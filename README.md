@@ -1,1 +1,1 @@
-ZMP3PublisherMW
+Kit

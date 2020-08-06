@@ -2,7 +2,7 @@
  * Copyright (c) 2012-2016 by Zalo Group.
  * All Rights Reserved.
  */
-package com.vng.zing.media.mp3.publisher.mw.app;
+package com.vng.zing.media.mp3.test.kit.app;
 
 /**
  *
