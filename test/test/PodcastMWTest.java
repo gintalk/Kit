@@ -18,8 +18,8 @@ public class PodcastMWTest extends BaseTest {
     private static final TZMP3PodcastMWClient CLI = TZMP3PodcastMWClient.INST;
 
     public static void main(String[] args) {
-        System.out.println(CLI.getEpisodeIdsOfProgram(new TPodcastProgramGetEpisodeIdsReq().setProgramId(1078188986)));
-        System.out.println(CLI.getEpisode(new TPodcastEpisodeGetReq().setId(1078188993)));
-        System.out.println(CLI.getProgram(new TPodcastProgramGetReq().setId(1094011204)));
+//        System.out.println(CLI.getEpisodeIdsOfProgram(new TPodcastProgramGetEpisodeIdsReq().setProgramId(1078188986)));
+        System.out.println(CLI.getEpisode(new TPodcastEpisodeGetReq().setId(1080637341)));
+//        System.out.println(CLI.getProgram(new TPodcastProgramGetReq().setId(1094011204)));
     }
 }

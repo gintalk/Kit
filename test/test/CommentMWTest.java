@@ -40,13 +40,14 @@ public class CommentMWTest extends BaseTest {
     private static final ZMediaCommentMWClient feedClient = ZMediaCommentMWClient.INST_FEED;
 
     public static void main(String[] args) {
-        ZMediaCommentMWClient client = feedClient;
+        ZMediaCommentMWClient client = defaultClient;
 
-        TCommentApp app = TCommentApp.ZINGMP3_NEWS_FEED;
-        int objectId = 1079680313;
+        TCommentApp app = TCommentApp.ZINGMP3_SONG;
+        int objectId = 1079714489;
 
-        System.out.println(client.fullGet(app, 16777838));
-//        System.out.println(client.approve(app, 17812471));
+        System.out.println(client.fullGet(app, 17786859));
+//        _printAll(client.getSlice(new TCommentGetSliceReq().setApp(app).setCount(200).setStart(0).setSortBy(TSortBy.NEW).setGetType(TGetType.ALL).setObjectId(objectId)));
+//        System.out.println(client.approve(app, 17844810));
     }
 
     protected static void _printAll(TVoteResult voteResult) {

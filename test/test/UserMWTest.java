@@ -19,8 +19,8 @@ public class UserMWTest extends BaseTest {
     public static void main(String[] args) {
         System.out.println(CLI.getAssetSliceWithScore(
                 new TUserReadAssetReq()
-                        .setUserId(1019256468)
-                        .setAssetType(TUserListType.BLOCKED_ARTIST.getValue())
+                        .setUserId(1158513)
+                        .setAssetType(TUserListType.LIBRARY_SONG.getValue())
                         .setCount(200)
                         .setStart(0))
         );

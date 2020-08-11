@@ -10,4 +10,19 @@ package test;
  */
 public class BaseTest {
 
+    public static void main(String[] args) {
+        int retry = 5;
+        String eCode = "A";
+
+        while (!change(eCode).equals("SUCCESS") && retry > 0) {
+            System.out.println(eCode + " " + retry);
+            retry--;
+        }
+    }
+
+    private static String change(String a) {
+        System.out.println("called");
+        a = "B";
+        return a;
+    }
 }
