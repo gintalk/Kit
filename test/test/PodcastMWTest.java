@@ -4,6 +4,7 @@
  */
 package test;
 
+import com.vng.zing.media.common.utils.ThriftUtils;
 import com.vng.zing.media.mp3.common.thrift.podcast.TPodcastEpisodeGetReq;
 import com.vng.zing.media.mp3.common.thrift.podcast.TPodcastProgramGetEpisodeIdsReq;
 import com.vng.zing.media.mp3.common.thrift.podcast.TPodcastProgramGetReq;
@@ -19,7 +20,7 @@ public class PodcastMWTest extends BaseTest {
 
     public static void main(String[] args) {
 //        System.out.println(CLI.getEpisodeIdsOfProgram(new TPodcastProgramGetEpisodeIdsReq().setProgramId(1078188986)));
-        System.out.println(CLI.getEpisode(new TPodcastEpisodeGetReq().setId(1080637341)));
+        System.out.println(ThriftUtils.getStructAsString(CLI.getEpisode(new TPodcastEpisodeGetReq().setId(1078188987)).value));
 //        System.out.println(CLI.getProgram(new TPodcastProgramGetReq().setId(1094011204)));
     }
 }

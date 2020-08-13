@@ -18,7 +18,7 @@ public class PublisherMWTest extends BaseTest {
 
     public static void main(String[] args) {
         TPublisherAssetReadReq readReq = new TPublisherAssetReadReq()
-                .setPublisherId(6980)
+                .setPublisherId(10139)
                 .setAssetType(TPublisherAssetType.EVENT.getValue())
                 .setStart(0)
                 .setCount(200);

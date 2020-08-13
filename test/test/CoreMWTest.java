@@ -19,9 +19,9 @@ public class CoreMWTest extends BaseTest {
 
     public static void main(String[] args) {
         TEventGetReq req = new TEventGetReq()
-                .setId(10118);
+                .setId(10113);
         System.out.println(CLI.getEvent(req));
 
-        System.out.println(CLI.getSliceListI32(new TSliceReq().setStart(0).setCount(200).setType(TListI32Type.EVENT_FOLLOW_BY_USER.getValue()).setId(10141)));
+//        System.out.println(CLI.getSliceListI32(new TSliceReq().setStart(0).setCount(200).setType(TListI32Type.EVENT_FOLLOW_BY_USER.getValue()).setId(10141)));
     }
 }

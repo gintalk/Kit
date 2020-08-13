@@ -17,12 +17,19 @@ public class UserMWTest extends BaseTest {
     private static final TZMP3UserMWClient CLI = TZMP3UserMWClient.INST;
 
     public static void main(String[] args) {
-        System.out.println(CLI.getAssetSliceWithScore(
+//        System.out.println(CLI.getAssetSliceWithScore(
+//                new TUserReadAssetReq()
+//                        .setUserId(1158513)
+//                        .setAssetType(TUserListType.LIBRARY_SONG.getValue())
+//                        .setCount(200)
+//                        .setStart(0))
+//        );
+        System.out.println(CLI.getAssetSlice(
                 new TUserReadAssetReq()
-                        .setUserId(1158513)
-                        .setAssetType(TUserListType.LIBRARY_SONG.getValue())
-                        .setCount(200)
-                        .setStart(0))
-        );
+                .setUserId(123)
+                .setAssetType(TUserListType.CREATE_PLAYLIST.getValue())
+                .setStart(0)
+                .setCount(200)
+        ));
     }
 }

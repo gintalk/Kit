@@ -43,10 +43,10 @@ public class CommentMWTest extends BaseTest {
         ZMediaCommentMWClient client = defaultClient;
 
         TCommentApp app = TCommentApp.ZINGMP3_SONG;
-        int objectId = 1079714489;
+        int objectId = 1079327803;
 
-        System.out.println(client.fullGet(app, 17786859));
-//        _printAll(client.getSlice(new TCommentGetSliceReq().setApp(app).setCount(200).setStart(0).setSortBy(TSortBy.NEW).setGetType(TGetType.ALL).setObjectId(objectId)));
+//        System.out.println(client.fullGet(app, 17614363));
+        _printAll(client.getSlice(new TCommentGetSliceReq().setApp(app).setCount(200).setStart(0).setSortBy(TSortBy.NEW).setGetType(TGetType.N_DAYS).setObjectId(objectId)));
 //        System.out.println(client.approve(app, 17844810));
     }
 
