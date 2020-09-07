@@ -4,6 +4,7 @@
  */
 package test;
 
+import com.vng.zing.media.common.utils.ThriftUtils;
 import com.vng.zing.media.mp3.common.thrift.TUserListType;
 import com.vng.zing.media.mp3.common.thrift.user.TUserReadAssetReq;
 import com.vng.zing.media.mp3.usermw.thrift.client.TZMP3UserMWClient;
@@ -26,8 +27,8 @@ public class UserMWTest extends BaseTest {
 //        );
         System.out.println(CLI.getAssetSlice(
                 new TUserReadAssetReq()
-                .setUserId(123)
-                .setAssetType(TUserListType.CREATE_PLAYLIST.getValue())
+                .setUserId(1003782945)
+                .setAssetType(TUserListType.LIBRARY_SONG.getValue())
                 .setStart(0)
                 .setCount(200)
         ));

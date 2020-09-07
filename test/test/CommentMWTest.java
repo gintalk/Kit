@@ -22,12 +22,15 @@ import com.vng.zing.media.comment.thrift.TSortBy;
 import com.vng.zing.media.comment.thrift.TStatus;
 import com.vng.zing.media.comment.thrift.TVoteResult;
 import com.vng.zing.media.comment.thrift.client.ZMediaCommentMWClient;
+import com.vng.zing.media.common.thrift.TCountry;
 import com.vng.zing.media.common.thrift.TCountryCode;
 import com.vng.zing.media.common.thrift.TI32ListResult;
 import com.vng.zing.media.common.thrift.TI32Result;
 import com.vng.zing.media.common.thrift.TUpdateSourceType;
 import com.vng.zing.media.common.utils.CommonUtils;
 import com.vng.zing.media.common.utils.ConvertUtils;
+import com.vng.zing.media.common.utils.ThriftUtils;
+import com.vng.zing.media.common.utils.WhiteListUserUtils;
 import com.vng.zing.media.mp3.common.thrift.TMP3ItemType;
 
 /**
@@ -42,12 +45,30 @@ public class CommentMWTest extends BaseTest {
     public static void main(String[] args) {
         ZMediaCommentMWClient client = defaultClient;
 
-        TCommentApp app = TCommentApp.ZINGMP3_SONG;
-        int objectId = 1079327803;
+        TCommentApp app = TCommentApp.ZMP3_EVENT;
+        int objectId = 101030;
 
-//        System.out.println(client.fullGet(app, 17614363));
-        _printAll(client.getSlice(new TCommentGetSliceReq().setApp(app).setCount(200).setStart(0).setSortBy(TSortBy.NEW).setGetType(TGetType.N_DAYS).setObjectId(objectId)));
-//        System.out.println(client.approve(app, 17844810));
+        System.out.println(ThriftUtils.getStructAsString(client.fullGet(app, 18008573).comment));
+//        System.out.println(client.getSliceReplies(new TCommentGetSliceReq().setApp(app).setStart(0).setCount(200).setSortBy(TSortBy.NEW).setGetType(TGetType.).setCommentId(14495614)));
+//        _printAll(client.getSlice(new TCommentGetSliceReq().setApp(app).setCount(200).setStart(0).setSortBy(TSortBy.NEW).setGetType(TGetType.N_DAYS).setObjectId(objectId)));
+//        System.out.println(client.approve(app, 17844684));
+//        System.out.println(client.systemMultiRemove(app, Arrays.asList(17424381)));
+//        System.out.println(client.reject(app, 17925798));
+
+//        for(int i=1; i<=2000; i++){
+//            TComment comment = new TComment()
+//                    .setContent(String.valueOf(i) + "..")
+//                    .setApp(app)
+//                    .setObjectId(1)
+//                    .setStatus(TStatus.NEW)
+//                    .setUserId(WhiteListUserUtils.NAMNH16);
+//            
+//            TCommentAddReq req = new TCommentAddReq()
+//                    .setComment(comment)
+//                    .setIpCode(TCountry.VIETNAM.getValue());
+//            
+//            System.out.println(client.add(req));
+//        }
     }
 
     protected static void _printAll(TVoteResult voteResult) {
