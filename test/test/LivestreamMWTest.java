@@ -4,10 +4,10 @@
  */
 package test;
 
-import com.vng.zing.media.common.thrift.live.streaming.TLiveStreamCustomListID;
-import com.vng.zing.media.common.thrift.live.streaming.TLiveStreamListInfo;
-import com.vng.zing.media.common.thrift.live.streaming.TLiveStreamListType;
-import com.vng.zing.media.common.thrift.live.streaming.TLiveStreamingApp;
+import com.vng.zing.media.common.thrift.live.streaming.TLiveMediaWrapper;
+import com.vng.zing.media.common.thrift.live.streaming.TLivePlaylistInfoResultWrapper;
+import com.vng.zing.media.common.utils.ThriftUtils;
+import com.vng.zing.media.common.wrapper.zdn.ZMLivePlaylistWrapper;
 import com.vng.zing.media.livestreaming.mw.thrift.client.ZMediaLiveStreamMWClient;
 
 /**
@@ -15,16 +15,27 @@ import com.vng.zing.media.livestreaming.mw.thrift.client.ZMediaLiveStreamMWClien
  * @author namnh16
  */
 public class LivestreamMWTest {
-    
-    
-    private static final ZMediaLiveStreamMWClient client = new ZMediaLiveStreamMWClient("main");
-    
+
+    private static final ZMediaLiveStreamMWClient CLI = new ZMediaLiveStreamMWClient("main");
+    private static final ZMLivePlaylistWrapper LIVE_PLAYLIST_CLI = new ZMLivePlaylistWrapper("main");
+
     public static void main(String[] args) {
-        TLiveStreamListInfo info = new TLiveStreamListInfo()
-                .setType(TLiveStreamListType.LIST_BY_CUSTOM.getValue())
-                .setAppId(TLiveStreamingApp.ZMP3.getValue())
-                .setId(TLiveStreamCustomListID.PROMOTE_TOPIC_RADIO.getValue());
+        System.out.println(CLI.getLiveStream(10565).value.webViews);
         
-        System.out.println(client.getSliceIds(info, 0, 200));
+//        TLiveStreamListInfo info = new TLiveStreamListInfo()
+//                .setType(TLiveStreamListType.LIST_BY_CUSTOM.getValue())
+//                .setAppId(TLiveStreamingApp.ZMP3.getValue())
+//                .setId(TLiveStreamCustomListID.PROMOTE_TOPIC_RADIO.getValue());
+//
+//        System.out.println(ThriftUtils.getStructAsString(CLI.getLiveRoom(10553).value));
+
+//        TLivePlaylistInfoResultWrapper livePlaylist = LIVE_PLAYLIST_CLI.getLivePlaylistInfo("c26843d575909ccec581");
+//        System.out.println(ThriftUtils.getStructAsString(livePlaylist));
+        
+//        for(TLiveMediaWrapper media: LIVE_PLAYLIST_CLI.getListMediaSlice("c26843d575909ccec581", livePlaylist.currentMediaIdx, 2).values){
+//            System.out.println(ThriftUtils.getStructAsString(media));
+//        }
+        
+        System.exit(0);
     }
 }
