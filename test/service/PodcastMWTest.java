@@ -2,7 +2,7 @@
  * Copyright (c) 2012-2016 by Zalo Group.
  * All Rights Reserved.
  */
-package test;
+package service;
 
 import com.vng.zing.media.common.utils.ThriftUtils;
 import com.vng.zing.media.mp3.common.thrift.podcast.TPodcastCategory;
@@ -29,9 +29,9 @@ public class PodcastMWTest extends BaseTest {
     private static final TZMP3PodcastMWClient CLI = TZMP3PodcastMWClient.INST;
 
     public static void main(String[] args) {
-//        System.out.println(CLI.getEpisodeIdsOfProgram(new TPodcastProgramGetEpisodeIdsReq().setProgramId(1078188986)));
-        System.out.println(ThriftUtils.getStructAsString(CLI.getEpisode(new TPodcastEpisodeGetReq().setId(1078188997)).value));
-//        System.out.println(CLI.getProgram(new TPodcastProgramGetReq().setId(1331068752)));
+        System.out.println(CLI.getEpisodeIdsOfProgram(new TPodcastProgramGetEpisodeIdsReq().setProgramId(1078188986)));
+//        System.out.println(ThriftUtils.getStructAsString(CLI.getEpisode(new TPodcastEpisodeGetReq().setId(1081846516)).value));
+//        System.out.println(ThriftUtils.getStructAsString(CLI.getProgram(new TPodcastProgramGetReq().setId(1372612178)).value));
 //        System.out.println(CLI.getCategory(new TPodcastCategoryGetReq().setId(12316)));
 //        System.out.println(CLI.putCategory(new TPodcastCategoryPutReq().setData(new TPodcastCategory().setId(-11).setName("Test category").setStatus(TPodcastCategoryStatus.SHOW.getValue()))));
 //        System.out.println(CLI.removeCategory(-1));

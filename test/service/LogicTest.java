@@ -2,7 +2,7 @@
  * Copyright (c) 2012-2016 by Zalo Group.
  * All Rights Reserved.
  */
-package test;
+package service;
 
 import java.util.ArrayList;
 import java.util.Arrays;

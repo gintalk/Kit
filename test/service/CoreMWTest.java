@@ -2,7 +2,7 @@
  * Copyright (c) 2012-2016 by Zalo Group.
  * All Rights Reserved.
  */
-package test;
+package service;
 
 import com.vng.zing.media.common.utils.ConvertUtils;
 import com.vng.zing.media.common.utils.ThriftUtils;
@@ -22,7 +22,7 @@ public class CoreMWTest extends BaseTest {
 
     public static void main(String[] args) {
         TEventGetReq req = new TEventGetReq()
-                .setId(10113);
+                .setId(618740);
         System.out.println(ThriftUtils.getStructAsString(CLI.getEvent(req).value));
 //        System.out.println(CLI.getSliceListI32(new TSliceReq().setStart(0).setCount(200).setType(TListI32Type.EVENT_FOLLOW_BY_USER.getValue()).setId(10141)));
     }

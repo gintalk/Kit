@@ -2,7 +2,7 @@
  * Copyright (c) 2012-2016 by Zalo Group.
  * All Rights Reserved.
  */
-package test;
+package service;
 
 import com.sun.xml.internal.bind.v2.runtime.Coordinator;
 import com.vng.zing.media.common.client.ZMediaClientPoolManager;
@@ -49,7 +49,7 @@ public class ProfileMWTest extends BaseTest {
 //
 //        System.out.println("Finished");
 
-        int userId = 1050923047;
+        int userId = 72519474;
         TProfile profile = PROFILE_CLI.getProfile(userId).value;
         System.out.println(ThriftUtils.getStructAsString(profile));
 //        System.out.println(ThriftUtils.getStructAsString(ZALO_CLI.getCompactZProfile(userId).profile.profile));

@@ -2,7 +2,7 @@
  * Copyright (c) 2012-2016 by Zalo Group.
  * All Rights Reserved.
  */
-package test;
+package service;
 
 import com.vng.zing.media.mp3.common.thrift.publisher.TPublisherAssetReadReq;
 import com.vng.zing.media.mp3.common.thrift.publisher.TPublisherAssetType;

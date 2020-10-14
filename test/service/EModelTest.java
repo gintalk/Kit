@@ -2,7 +2,7 @@
  * Copyright (c) 2012-2016 by Zalo Group.
  * All Rights Reserved.
  */
-package test;
+package service;
 
 import com.vng.zing.media.common.utils.ThriftUtils;
 import com.vng.zing.media.mp3.common.thrift.api.TRadioHomeSection;

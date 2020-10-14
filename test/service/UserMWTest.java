@@ -2,7 +2,7 @@
  * Copyright (c) 2012-2016 by Zalo Group.
  * All Rights Reserved.
  */
-package test;
+package service;
 
 import com.vng.zing.media.common.utils.ThriftUtils;
 import com.vng.zing.media.mp3.common.thrift.TUserListType;
@@ -27,8 +27,8 @@ public class UserMWTest extends BaseTest {
 //        );
         System.out.println(CLI.getAssetSlice(
                 new TUserReadAssetReq()
-                .setUserId(1003782945)
-                .setAssetType(TUserListType.LIBRARY_SONG.getValue())
+                .setUserId(1034077885)
+                .setAssetType(TUserListType.LIBRARY_ARTIST.getValue())
                 .setStart(0)
                 .setCount(200)
         ));

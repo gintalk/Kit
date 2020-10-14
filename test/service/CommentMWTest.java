@@ -2,7 +2,7 @@
  * Copyright (c) 2012-2016 by Zalo Group.
  * All Rights Reserved.
  */
-package test;
+package service;
 
 import java.util.Arrays;
 import java.util.List;
@@ -45,22 +45,22 @@ public class CommentMWTest extends BaseTest {
     public static void main(String[] args) {
         ZMediaCommentMWClient client = defaultClient;
 
-        TCommentApp app = TCommentApp.ZMP3_EVENT;
-        int objectId = 101030;
+        TCommentApp app = TCommentApp.ZINGMP3_SONG;
+        int objectId = 1079234134;
 
-        System.out.println(ThriftUtils.getStructAsString(client.fullGet(app, 18008573).comment));
-//        System.out.println(client.getSliceReplies(new TCommentGetSliceReq().setApp(app).setStart(0).setCount(200).setSortBy(TSortBy.NEW).setGetType(TGetType.).setCommentId(14495614)));
-//        _printAll(client.getSlice(new TCommentGetSliceReq().setApp(app).setCount(200).setStart(0).setSortBy(TSortBy.NEW).setGetType(TGetType.N_DAYS).setObjectId(objectId)));
+//        System.out.println(ThriftUtils.getStructAsString(client.fullGet(app, 18210410).comment));
+//        System.out.println(client.getSliceReplies(new TCommentGetSliceReq().setApp(app).setStart(0).setCount(200).setSortBy(TSortBy.NEW).setGetType(TGetType.ALL).setCommentId(16961390)));
+        _printAll(client.getSlice(new TCommentGetSliceReq().setApp(app).setCount(200).setStart(0).setSortBy(TSortBy.TOP).setGetType(TGetType.N_DAYS).setObjectId(objectId)));
 //        System.out.println(client.approve(app, 17844684));
 //        System.out.println(client.systemMultiRemove(app, Arrays.asList(17424381)));
 //        System.out.println(client.reject(app, 17925798));
 
-//        for(int i=1; i<=2000; i++){
+//        for(int i=1; i<2; i++){
 //            TComment comment = new TComment()
-//                    .setContent(String.valueOf(i) + "..")
+//                    .setContent("A lô 1 2 3 4")
 //                    .setApp(app)
-//                    .setObjectId(1)
-//                    .setStatus(TStatus.NEW)
+//                    .setObjectId(objectId)
+//                    .setStatus(TStatus.AUTO_APPROVED)
 //                    .setUserId(WhiteListUserUtils.NAMNH16);
 //            
 //            TCommentAddReq req = new TCommentAddReq()
@@ -96,6 +96,7 @@ public class CommentMWTest extends BaseTest {
             return;
         }
 
+        System.out.println(listCommentResult);
         System.out.println(CommonUtils.buildTabLog("success", listCommentResult.getTotal()));
 
         if (listCommentResult.getComments() == null) {

@@ -2,7 +2,7 @@
  * Copyright (c) 2012-2016 by Zalo Group.
  * All Rights Reserved.
  */
-package test;
+package service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -30,7 +30,7 @@ public class ZingMP3MWTest extends BaseTest {
 //        JsonParser jp = new JsonParser();
 //        JsonElement je = jp.parse(CLI.getStringConfig(84, StringConfigKeyUtils.getRadioHomeSectionLayoutConfigKey()).value);
 //        System.out.println(gson.toJson(je));
-        System.out.println(ThriftUtils.getStructAsString(CLI.getStringConfig(84, TStringConfigKey.RADIO_PROMOTE_CHANNEL.name())));
+        System.out.println(ThriftUtils.getStructAsString(CLI.getStringConfig(84, TStringConfigKey.RADIO_BANNER.name())));
 //        System.out.println(ThriftUtils.getStructAsString(CLI.getSliceIds(new TListInfo().setCountryCode(84).setItemType(TMP3ItemType.MEDIA.getValue()).setType(TMP3ListType.LIST_BY_CUSTOM.getValue()).setId(TMP3CustomListID.SONG_HOT.getValue()), 0, 200)));
     }
 }
