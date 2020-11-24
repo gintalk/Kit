@@ -49,7 +49,7 @@ public class ProfileMWTest extends BaseTest {
 //
 //        System.out.println("Finished");
 
-        int userId = 72519474;
+        int userId = 280246961;
         TProfile profile = PROFILE_CLI.getProfile(userId).value;
         System.out.println(ThriftUtils.getStructAsString(profile));
 //        System.out.println(ThriftUtils.getStructAsString(ZALO_CLI.getCompactZProfile(userId).profile.profile));

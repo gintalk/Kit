@@ -29,8 +29,8 @@ public class PodcastMWTest extends BaseTest {
     private static final TZMP3PodcastMWClient CLI = TZMP3PodcastMWClient.INST;
 
     public static void main(String[] args) {
-        System.out.println(CLI.getEpisodeIdsOfProgram(new TPodcastProgramGetEpisodeIdsReq().setProgramId(1078188986)));
-//        System.out.println(ThriftUtils.getStructAsString(CLI.getEpisode(new TPodcastEpisodeGetReq().setId(1081846516)).value));
+//        System.out.println(CLI.getEpisodeIdsOfProgram(new TPodcastProgramGetEpisodeIdsReq().setProgramId(1078188986)));
+        System.out.println(ThriftUtils.getStructAsString(CLI.getEpisode(new TPodcastEpisodeGetReq().setId(1078188987)).value));
 //        System.out.println(ThriftUtils.getStructAsString(CLI.getProgram(new TPodcastProgramGetReq().setId(1372612178)).value));
 //        System.out.println(CLI.getCategory(new TPodcastCategoryGetReq().setId(12316)));
 //        System.out.println(CLI.putCategory(new TPodcastCategoryPutReq().setData(new TPodcastCategory().setId(-11).setName("Test category").setStatus(TPodcastCategoryStatus.SHOW.getValue()))));
@@ -44,5 +44,6 @@ public class PodcastMWTest extends BaseTest {
 //        System.out.println(CLI.mGetCategory(new TPodcastCategoryMGetReq().setIds(Arrays.asList(1,3,2))));
 
 //        System.out.println(CLI.getSliceIds(new TPodcastGetSliceReq().setListId(TPodcastCustomListID.PROMOTE_EPISODE.getValue()).setListType(TPodcastListType.CUSTOM_LIST.getValue()).setStart(0).setCount(200)));
+//        System.out.println(CLI.getEpisode(new TPodcastEpisodeGetReq().setId(1080637341)).value.description.length());
     }
 }

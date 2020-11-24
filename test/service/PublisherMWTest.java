@@ -18,21 +18,21 @@ public class PublisherMWTest extends BaseTest {
     private static final TZMP3PublisherMWClient CLI = TZMP3PublisherMWClient.INST;
 
     public static void main(String[] args) {
-//        TPublisherAssetReadReq readReq = new TPublisherAssetReadReq()
-//                .setPublisherId(10139)
-//                .setAssetType(TPublisherAssetType.EVENT.getValue())
-//                .setStart(0)
-//                .setCount(200);
-//        System.out.println(CLI.getAssetSliceWithScore(readReq));
+        TPublisherAssetReadReq readReq = new TPublisherAssetReadReq()
+                .setPublisherId(638327)
+                .setAssetType(TPublisherAssetType.PODCAST_PROGRAM.getValue())
+                .setStart(0)
+                .setCount(200);
+        System.out.println(CLI.getAssetSliceWithScore(readReq));
         
-        TPublisherAssetWriteReq req = new TPublisherAssetWriteReq()
-                .setPublisherId(NAMNH16_ZMP3_ID)
-                .setAssetType(TPublisherAssetType.LIVESTREAM.getValue())
-                .setAssetId(3)
-                .setScore(1);
-//        System.out.println(CLI.putAsset(req));
-        System.out.println(CLI.removeAsset(req));
+//        TPublisherAssetWriteReq req = new TPublisherAssetWriteReq()
+//                .setPublisherId(6980)
+//                .setAssetType(TPublisherAssetType.PODCAST_PROGRAM.getValue())
+//                .setAssetId(3)
+//                .setScore(1);
+////        System.out.println(CLI.putAsset(req));
+//        System.out.println(CLI.removeAsset(req));
         
-        System.out.println(CLI.getAssetCount(new TPublisherAssetReadReq().setPublisherId(NAMNH16_ZMP3_ID).setAssetType(TPublisherAssetType.LIVESTREAM.getValue())));
+//        System.out.println(CLI.getAssetCount(new TPublisherAssetReadReq().setPublisherId(NAMNH16_ZMP3_ID).setAssetType(TPublisherAssetType.LIVESTREAM.getValue())));
     }
 }
