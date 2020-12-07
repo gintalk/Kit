@@ -30,7 +30,7 @@ public class ZingMP3MWTest extends BaseTest {
 //        JsonParser jp = new JsonParser();
 //        JsonElement je = jp.parse(CLI.getStringConfig(84, StringConfigKeyUtils.getRadioHomeSectionLayoutConfigKey()).value);
 //        System.out.println(gson.toJson(je));
-        System.out.println(ThriftUtils.getStructAsString(CLI.getStringConfig(84, TStringConfigKey.RADIO_PROMOTE_CHANNEL.name())));
+//        System.out.println(ThriftUtils.getStructAsString(CLI.getStringConfig(84, TStringConfigKey.RADIO_PROMOTE_CHANNEL.name())));
 //        System.out.println(ThriftUtils.getStructAsString(CLI.getSliceIds(new TListInfo().setCountryCode(84).setItemType(TMP3ItemType.EVENT.getValue()).setType(TMP3ListType.LIST_BY_CUSTOM.getValue()).setId(TMP3CustomListID.EVENT_PROMOTE.getValue()), 0, 200)));
     }
 }

@@ -4,13 +4,13 @@
  */
 package service;
 
-import com.vng.zing.media.common.thrift.live.streaming.TLiveStream;
-import com.vng.zing.media.common.thrift.live.streaming.TLiveStreamProgram;
-import com.vng.zing.media.common.thrift.live.streaming.TLiveStreamRequestMedia;
+import com.vng.zing.media.common.thrift.live.streaming.TLiveStreamCustomListID;
+import com.vng.zing.media.common.thrift.live.streaming.TLiveStreamListInfo;
+import com.vng.zing.media.common.thrift.live.streaming.TLiveStreamListType;
+import com.vng.zing.media.common.thrift.live.streaming.TLiveStreamingApp;
 import com.vng.zing.media.common.utils.ThriftUtils;
-import com.vng.zing.media.common.utils.WhiteListUserUtils;
-import com.vng.zing.media.common.wrapper.zdn.ZMLivePlaylistWrapper;
 import com.vng.zing.media.livestreaming.mw.thrift.client.ZMediaLiveStreamMWClient;
+import com.vng.zing.zmliveplaylist.client.ZMLivePlaylistClient;
 
 /**
  *
@@ -20,16 +20,19 @@ public class LivestreamMWTest extends BaseTest {
 
     private static final ZMediaLiveStreamMWClient CLI = new ZMediaLiveStreamMWClient("main");
 //    private static final ZMLiveStreamMwWrapper ZCLI = new ZMLiveStreamMwWrapper("main");
-    private static final ZMLivePlaylistWrapper LIVE_PLAYLIST_CLI = new ZMLivePlaylistWrapper("main");
+    private static final ZMLivePlaylistClient LIVE_PLAYLIST_CLI = new ZMLivePlaylistClient("main");
 
     public static void main(String[] args) {
-//        TLiveStream livestream = CLI.getLiveStream(10929).value;
+//        TLiveStream livestream = CLI.getLiveStream(10610).value;
 //        System.out.println(ThriftUtils.getStructAsString(livestream));
-        
-//        TLiveStreamProgram program = CLI.getLiveStreamProgram(livestream.programId).value;
+
+//        TLiveStreamProgram program = CLI.getLiveStreamProgram(14521).value;
 //        program.setPlayingItemId(156);
 //        System.out.println(CLI.systemPutLiveStreamProgram(program));
 //        System.out.println(ThriftUtils.getStructAsString(program));
+//        for(TLiveStreamProgramItem item: program.programItems){
+//            System.out.println(item.id);
+//        }
 //        
 //        System.out.println(LIVE_PLAYLIST_CLI.setMediaList(program.livePlaylistId, Arrays.asList(
 //                new TLiveMediaWrapper().setName("bai 1").setUrl("abc"),
@@ -53,18 +56,26 @@ public class LivestreamMWTest extends BaseTest {
 //        System.out.println(CLI.systemPutLiveStreamProgram(program));
 //        System.out.println(CLI.putRequestMediaToListPromote(new TLiveStreamMedia().setLivestreamId(10926).setMediaId(1073744000)));
 //        System.out.println(CLI.selectPlayRequestMedia(new TLiveStreamMedia().setLivestreamId(10926).setMediaId(1073741852)));
-//        System.out.println(CLI.getListPromoteRequestMedia(new TLiveStreamGetListRequestMediaReq().setLivestreamId(10926).setStart(0).setCount(200)));
-//        System.out.println(CLI.putRequestMedia(new TLiveStreamRequestMedia().setLivestreamId(10929).setMediaId(1073744242).setUserId(WhiteListUserUtils.NAMNH16)));
-//        System.out.println(CLI.getListTopRequestMedia(new TLiveStreamGetListRequestMediaReq().setLivestreamId(10929).setStart(0).setCount(200)));
-//        TLiveStreamListInfo info = new TLiveStreamListInfo()
-//                .setType(TLiveStreamListType.LIST_BY_CUSTOM.getValue())
-//                .setAppId(TLiveStreamingApp.ZMP3.getValue())
-//                .setId(TLiveStreamCustomListID.PROMOTE_TOPIC_RADIO.getValue());
+//        System.out.println(CLI.getListPromoteRequestMedia(new TLiveStreamGetListRequestMediaReq().setLivestreamId(10610).setStart(0).setCount(200)));
+//        System.out.println(CLI.putRequestMedia(new TLiveStreamRequestMedia().setLivestreamId(10610).setMediaId(1085283096).setUserId(WhiteListUserUtils.LOCNT3)));
+//        TLiveStreamSystemGetListRequestMediaResult res = CLI.systemGetListTopRequestMedia(new TLiveStreamGetListRequestMediaReq().setLivestreamId(10610).setStart(0).setCount(200));
+//        for(TLiveStreamRequestMediaStatInfo info: res.values){
+////            if(info.requestNum != 3){
+//                System.out.println(info.mediaId);
+////            }
+//        }
+//        TI32PairListResult result = CLI.getListRequestMediaUser(new TLiveStreamGetListRequestMediaUserReq().setLivestreamId(10610).setUserId(WhiteListUserUtils.TRUONGDT).setStart(0).setCount(0));
+//        System.out.println(result.total);
+        TLiveStreamListInfo info = new TLiveStreamListInfo()
+                .setType(TLiveStreamListType.LIST_BY_CUSTOM.getValue())
+                .setAppId(TLiveStreamingApp.ZMP3.getValue())
+                .setId(TLiveStreamCustomListID.PROMOTE_CAR_RADIO.getValue());
+        System.out.println(ThriftUtils.getStructAsString(CLI.getSliceIds(info, 0, 200)));
 //
 //        System.out.println(ThriftUtils.getStructAsString(CLI.getLiveRoom(10553).value));
-//        TLivePlaylistInfoResultWrapper livePlaylist = LIVE_PLAYLIST_CLI.getLivePlaylistInfo("5b68310c0449ed17b458");
-//        System.out.println(ThriftUtils.getStructAsString(livePlaylist));
-//        System.out.println(ThriftUtils.getStructAsString(LIVE_PLAYLIST_CLI.getListMediaSlice("5b68310c0449ed17b458", livePlaylist.currentMediaIdx, 2)));
+//        TLivePlaylistRes livePlaylist = LIVE_PLAYLIST_CLI.getLivePlaylistInfo(program.livePlaylistId);
+//        System.out.println(ThriftUtils.getStructAsString(livePlaylist.livePlaylist));
+//        System.out.println(ThriftUtils.getStructAsString(LIVE_PLAYLIST_CLI.getListMediaSlice(program.livePlaylistId, 0, 5)));
 //        for(TLiveMediaWrapper media: LIVE_PLAYLIST_CLI.getListMediaSlice("0ebed9daf39f1ac1438e", livePlaylist.currentMediaIdx, 2).values){
 //            System.out.println(ThriftUtils.getStructAsString(media));
 //        }
