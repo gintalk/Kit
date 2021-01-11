@@ -1,0 +1,63 @@
+plugins {
+    id 'java'
+}
+
+group 'com.vng.zing.media'
+version '1.0.0.1'
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://nexus.infra.zalo.services/repository/zmp3-maven-private"
+        credentials {
+            username "zmp3-rw"
+            password "HwAdcN5L3BD4tqaaw"
+        }
+    }
+}
+// Migrate from Netbeans (Ant) project
+sourceSets{
+    main.java.srcDirs "src"
+    test.java.srcDir "test"
+}
+
+dependencies {
+    compile project(":ZMP3Engine")
+    compile "com.vng.zing.media.mp3:zmp3-mw-feed:0.9.0.0"
+    // default
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+
+// build task
+task _clean(type: Delete) {
+    delete "dist"
+}
+
+jar {
+//    exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.MF'
+    manifest {
+        attributes 'Main-Class': 'com.vng.zing.media.mp3.test.kit.app.MainApp',
+                'Class-Path': configurations.runtimeClasspath.files.collect {
+                    "lib/$it.name"
+                }.join(' ')
+    }
+}
+
+task _copyJar(type: Copy) {
+    from jar
+    into 'dist'
+}
+
+task _copyDependencies(type: Copy) {
+    from configurations.default
+    into 'dist/lib'
+}
+
+task buildApp(dependsOn: [_clean, jar, _copyJar, _copyDependencies])
+// end build task
+
+test {
+    useJUnitPlatform()
+}

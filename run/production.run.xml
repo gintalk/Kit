@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="production" type="Application" factoryName="Application">
+    <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <option name="MAIN_CLASS_NAME" value="com.vng.zing.media.mp3.test.kit.app.MainApp" />
+    <module name="Kit.main" />
+    <option name="VM_PARAMETERS" value="-ea -Dzappname=Kit -Dzappprof=production -Dzconfdir=conf -Dzconffiles=config.ini -Djzcommonx.version=LATEST -Dzicachex.version=LATEST" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

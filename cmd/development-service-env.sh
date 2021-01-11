@@ -55,6 +55,6 @@ JVM_EXTRA_ARGS=""
 APP_ARGS=""
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-# common attributes
+# com.vng.zing.media.mp3.test.kit.test.common attributes
 CONF_FILES=config.ini
 

@@ -1,0 +1,6 @@
+rootProject.name = rootProject.projectDir.getName()
+include 'ZMediaCommonLib', 'ZMP3Engine'
+project(':ZMP3Engine').projectDir = file('../../zmp3-new/common/ZMP3Engine')
+project(':ZMediaCommonLib').projectDir = file('../../zcommon/common/ZMediaCommonLib')
+
+
