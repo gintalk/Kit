@@ -32,8 +32,7 @@ public class LogicTest extends BaseTest {
     private static final Logger LOG = ZLogger.getLogger(LogicTest.class);
 
     public static void main(String[] args) {
-        JsonObject jsonObj = new JsonObject();
-        JsonArray
+
     }
 
     private static void _prepareMediaSessionsKeyFile() {

@@ -1,9 +1,20 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
-group 'com.vng.zing.media'
+group 'com.vng.zing.media.mp3'
 version '1.0.0.1'
+def thriftJarVersion = '0.0.0.7'
+def thriftJarName = 'zmp3-tpl-thrift'
+
+dependencies {
+    compile project("ZMP3MWEngine")
+    compile "com.vng.zing.media.mp3:zmp3-mw-feed:0.9.0.0"
+    // default
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
 
 repositories {
     mavenCentral()
@@ -15,22 +26,18 @@ repositories {
         }
     }
 }
+
+test {
+    useJUnitPlatform()
+}
+
 // Migrate from Netbeans (Ant) project
 sourceSets{
     main.java.srcDirs "src"
     test.java.srcDir "test"
 }
 
-dependencies {
-    compile project(":ZMP3Engine")
-    compile "com.vng.zing.media.mp3:zmp3-mw-feed:0.9.0.0"
-    // default
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
-}
-
-
-// build task
+// build app task
 task _clean(type: Delete) {
     delete "dist"
 }
@@ -56,8 +63,4 @@ task _copyDependencies(type: Copy) {
 }
 
 task buildApp(dependsOn: [_clean, jar, _copyJar, _copyDependencies])
-// end build task
-
-test {
-    useJUnitPlatform()
-}
+// end build app task

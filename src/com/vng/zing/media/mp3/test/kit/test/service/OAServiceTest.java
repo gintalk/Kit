@@ -9,6 +9,9 @@ import com.vng.zing.media.mp3.common.thrift.publisher.TPublisherAssetType;
 import com.vng.zing.media.mp3.oa.service.thrift.client.TZMP3OACMSServiceClient;
 import com.vng.zing.media.mp3.oa.service.thrift.client.TZMP3OAServiceClient;
 import com.vng.zing.media.mp3.oa.service.thrift.req.TGetAssetSliceReq;
+import com.vng.zing.media.mp3.oa.service.thrift.req.TGetOABoxReq;
+import com.vng.zing.media.mp3.oa.service.thrift.req.TGetOAHomeReq;
+import com.vng.zing.media.mp3.oa.service.thrift.req.TGetOAReq;
 import com.vng.zing.media.mp3.test.kit.test.common.Constant;
 
 /**
@@ -26,19 +29,19 @@ public class OAServiceTest extends BaseTest {
     }
 
     private static void testOAService() {
-//        System.out.println(SERVICE_CLIENT.getOA(new TGetOAReq(Constant.HEADER).setId(Constant.OA_PETER_SERKIN)));
-//        System.out.println(SERVICE_CLIENT.getOABox(new TGetOABoxReq(Constant.HEADER).setId(10618)));
-//        System.out.println(SERVICE_CLIENT.getOAHome(new TGetOAHomeReq(Constant.HEADER).setId(Constant.OA_TANG_CHI_KIEU)));
+        System.out.println(SERVICE_CLIENT.getOA(new TGetOAReq().setId(Constant.OA_PETER_SERKIN)));
+        System.out.println(SERVICE_CLIENT.getOABox(new TGetOABoxReq().setId(10618)));
+        System.out.println(SERVICE_CLIENT.getOAHome(new TGetOAHomeReq().setId(Constant.OA_TANG_CHI_KIEU)));
 //        System.out.println(SERVICE_CLIENT.getOABoxesByType(new TGetOABoxesByTypeReq(Constant.HEADER).setOaId(Constant.OA_PETER_SERKIN).setBoxType(10)));
 //        System.out.println(SERVICE_CLIENT.getMyOAs(new TGetMyOAsReq(Constant.HEADER).setUserId(NAMNH16_ZMP3_ID).setStart(0).setCount(100)));
 //        System.out.println(SERVICE_CLIENT.mgetOA(new TMGetOAReq(Constant.HEADER).setIds(Arrays.asList(Constant.OA_PETER_SERKIN, Constant.OA_JEDWARD))));
 //        System.out.println(SERVICE_CLIENT.mgetOABox(new TMGetOABoxReq(Constant.HEADER).setIds(Arrays.asList(10620, 10619))));
 //        System.out.println(SERVICE_CLIENT.mgetOAHome(new TMGetOAHomeReq(Constant.HEADER).setIds(Arrays.asList(Constant.OA_PETER_SERKIN, 638327))));
-        System.out.println(SERVICE_CLIENT.getAssetSlice(new TGetAssetSliceReq(Constant.HEADER).setOaId(638323).setAssetType(TPublisherAssetType.LIVESTREAM.getValue()).setAssetStatus(0).setStart(0).setCount(100)));
-        System.out.println(SERVICE_CLIENT.getAssetSlice(new TGetAssetSliceReq(Constant.HEADER).setOaId(638323).setAssetType(TPublisherAssetType.LIVESTREAM.getValue()).setAssetStatus(TLiveStreamStatus.LIVE.getValue()).setStart(0).setCount(100)));
-        System.out.println(SERVICE_CLIENT.getAssetSlice(new TGetAssetSliceReq(Constant.HEADER).setOaId(638323).setAssetType(TPublisherAssetType.LIVESTREAM.getValue()).setAssetStatus(TLiveStreamStatus.REPLAY.getValue()).setStart(0).setCount(100)));
-        System.out.println(SERVICE_CLIENT.getAssetSlice(new TGetAssetSliceReq(Constant.HEADER).setOaId(638323).setAssetType(TPublisherAssetType.LIVESTREAM.getValue()).setAssetStatus(TLiveStreamStatus.DRAFT.getValue()).setStart(0).setCount(100)));
-        System.out.println(SERVICE_CLIENT.getAssetSlice(new TGetAssetSliceReq(Constant.HEADER).setOaId(638323).setAssetType(TPublisherAssetType.LIVESTREAM.getValue()).setAssetStatus(TLiveStreamStatus.ENDED.getValue()).setStart(0).setCount(100)));
+//        System.out.println(SERVICE_CLIENT.getAssetSlice(new TGetAssetSliceReq(Constant.HEADER).setOaId(638323).setAssetType(TPublisherAssetType.LIVESTREAM.getValue()).setAssetStatus(0).setStart(0).setCount(100)));
+//        System.out.println(SERVICE_CLIENT.getAssetSlice(new TGetAssetSliceReq(Constant.HEADER).setOaId(638323).setAssetType(TPublisherAssetType.LIVESTREAM.getValue()).setAssetStatus(TLiveStreamStatus.LIVE.getValue()).setStart(0).setCount(100)));
+//        System.out.println(SERVICE_CLIENT.getAssetSlice(new TGetAssetSliceReq(Constant.HEADER).setOaId(638323).setAssetType(TPublisherAssetType.LIVESTREAM.getValue()).setAssetStatus(TLiveStreamStatus.REPLAY.getValue()).setStart(0).setCount(100)));
+//        System.out.println(SERVICE_CLIENT.getAssetSlice(new TGetAssetSliceReq(Constant.HEADER).setOaId(638323).setAssetType(TPublisherAssetType.LIVESTREAM.getValue()).setAssetStatus(TLiveStreamStatus.DRAFT.getValue()).setStart(0).setCount(100)));
+//        System.out.println(SERVICE_CLIENT.getAssetSlice(new TGetAssetSliceReq(Constant.HEADER).setOaId(638323).setAssetType(TPublisherAssetType.LIVESTREAM.getValue()).setAssetStatus(TLiveStreamStatus.ENDED.getValue()).setStart(0).setCount(100)));
 //        System.out.println(SERVICE_CLIENT.getAssetSliceWithScore(new TGetAssetSliceWithScoreReq(Constant.HEADER).setOaId(Constant.OA_PETER_SERKIN).setAssetType(TPublisherAssetType.EVENT.getValue()).setAssetStatus(TEventStatus.HIDE.getValue()).setStart(0).setCount(100)));
 //        System.out.println(SERVICE_CLIENT.putAsset(new TPutAssetReq(Constant.HEADER).setOaId(Constant.OA_PETER_SERKIN).setAssetType(TPublisherAssetType.EVENT.getValue()).setAssetStatus(TEventStatus.SHOW.getValue()).setAssetId(8888).setScore(8181)));
 //        System.out.println(SERVICE_CLIENT.removeAsset(new TRemoveAssetReq(Constant.HEADER).setOaId(Constant.OA_PETER_SERKIN).setAssetType(TPublisherAssetType.EVENT.getValue()).setAssetStatus(TEventStatus.SHOW.getValue()).setAssetId(8888)));
