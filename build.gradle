@@ -3,64 +3,23 @@ plugins {
     id 'maven-publish'
 }
 
-group 'com.vng.zing.media.mp3'
-version '1.0.0.1'
-def thriftJarVersion = '0.0.0.7'
-def thriftJarName = 'zmp3-tpl-thrift'
+project.ext.appGroup = 'com.vng.zing.media'
+project.ext.appJarVersion = '1.0.0.1'
+project.ext.thriftJarVersion = '1.0.0.1'
+project.ext.thriftJarName = 'zm-service-comment'
+project.ext.thriftJarPackage = 'com/vng/zing/media/service/comment/thrift'
 
 dependencies {
-    compile project("ZMP3MWEngine")
+    compile project("ZMP3Engine")
     compile "com.vng.zing.media.mp3:zmp3-mw-feed:0.9.0.0"
+    compile "com.vng.zing.media.mp3:zmp3-service-podcast:1.0.0.6"
+    compile "com.vng.zing.media:zm-service-livestream:0.0.0.2"
+    compile "com.vng.zing.media:zm-service-live-station:1.0.0.2"
+    compile "com.vng.zing.media:zm-service-comment:1.0.0.2"
+    compile "com.vng.zing.media:zm-mw-comment:0.9.0.0"
     // default
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }
 
-repositories {
-    mavenCentral()
-    maven {
-        url "https://nexus.infra.zalo.services/repository/zmp3-maven-private"
-        credentials {
-            username "zmp3-rw"
-            password "HwAdcN5L3BD4tqaaw"
-        }
-    }
-}
-
-test {
-    useJUnitPlatform()
-}
-
-// Migrate from Netbeans (Ant) project
-sourceSets{
-    main.java.srcDirs "src"
-    test.java.srcDir "test"
-}
-
-// build app task
-task _clean(type: Delete) {
-    delete "dist"
-}
-
-jar {
-//    exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.MF'
-    manifest {
-        attributes 'Main-Class': 'com.vng.zing.media.mp3.test.kit.app.MainApp',
-                'Class-Path': configurations.runtimeClasspath.files.collect {
-                    "lib/$it.name"
-                }.join(' ')
-    }
-}
-
-task _copyJar(type: Copy) {
-    from jar
-    into 'dist'
-}
-
-task _copyDependencies(type: Copy) {
-    from configurations.default
-    into 'dist/lib'
-}
-
-task buildApp(dependsOn: [_clean, jar, _copyJar, _copyDependencies])
-// end build app task
+apply from: '../../zmp3-new/common/ZMP3TplGradle/zmp3.gradle'

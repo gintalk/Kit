@@ -33,7 +33,7 @@ public class OAMWTest extends BaseTest {
     
     private static void _testOA(){
         TZMP3OA oa = CLIENT.getZMP3OA(ZMA).value;
-        System.out.println(ThriftUtils.getStructAsString(oa));
+        System.out.println(ThriftUtils.INST.toString(oa));
         
 //        oa.setType(TZMP3OAType.BRAND.getValue());
 //        System.out.println(CLIENT.putZMP3OA(oa));

@@ -30,7 +30,7 @@ public class EModelTest extends BaseTest {
 //        ));
         
         for(TRadioHomeSection section: rhsModel.getLayout().sections){
-            System.out.println(ThriftUtils.getStructAsString(section));
+            System.out.println(ThriftUtils.INST.toString(section));
         }
     }
 }

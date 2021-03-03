@@ -7,19 +7,14 @@ package com.vng.zing.media.mp3.test.kit.test.service;
 import java.util.List;
 import java.util.Map;
 
+
 import com.vng.zing.common.ZErrorHelper;
-import com.vng.zing.media.comment.thrift.TComment;
-import com.vng.zing.media.comment.thrift.TCommentApp;
-import com.vng.zing.media.comment.thrift.TCommentGetSliceReq;
-import com.vng.zing.media.comment.thrift.TCommentResult;
-import com.vng.zing.media.comment.thrift.TGetType;
-import com.vng.zing.media.comment.thrift.TListCommentResult;
-import com.vng.zing.media.comment.thrift.TSortBy;
-import com.vng.zing.media.comment.thrift.TVoteResult;
+import com.vng.zing.media.comment.thrift.*;
 import com.vng.zing.media.comment.thrift.client.ZMediaCommentMWClient;
 import com.vng.zing.media.common.thrift.TI32ListResult;
 import com.vng.zing.media.common.thrift.TI32Result;
 import com.vng.zing.media.common.utils.CommonUtils;
+import com.vng.zing.media.common.utils.ThriftUtils;
 
 /**
  *
@@ -33,12 +28,10 @@ public class CommentMWTest extends BaseTest {
     public static void main(String[] args) {
         ZMediaCommentMWClient client = defaultClient;
         TCommentApp app = TCommentApp.ZINGMP3_SONG;
-        int objectId = 1089920256;
+        int objectId = 1093623782;
 
-        
-//        System.out.println(ThriftUtils.getStructAsString(com.vng.zing.media.mp3.test.kit.test.client.fullGet(app, 18581751).comment));
-//        _printAll(com.vng.zing.media.mp3.test.kit.test.client.getSliceReplies(new TCommentGetSliceReq().setApp(app).setStart(0).setCount(200).setSortBy(TSortBy.TOP).setGetType(TGetType.ALL).setCommentId(18302277)));
-        _printAll(client.getSlice(new TCommentGetSliceReq().setApp(app).setCount(20).setStart(0).setSortBy(TSortBy.NEW).setGetType(TGetType.N_DAYS).setObjectId(objectId)));
+        System.out.println(ThriftUtils.INST.toString(client.get(app, 18847112).comment));
+//        _printAll(client.getSlice(new TCommentGetSliceReq().setApp(app).setCount(200).setStart(0).setSortBy(TSortBy.NEW).setGetType(TGetType.N_DAYS).setObjectId(objectId)));
 //        System.out.println(com.vng.zing.media.mp3.test.kit.test.client.multiGetCommentCount(new TCommentMultiGetReq().setApp(app).setGetType(TGetType.ALL).setObjectIds(Arrays.asList(2,3))));
 //        for(int i=0; i<10000; i++){
 //            int size = com.vng.zing.media.mp3.test.kit.test.client.getSlice(new TCommentGetSliceReq().setApp(app).setCount(200).setStart(0).setSortBy(TSortBy.NEW).setGetType(TGetType.N_DAYS).setObjectId(objectId)).comments.size();
@@ -62,7 +55,7 @@ public class CommentMWTest extends BaseTest {
 //                    .setUserId(WhiteListUserUtils.NAMNH16);
 //
 //            System.out.println(com.vng.zing.media.mp3.test.kit.test.client.add(new TCommentAddReq().setComment(comment).setIpCode(84)));
-//            
+//
 //            ZUtil.sleep(1000);
 //        }
     }
@@ -163,9 +156,5 @@ public class CommentMWTest extends BaseTest {
         }
 
         System.out.println(CommonUtils.buildTabLog("success", result));
-    }
-
-    protected static void _printAll(int errorCode) {
-        _printAll(new TI32Result(errorCode));
     }
 }

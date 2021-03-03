@@ -5,3 +5,7 @@ nbproject/private/
 /thrift/jz-mw-thrift/build/
 
 thrift/jar/
+
+.gradle/
+
+.idea/
