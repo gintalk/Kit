@@ -16,7 +16,7 @@ dependencies {
     compile "com.vng.zing.media:zm-service-livestream:0.0.0.2"
     compile "com.vng.zing.media:zm-service-live-station:1.0.0.2"
     compile "com.vng.zing.media:zm-service-comment:1.0.0.2"
-    compile "com.vng.zing.media:zm-mw-comment:0.9.0.0"
+    compile "com.vng.zing.media:zm-mw-comment:2.0.1.0"
     // default
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'

@@ -27,18 +27,21 @@ import java.util.Map;
 
 public class LivestreamServiceTest extends BaseTest {
 
-    private static final TZMediaLiveStreamServiceClient LIVESTREAM_SERVICE = TZMediaLiveStreamServiceClient.INST;
+//    private static final TZMediaLiveStreamServiceClient LIVESTREAM_SERVICE = TZMediaLiveStreamServiceClient.INST;
     private static final TZMediaLiveStationServiceClient LIVE_STATION_SERVICE = TZMediaLiveStationServiceClient.INST;
 
     public static void main(String[] args) {
 //        massReject();
-        System.out.println(ThriftUtils.INST.toString(LIVE_STATION_SERVICE.getLiveProgram(new TGetLiveProgramReq().setId(14905))));
-//        LIVESTREAM_SERVICE.getStreamInfo(new TGetStreamInfoReq().setAppId(1).setStreamId(10634));
+//        System.out.println(ThriftUtils.INST.toString(LIVE_STATION_SERVICE.getLiveProgram(new TGetLiveProgramReq().setId(10443))));
+//        ThriftUtils.prettyPrint(LIVESTREAM_SERVICE.getPinMessage(new TGetPinMessageReq().setAppId(1).setMsgId(10932)).value);
+//        ThriftUtils.prettyPrint(LIVESTREAM_SERVICE.getStreamInfo(new TGetStreamInfoReq().setAppId(1).setStreamId(10634)).value);
 //        System.out.println(ThriftUtils.INST.toString(LIVESTREAM_SERVICE.getLiveStream(new TGetLiveStreamReq().setAppId(1).setStreamId(10634)).value));
 //        LIVESTREAM_SERVICE.setBlackListRequestMedia(new TSetBlackListRequestMediaReq().setLivestreamId(10931).setMediaIds(new ArrayList<>()));
 //        System.out.println(LIVESTREAM_SERVICE.getWhiteListRequestMedia(new TGetWhiteListRequestMediaReq().setLivestreamId(10931)));
 //        System.out.println(LIVESTREAM_SERVICE.putRequestMedia(new TPutRequestMediaReq().setRequestMedia(new TLiveStreamRequestMedia().setLivestreamId(10931).setMediaId(1078196370).setUserId(NAMNH16_ZMP3_ID))));
-//        System.out.println(ThriftUtils.INST.toString(LIVE_STATION_SERVICE.getTLiveProgram(new TGetTLiveProgramReq().setId(14955)).value));
+        ThriftUtils.prettyPrint(LIVE_STATION_SERVICE.getTLiveProgram(new TGetTLiveProgramReq().setId(14814)).value);
+
+        System.exit(0);
     }
 
     private static void massReject() {
@@ -55,12 +58,12 @@ public class LivestreamServiceTest extends BaseTest {
 //        Map<Integer, TLiveStream> livestreams = rs.mapValues;
 //        System.out.println(livestreams);
 
-        TMGetLiveStreamRs rs = LIVESTREAM_SERVICE.mGetLiveStream(new TMGetLiveStreamReq()
-                .setAppId(TLiveStreamApp.ZMP3.getValue())
-                .setStreamIds(Arrays.asList(10634, 10633))
-                .setAsList(true)
-        );
-        List<TLiveStream> livestreams = rs.listValues;
-        System.out.println(livestreams);
+//        TMGetLiveStreamRs rs = LIVESTREAM_SERVICE.mGetLiveStream(new TMGetLiveStreamReq()
+//                .setAppId(TLiveStreamApp.ZMP3.getValue())
+//                .setStreamIds(Arrays.asList(10634, 10633))
+//                .setAsList(true)
+//        );
+//        List<TLiveStream> livestreams = rs.listValues;
+//        System.out.println(livestreams);
     }
 }

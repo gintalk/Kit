@@ -4,22 +4,26 @@
  */
 package com.vng.zing.media.mp3.test.kit.test.service;
 
+import com.vng.zing.media.mp3.common.client.ClientPoolManager;
+import com.vng.zing.media.mp3.common.thrift.TMP3ItemType;
+import com.vng.zing.media.mp3.common.thrift.TMP3ListType;
+import com.vng.zing.media.mp3.common.thrift.core.TListInfo;
+import com.vng.zing.media.mp3.common.utils.MP3Utils;
+import com.vng.zing.media.mp3.mw.core.thrift.client.TZMP3CoreMWClient;
 import com.vng.zing.media.mp3.mw.thrift.client.TZingMP3MWClient;
 
 /**
- *
  * @author namnh16
  */
 public class ZingMP3MWTest extends BaseTest {
 
-    private static final TZingMP3MWClient CLI = new TZingMP3MWClient("main");
+    private static final TZingMP3MWClient MP3_MW = ClientPoolManager.getZingMP3MWClient();
+    private static final TZMP3CoreMWClient CORE_MW = TZMP3CoreMWClient.INST;
 
     public static void main(String[] args) {
-//        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-//        JsonParser jp = new JsonParser();
-//        JsonElement je = jp.parse(CLI.getStringConfig(84, StringConfigKeyUtils.getRadioHomeSectionLayoutConfigKey()).value);
-//        System.out.println(gson.toJson(je));
-//        System.out.println(ThriftUtils.getStructAsString(CLI.getStringConfig(84, TStringConfigKey.RADIO_PROMOTE_CHANNEL.name())));
-//        System.out.println(ThriftUtils.getStructAsString(CLI.getSliceIds(new TListInfo().setCountryCode(84).setItemType(TMP3ItemType.EVENT.getValue()).setType(TMP3ListType.LIST_BY_CUSTOM.getValue()).setId(TMP3CustomListID.EVENT_PROMOTE.getValue()), 0, 200)));
+        System.out.println(MP3_MW.getSliceIds(MP3Utils.buildListInfo(1073741824, TMP3ListType.LIST_BY_PLAYLIST, TMP3ItemType.MEDIA, 84), 0,0).values);
+        System.out.println(CORE_MW.getSliceIds(new TListInfo().setId(1073741824).setType(TMP3ListType.LIST_BY_PLAYLIST.getValue()).setItemType(TMP3ItemType.MEDIA.getValue()), 0, 0).values);
+
+        System.exit(0);
     }
 }

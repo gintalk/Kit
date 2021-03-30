@@ -11,6 +11,7 @@ import com.vng.zing.media.common.thrift.comment.*;
 import com.vng.zing.media.common.utils.CommonUtils;
 import com.vng.zing.media.common.utils.DateTimeUtils;
 import com.vng.zing.media.common.utils.ThriftUtils;
+import com.vng.zing.media.common.utils.WhiteListUserUtils;
 import com.vng.zing.media.service.comment.thrift.client.TZMediaCommentServiceClient;
 import com.vng.zing.media.service.comment.thrift.req.*;
 import com.vng.zing.media.service.comment.thrift.res.*;
@@ -45,17 +46,17 @@ public class CommentServiceTest extends BaseTest {
     }
 
     private static void _getComment() {
-        print(DEF_COMMENT_SERVICE.getComment(new TGetCommentReq()
-                .setAppId(1)
-                .setCommentId(18846878)
-                .setIsFull(false)
+        print(FEED_COMMENT_SERVICE.getComment(new TGetCommentReq()
+                .setAppId(10)
+                .setCommentId(18920191)
+                .setIsFull(true)
         ));
     }
 
     private static void _mgetComment() {
         print(DEF_COMMENT_SERVICE.mgetComment(new TMGetCommentReq()
                 .setAppId(1)
-                .setCommentIds(Arrays.asList(18843388, 18842730))
+                .setCommentIds(Arrays.asList(17831517, 17830887, 17829469, 17481687, 18803918))
                 .setAsList(true)
                 .setIsFull(true)
         ));
@@ -63,19 +64,19 @@ public class CommentServiceTest extends BaseTest {
 
     private static void _getCommentSlice() {
         print(DEF_COMMENT_SERVICE.getCommentSlice(new TGetCommentSliceReq()
-                .setAppId(1)
-                .setObjectId(1092446906)
-                .setStart(100)
-                .setCount(20)
-                .setGetType(1)
-                .setSortBy(1)
+                .setAppId(TCommentApp.ZMP3_SONG.getValue())
+                .setObjectId(1095011640)
+                .setStart(0)
+                .setCount(200)
+                .setGetType(TCommentGetType.N_DAYS.getValue())
+                .setSortBy(TCommentSortBy.NEW.getValue())
         ));
     }
 
     private static void _getReplySlice() {
         print(DEF_COMMENT_SERVICE.getReplySlice(new TGetReplySliceReq()
-                .setAppId(9)
-                .setParentId(18843608)
+                .setAppId(1)
+                .setParentId(1615475881)
                 .setStart(0)
                 .setCount(200)
                 .setGetType(TCommentGetType.N_DAYS.getValue())
@@ -85,8 +86,8 @@ public class CommentServiceTest extends BaseTest {
 
     private static void _getCommentCount() {
         print(DEF_COMMENT_SERVICE.getCommentCount(new TGetCommentCountReq()
-                .setAppId(9)
-                .setObjectId(100)
+                .setAppId(1)
+                .setObjectId(1094806157)
                 .setGetType(TCommentGetType.N_DAYS.getValue())
         ));
     }
@@ -117,23 +118,24 @@ public class CommentServiceTest extends BaseTest {
 
     private static void _addComment() {
         TComment comment = new TComment()
-                .setUserId(1)
-                .setAppId(TCommentApp.ZMP3_SONG.getValue())
-                .setContent("Test foreign country code")
-                .setObjectId(1)
+                .setUserId(WhiteListUserUtils.LUONGPC)
+                .setAppId(TCommentApp.ZMEDIA_TEST.getValue())
+                .setContent("Test user remove")
+                .setObjectId(101)
                 .setTime(DateTimeUtils.currentTimeSeconds());
 
         print(DEF_COMMENT_SERVICE.addComment(new TAddCommentReq()
-                .setCountryCode(0)
+                .setCountryCode(84)
+                .setDelegatedId(1033003572)
                 .setValue(comment)
         ));
     }
 
     private static void _removeComment() {
         print(DEF_COMMENT_SERVICE.removeComment(new TRemoveCommentReq()
-                .setAppId(9)
-                .setUserId(108)
-                .setCommentId(18843632)
+                .setAppId(1)
+                .setUserId(1013921657)
+                .setCommentId(18889770)
         ));
     }
 
@@ -188,11 +190,12 @@ public class CommentServiceTest extends BaseTest {
     private static void print(TGetCommentRes res) {
         System.out.println("Error " + res.error);
         System.out.println("===== Comment =====");
-        System.out.println(ThriftUtils.INST.toString(res.comment));
+        System.out.println(res.comment.time);
+        ThriftUtils.prettyPrint(res.comment);
         if (!CommonUtils.isEmpty(res.replies)) {
             System.out.println("===== Reply =====");
             for (TComment reply : res.replies) {
-                System.out.println(ThriftUtils.INST.toString(reply));
+                ThriftUtils.prettyPrint(reply);
             }
         }
     }
@@ -201,14 +204,14 @@ public class CommentServiceTest extends BaseTest {
         System.out.println("Error " + res.error);
         if (!CommonUtils.isEmpty(res.dataList)) {
             for (TComment comment : res.dataList) {
-                System.out.println(ThriftUtils.INST.toString(comment));
+                ThriftUtils.prettyPrint(comment);
             }
             return;
         }
 
         if (!CommonUtils.isEmpty(res.dataMap)) {
             for (Map.Entry<Integer, TComment> entry : res.dataMap.entrySet()) {
-                System.out.println(ThriftUtils.INST.toString(entry.getValue()));
+                ThriftUtils.prettyPrint(entry.getValue());
             }
         }
     }
@@ -223,12 +226,12 @@ public class CommentServiceTest extends BaseTest {
         System.out.println("Actual Total: Parent " + res.values.size() + ". Parent+Reply " + actualTotal);
         for (TComment comment : res.values) {
             System.out.println("===== Comment =====");
-            System.out.println(ThriftUtils.INST.toString(comment));
+            ThriftUtils.prettyPrint(comment);
             List<TComment> replies = res.replyMap.get(comment.commentId);
             if (!CommonUtils.isEmpty(replies)) {
                 System.out.println("========== Reply ==========");
                 for (TComment reply : replies) {
-                    System.out.println(ThriftUtils.INST.toString(reply));
+                    ThriftUtils.prettyPrint(reply);
                 }
             }
         }
@@ -239,7 +242,7 @@ public class CommentServiceTest extends BaseTest {
         System.out.println("Total " + res.total);
         System.out.println("Actual Total " + res.values.size());
         for (TComment comment : res.values) {
-            System.out.println(ThriftUtils.INST.toString(comment));
+            ThriftUtils.prettyPrint(comment);
         }
     }
 

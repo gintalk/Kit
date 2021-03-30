@@ -23,8 +23,8 @@ public class PodcastServiceTest extends BaseTest {
 
     public static void main(String[] args) {
 //        _testEpisode();
-//        _testProgram();
-        _testCategory();
+        _testProgram();
+//        _testCategory();
     }
 
     private static void _testEpisode() {
@@ -34,26 +34,25 @@ public class PodcastServiceTest extends BaseTest {
 //        episode.setDescription("");
 //        System.out.println(SERVICE.putEpisode(new TPutEpisodeReq().setEpisode(episode)));
 
-        List<TPodcastEpisode> episodes = SERVICE.mgetEpisode(new TMGetEpisodeReq().setEpisodeIds(Arrays.asList(1078188998, 1078189022)).setAsList(true)).dataList;
-        for (TPodcastEpisode ep : episodes) {
-            System.out.println(ThriftUtils.INST.toString(ep));
+//        List<TPodcastEpisode> episodes = SERVICE.mgetEpisode(new TMGetEpisodeReq().setEpisodeIds(Arrays.asList(1078188998, 1078189022)).setAsList(true)).dataList;
+//        for (TPodcastEpisode ep : episodes) {
+//            ThriftUtils.prettyPrint(ep);
 //            ep.setDescription("");
-        }
+//        }
 
 //        System.out.println(SERVICE.mputEpisode(new TMPutEpisodeReq().setEpisodes(episodes)));
     }
 
     private static void _testProgram(){
-//        TPodcastProgram program = SERVICE.getProgram(new TGetProgramReq().setProgramId(1078188986)).program;
-//        System.out.println(ThriftUtils.getStructAsString(program));
+//        TPodcastProgram program = SERVICE.getProgram(new TGetProgramReq().setProgramId(1427610826)).program;
+//        ThriftUtils.prettyPrint(program);
 
 //        program.setTitle("Breakfast Xone");
 //        System.out.println(SERVICE.putProgram(new TPutProgramReq().setProgram(program)));
 
-        List<TPodcastProgram> programs = SERVICE.mgetProgram(new TMGetProgramReq().setProgramIds(Arrays.asList(1078188986, 1094011204)).setAsList(true)).dataList;
+        List<TPodcastProgram> programs = SERVICE.mgetProgram(new TMGetProgramReq().setProgramIds(Arrays.asList(1427610882, 1427610873, 1427610865, 1427610837, 1427610826, 1427610818, 1427610803, 1383532447, 1383532433)).setAsList(true)).dataList;
         for(TPodcastProgram pro: programs){
-            System.out.println(ThriftUtils.INST.toString(pro));
-//            pro.setTitle("Lorem Ipsum");
+            ThriftUtils.prettyPrint(pro);
         }
 
 //        System.out.println(SERVICE.mputProgram(new TMPutProgramReq().setPrograms(programs)));
@@ -61,7 +60,7 @@ public class PodcastServiceTest extends BaseTest {
 
     private static void _testCategory(){
         TPodcastCategory category = SERVICE.getCategory(new TGetCateforyReq().setCategoryId(12219)).category;
-        System.out.println(ThriftUtils.INST.toString(category));
+        ThriftUtils.prettyPrint(category);
 
 //        category.setName("Thể loại");
 //        System.out.println(SERVICE.putCategory(new TPutCategoryReq().setCategory(category)));

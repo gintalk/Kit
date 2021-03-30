@@ -5,8 +5,10 @@
 package com.vng.zing.media.mp3.test.kit.test.service;
 
 import com.vng.zing.media.common.utils.ThriftUtils;
+import com.vng.zing.media.mp3.common.thrift.TZCRealtimeType;
 import com.vng.zing.media.mp3.common.thrift.api.TRadioHomeSection;
 import com.vng.zing.media.mp3.engine.model.ERadioHomeSectionModel;
+import com.vng.zing.media.mp3.engine.model.EZingChartModel;
 
 /**
  *
@@ -29,8 +31,8 @@ public class EModelTest extends BaseTest {
 //                )
 //        ));
         
-        for(TRadioHomeSection section: rhsModel.getLayout().sections){
-            System.out.println(ThriftUtils.INST.toString(section));
-        }
+//        for(TRadioHomeSection section: rhsModel.getLayout().sections){
+//            ThriftUtils.prettyPrint(section);
+//        }
     }
 }
