@@ -14,7 +14,7 @@ import com.vng.zing.common.ZUtil;
  *
  * @author namnh16
  */
-public class ConcurrencyTest extends BaseTest{
+public class ConcurrencyTest extends Test {
     
     private static final ExecutorService EXECUTOR = Executors.newSingleThreadExecutor();
     

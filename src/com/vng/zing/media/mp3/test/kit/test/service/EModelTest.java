@@ -4,35 +4,22 @@
  */
 package com.vng.zing.media.mp3.test.kit.test.service;
 
-import com.vng.zing.media.common.utils.ThriftUtils;
-import com.vng.zing.media.mp3.common.thrift.TZCRealtimeType;
-import com.vng.zing.media.mp3.common.thrift.api.TRadioHomeSection;
-import com.vng.zing.media.mp3.engine.model.ERadioHomeSectionModel;
-import com.vng.zing.media.mp3.engine.model.EZingChartModel;
+import com.vng.zing.media.common.thrift.THeaderReq;
+import com.vng.zing.media.engine.entity.pagination.IEPaging;
+import com.vng.zing.media.mp3.common.thrift.TUserListType;
+import com.vng.zing.media.mp3.common.thrift.podcast.TPodcastEpisode;
+import com.vng.zing.media.mp3.engine.model.EPodcastEpisodeModel;
+import com.vng.zing.media.mp3.engine.model.EPodcastProgramModel;
+import com.vng.zing.media.mp3.engine.model.EUserAssetModel;
+
+import java.util.List;
 
 /**
- *
  * @author namnh16
  */
-public class EModelTest extends BaseTest {
-    
-    private static final ERadioHomeSectionModel rhsModel = ERadioHomeSectionModel.INST;
+public class EModelTest extends Test {
 
     public static void main(String[] args) {
-//        System.out.println(rhsModel.setLayout(
-//                new TRadioHomeSectionLayout(
-//                        1, 
-//                        Arrays.asList(
-//                                new TRadioHomeSection(TRadioHomeSectionType.LIVE, false, true),
-//                                new TRadioHomeSection(TRadioHomeSectionType.BANNERS, false, false),
-//                                new TRadioHomeSection(TRadioHomeSectionType.BY_GENRE, true, false),
-//                                new TRadioHomeSection(TRadioHomeSectionType.BY_ARTIST, false, true)
-//                        )
-//                )
-//        ));
-        
-//        for(TRadioHomeSection section: rhsModel.getLayout().sections){
-//            ThriftUtils.prettyPrint(section);
-//        }
+        System.exit(0);
     }
 }

@@ -7,20 +7,52 @@ package com.vng.zing.media.mp3.test.kit.test.service;
  * @author namnh16 on 24/02/2021
  */
 
-import com.vng.zing.media.common.thrift.comment.*;
+import com.vng.zing.media.common.thrift.comment.TComment;
+import com.vng.zing.media.common.thrift.comment.TCommentApp;
+import com.vng.zing.media.common.thrift.comment.TCommentGetType;
+import com.vng.zing.media.common.thrift.comment.TCommentReactionType;
+import com.vng.zing.media.common.thrift.comment.TCommentSortBy;
+import com.vng.zing.media.common.thrift.comment.TCommentStatus;
 import com.vng.zing.media.common.utils.CommonUtils;
 import com.vng.zing.media.common.utils.DateTimeUtils;
 import com.vng.zing.media.common.utils.ThriftUtils;
-import com.vng.zing.media.common.utils.WhiteListUserUtils;
+import com.vng.zing.media.mp3.engine.model.ECommentModel;
 import com.vng.zing.media.service.comment.thrift.client.TZMediaCommentServiceClient;
-import com.vng.zing.media.service.comment.thrift.req.*;
-import com.vng.zing.media.service.comment.thrift.res.*;
+import com.vng.zing.media.service.comment.thrift.req.TAddCommentReq;
+import com.vng.zing.media.service.comment.thrift.req.TApproveCommentReq;
+import com.vng.zing.media.service.comment.thrift.req.TGetCommentCountReq;
+import com.vng.zing.media.service.comment.thrift.req.TGetCommentReactionReq;
+import com.vng.zing.media.service.comment.thrift.req.TGetCommentReq;
+import com.vng.zing.media.service.comment.thrift.req.TGetCommentSliceReq;
+import com.vng.zing.media.service.comment.thrift.req.TGetReplyCountReq;
+import com.vng.zing.media.service.comment.thrift.req.TGetReplySliceReq;
+import com.vng.zing.media.service.comment.thrift.req.TMGetCommentCountReq;
+import com.vng.zing.media.service.comment.thrift.req.TMGetCommentReq;
+import com.vng.zing.media.service.comment.thrift.req.TMRejectCommentReq;
+import com.vng.zing.media.service.comment.thrift.req.TReactCommentReq;
+import com.vng.zing.media.service.comment.thrift.req.TRejectCommentReq;
+import com.vng.zing.media.service.comment.thrift.req.TRemoveCommentReq;
+import com.vng.zing.media.service.comment.thrift.res.TAddCommentRes;
+import com.vng.zing.media.service.comment.thrift.res.TApproveCommentRes;
+import com.vng.zing.media.service.comment.thrift.res.TGetCommentCountRes;
+import com.vng.zing.media.service.comment.thrift.res.TGetCommentReactionRes;
+import com.vng.zing.media.service.comment.thrift.res.TGetCommentRes;
+import com.vng.zing.media.service.comment.thrift.res.TGetCommentSliceRes;
+import com.vng.zing.media.service.comment.thrift.res.TGetReplyCountRes;
+import com.vng.zing.media.service.comment.thrift.res.TGetReplySliceRes;
+import com.vng.zing.media.service.comment.thrift.res.TMGetCommentCountRes;
+import com.vng.zing.media.service.comment.thrift.res.TMGetCommentRes;
+import com.vng.zing.media.service.comment.thrift.res.TMRejectCommentRes;
+import com.vng.zing.media.service.comment.thrift.res.TMRemoveCommentRes;
+import com.vng.zing.media.service.comment.thrift.res.TReactCommentRes;
+import com.vng.zing.media.service.comment.thrift.res.TRejectCommentRes;
+import com.vng.zing.media.service.comment.thrift.res.TRemoveCommentRes;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-public class CommentServiceTest extends BaseTest {
+public class CommentServiceTest extends Test {
 
     private static final TZMediaCommentServiceClient DEF_COMMENT_SERVICE = TZMediaCommentServiceClient.DEFAULT_INST;
     private static final TZMediaCommentServiceClient FEED_COMMENT_SERVICE = TZMediaCommentServiceClient.FEED_INST;
@@ -46,11 +78,11 @@ public class CommentServiceTest extends BaseTest {
     }
 
     private static void _getComment() {
-        print(FEED_COMMENT_SERVICE.getComment(new TGetCommentReq()
-                .setAppId(10)
-                .setCommentId(18920191)
+        ThriftUtils.prettyPrint(DEF_COMMENT_SERVICE.getComment(new TGetCommentReq()
+                .setAppId(TCommentApp.ZMP3_SONG.getValue())
+                .setCommentId(20592017)
                 .setIsFull(true)
-        ));
+        ).comment);
     }
 
     private static void _mgetComment() {
@@ -64,10 +96,10 @@ public class CommentServiceTest extends BaseTest {
 
     private static void _getCommentSlice() {
         print(DEF_COMMENT_SERVICE.getCommentSlice(new TGetCommentSliceReq()
-                .setAppId(TCommentApp.ZMP3_SONG.getValue())
-                .setObjectId(1095011640)
+                .setAppId(TCommentApp.ZMP3_PODCAST_EPISODE.getValue())
+                .setObjectId(1124595032)
                 .setStart(0)
-                .setCount(200)
+                .setCount(20)
                 .setGetType(TCommentGetType.N_DAYS.getValue())
                 .setSortBy(TCommentSortBy.NEW.getValue())
         ));
@@ -76,7 +108,7 @@ public class CommentServiceTest extends BaseTest {
     private static void _getReplySlice() {
         print(DEF_COMMENT_SERVICE.getReplySlice(new TGetReplySliceReq()
                 .setAppId(1)
-                .setParentId(1615475881)
+                .setParentId(1074764608)
                 .setStart(0)
                 .setCount(200)
                 .setGetType(TCommentGetType.N_DAYS.getValue())
@@ -86,8 +118,8 @@ public class CommentServiceTest extends BaseTest {
 
     private static void _getCommentCount() {
         print(DEF_COMMENT_SERVICE.getCommentCount(new TGetCommentCountReq()
-                .setAppId(1)
-                .setObjectId(1094806157)
+                .setAppId(12)
+                .setObjectId(1127256743)
                 .setGetType(TCommentGetType.N_DAYS.getValue())
         ));
     }
@@ -118,24 +150,23 @@ public class CommentServiceTest extends BaseTest {
 
     private static void _addComment() {
         TComment comment = new TComment()
-                .setUserId(WhiteListUserUtils.LUONGPC)
+                .setUserId(1063651908)
                 .setAppId(TCommentApp.ZMEDIA_TEST.getValue())
-                .setContent("Test user remove")
-                .setObjectId(101)
+                .setContent("nghe hoài ko chán hihi")
+                .setObjectId(1)
                 .setTime(DateTimeUtils.currentTimeSeconds());
 
         print(DEF_COMMENT_SERVICE.addComment(new TAddCommentReq()
                 .setCountryCode(84)
-                .setDelegatedId(1033003572)
                 .setValue(comment)
         ));
     }
 
     private static void _removeComment() {
         print(DEF_COMMENT_SERVICE.removeComment(new TRemoveCommentReq()
-                .setAppId(1)
-                .setUserId(1013921657)
-                .setCommentId(18889770)
+                .setAppId(TCommentApp.ZMP3_SONG.getValue())
+                .setUserId(1060037713)
+                .setCommentId(19890605)
         ));
     }
 
@@ -144,9 +175,9 @@ public class CommentServiceTest extends BaseTest {
     }
 
     private static void _approveComment() {
-        for (int commentId : Arrays.asList(18843882)) {
-            print(DEF_COMMENT_SERVICE.approveComment(new TApproveCommentReq()
-                    .setAppId(9)
+        for (int commentId : Arrays.asList(9021712, 9021711)) {
+            print(FEED_COMMENT_SERVICE.approveComment(new TApproveCommentReq()
+                    .setAppId(TCommentApp.ZMP3_NEWS_FEED.getValue())
                     .setCommentId(commentId)
             ));
         }
@@ -158,8 +189,8 @@ public class CommentServiceTest extends BaseTest {
 
     private static void _rejectComment() {
         print(DEF_COMMENT_SERVICE.rejectComment(new TRejectCommentReq()
-                .setAppId(9)
-                .setCommentId(18843706)
+                .setAppId(1)
+                .setCommentId(20399481)
         ));
     }
 
