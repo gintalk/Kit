@@ -1,32 +1,63 @@
 plugins {
     id 'java'
-    id 'maven-publish'
+    id 'com.vng.zing.media.gradle.plug' version '1.0.1'
 }
 
-project.ext.appGroup = 'com.vng.zing.media'
-project.ext.appJarVersion = '1.0.0.1'
-project.ext.thriftJarVersion = '1.0.0.1'
-project.ext.thriftJarName = 'zm-service-comment'
-project.ext.thriftJarPackage = 'com/vng/zing/media/service/comment/thrift'
+conf {
+    appVersion = '1.0.0'
+    jarGroup = ''
+    jarName = ''
+    jarVersion = ''
+    jarPackage = ''
+    jarConf = ''
+}
 
 dependencies {
-    implementation project("ZMP3Engine")
-    implementation "com.rometools:rome:1.18.0"
-    implementation 'com.google.api-client:google-api-client:1.33.4'
-    implementation 'com.google.oauth-client:google-oauth-client-jetty:1.33.1'
-    implementation 'com.google.apis:google-api-services-youtube:v3-rev20220320-1.32.1'
-    implementation 'org.apache.commons:commons-lang3:3.12.0'
-    implementation 'org.scala-lang:scala-library:2.13.8'
-    implementation 'com.google.guava:guava:31.1-jre'
-    implementation 'nz.ac.waikato.cms.weka:weka-stable:3.8.6'
-    implementation 'org.apache.spark:spark-sql_2.13:3.2.1'
-    implementation 'org.apache.spark:spark-core_2.13:3.2.1'
-    implementation 'org.apache.spark:spark-graphx_2.13:3.2.1'
-    implementation 'org.apache.spark:spark-mllib_2.13:3.2.1'
+    /* --- Libs begin --- */
+    /* ZTM */
+//    implementation 'com.vng.zing.media:ztm-lib-thrift:1.0.7'
+//    implementation 'com.vng.zing.media:ztm-lib-profiler:1.0.1'
+//    implementation 'com.vng.zing.media:ztm-lib-common:1.0.24'
+//    implementation "com.vng.zing.media:ztm-lib-thrift-service:1.0.2"
+//    implementation "com.vng.zing.media:ztm-lib-utils:1.0.6"
+//    implementation "com.vng.zing.media:ztm-lib-nosql:1.0.1"
+//    implementation "com.vng.zing.media:ztm-lib-api:1.0.4"
+//    implementation "com.vng.zing.media:ztm-lib-sql:1.0.9"
+//    implementation "com.vng.zing.media:ztm-lib-cms:1.0.4"
 
-    // default
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    /* ZMP3 */
+//    implementation "com.vng.zing.media.mp3:zmp3-lib-thrift:1.0.5"
+//    implementation "com.vng.zing.media.mp3:zmp3-lib-sql:1.0.1"
+//    implementation "com.vng.zing.media.mp3:zmp3-lib-common:1.0.3"
+
+    /* Core */
+    implementation 'com.vng.zing:jzcommon-corelib:1.2.3.8'
+    implementation 'com.vng.zing:log4j:1.2.17'
+    implementation 'com.vng.zing:slf4j-api:1.7.2'
+    implementation 'com.vng.zing:slf4j-log4j12:1.7.2'
+    implementation 'com.vng.zing:zthrift:0.9.3.8'
+    /* --- Libs end --- */
+
+    /* --- Thrifts begin --- */
+    /* ZTM */
+
+    /* ZMP3 */
+
+    /* Core */
+
+    /* --- Thrifts end --- */
+
+    /* --- Development begins --- */
+    /* ZTM */
+//    implementation project(":ZTMCommonLib")
+//    implementation project(":ZTMThriftLib")
+//    implementation project(":ZTMUtilsLib")
+//    implementation project(":ZTMAPILib")
+//    implementation project(":ZTMCMSLib")
+//    implementation project(":ZTMThriftServiceLib")
+//    implementation project(":ZTMNoSQLLib")
+
+    /* ZMP3 */
+//    implementation project(":ZMP3ThriftLib")
+    /* --- Development ends --- */
 }
-
-apply from: '../../zmp3-new/common/ZMP3TplGradle/zmp3.gradle'

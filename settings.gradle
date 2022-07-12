@@ -1,4 +1,53 @@
+pluginManagement.repositories.maven {
+    url mavenUrl
+    credentials {
+        username mavenRUsername
+        password mavenRPassword
+    }
+}
+
 rootProject.name = rootProject.projectDir.getName()
-include 'ZMediaCommonLib', 'ZMP3Engine'
-project(':ZMP3Engine').projectDir = file('../../zmp3-new/common/ZMP3Engine')
-project(':ZMediaCommonLib').projectDir = file('../../zcommon/common/ZMediaCommonLib')
+
+// Test SQL Lib
+//include 'ZTMSQLLib'
+//project(':ZTMSQLLib').projectDir = file('/zserver/lib/zmt/common/ZTMSQLLib')
+
+// Test API Lib
+//include 'ZTMAPILib'
+//project(':ZTMAPILib').projectDir = file('/zserver/lib/zmt/common/ZTMAPILib')
+
+// Test CMS Lib
+//include 'ZTMCMSLib'
+//project(':ZTMCMSLib').projectDir = file('/zserver/lib/zmt/common/ZTMCMSLib')
+
+// Test Common Lib
+//include 'ZTMCommonLib'
+//project(':ZTMCommonLib').projectDir = file('/zserver/lib/zmt/common/ZTMCommonLib')
+
+// Test Utils Lib
+//include 'ZTMUtilsLib'
+//project(':ZTMUtilsLib').projectDir = file('/zserver/lib/zmt/common/ZTMUtilsLib')
+
+// Test Packed Lib
+//include 'ZTMPackedLib'
+//project(':ZTMPackedLib').projectDir = file('/zserver/lib/zmt/common/ZTMPackedLib')
+
+// Test Thrift Lib
+//include 'ZTMThriftLib'
+//project(':ZTMThriftLib').projectDir = file('/zserver/lib/zmt/common/ZTMThriftLib')
+
+// Test Thrift Service Lib
+//include 'ZTMThriftServiceLib'
+//project(':ZTMThriftServiceLib').projectDir = file('/zserver/lib/zmt/common/ZTMThriftServiceLib')
+
+// Test NoSQL Lib
+//include 'ZTMNoSQLLib'
+//project(':ZTMNoSQLLib').projectDir = file('/zserver/lib/zmt/common/ZTMNoSQLLib')
+
+// Test MP3 Thrift Lib
+//include 'ZMP3ThriftLib'
+//project(':ZMP3ThriftLib').projectDir = file('/zserver/lib/zmp3/common/ZMP3ThriftLib')
+
+// Test MP3 Thrift Lib
+//include 'ZMP3SQLLib'
+//project(':ZMP3SQLLib').projectDir = file('/zserver/lib/zmp3/common/ZMP3SQLLib')
