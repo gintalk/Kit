@@ -10,10 +10,12 @@ import com.vng.zing.media.mp3.common.thrift.oa.core.TZMP3OAHome;
 import com.vng.zing.media.mp3.mw.oa.stats.thrift.client.TZMP3OAStatsMWClient;
 import com.vng.zing.media.mp3.mw.oa.stats.thrift.req.TGetZCPositionStatsMWReq;
 import com.vng.zing.media.mp3.mw.oa.thrift.client.TZMP3OAMWClient;
+import com.vng.zing.media.mp3.mw.oa.thrift.req.TGetOAAccountSliceMWReq;
 import com.vng.zing.media.mp3.mw.oa.thrift.req.TGetOABoxMWReq;
 import com.vng.zing.media.mp3.mw.oa.thrift.req.TGetOAHomeMWReq;
 import com.vng.zing.media.mp3.mw.oa.thrift.req.TMRemoveOABoxMWReq;
 import com.vng.zing.media.mp3.mw.oa.thrift.req.TPutOAHomeMWReq;
+import com.vng.zing.media.mp3.mw.oa.thrift.req.TRemoveOABoxMWReq;
 import com.vng.zing.media.mp3.mw.oa.thrift.req.TRemoveOAMWReq;
 import com.vng.zing.media.mp3.mw.oa.thrift.req.TRemoveOAOwnerMWReq;
 
@@ -32,10 +34,10 @@ public class OAMWTest extends Test {
     private static final TZMP3OAStatsMWClient OA_STATS_MW = TZMP3OAStatsMWClient.INST;
 
     public static void main(String[] args) {
-        _testOA();
+//        _testOA();
 //        _testOABox();
 //        _testOAHome();
-//        _testOAOwner();
+        _testOAOwner();
 //        _testStats();
 
         System.exit(0);
@@ -74,8 +76,8 @@ public class OAMWTest extends Test {
     }
 
     private static void _testOABox() {
-        TZMP3OABox box = OA_MW.getOABox(new TGetOABoxMWReq().setBoxId(14788)).value;
-        ThriftUtils.prettyPrint(box);
+//        TZMP3OABox box = OA_MW.getOABox(new TGetOABoxMWReq().setBoxId(15146)).value;
+//        ThriftUtils.prettyPrint(box);
 
 //        Map<Integer, TZMP3OABox> boxes = CLIENT.multiGetZMP3OABox(Arrays.asList(10807, 10808, 10809)).values;
 //        for(Map.Entry<Integer, TZMP3OABox> entry: boxes.entrySet()){
@@ -83,7 +85,7 @@ public class OAMWTest extends Test {
 //        }
 
 //        ThriftUtils.prettyPrint(OA_MW.removeOABox(new TRemoveOABoxMWReq().setBoxId(14688)));
-//        ThriftUtils.prettyPrint(OA_MW.removeOABox(new TRemoveOABoxMWReq().setBoxId(14695)));
+//        ThriftUtils.prettyPrint(OA_MW.removeOABox(new TRemoveOABoxMWReq().setBoxId(15146)));
     }
 
     private static void _testOAHome() {
@@ -105,19 +107,12 @@ public class OAMWTest extends Test {
     }
 
     private static void _testOAOwner() {
-//        List<TZMP3OAOwner> owners = CLIENT.getZMP3OAOwners(953266, 0, 100).values;
-//        for(TZMP3OAOwner owner: owners){
-//            System.out.println(ThriftUtils.getStructAsString(owner));
-//        }
-
-//        System.out.println(CLIENT.putZMP3OAOwner(new TZMP3OAOwner().setZmp3oaId(RALPH_FELIX).setUserId(1009291998).setRole(1)));
-
-//        List<TZMP3OAOwner> owners = OA_MW.getOAOwnerSliceByUserId(new TGetOAOwnerSliceByUserIdMWReq()
-//                .setUserId(1014483768)
-//                .setStart(0)
-//                .setCount(20)
-//        ).values;
-//        owners.forEach(ThriftUtils::prettyPrint);
+        System.out.println(OA_MW.getOAAccountSlice(new TGetOAAccountSliceMWReq()
+                .setOaID(6980)
+                .setUserID(NAMNH16_ZMP3_ID)
+                .setStart(0)
+                .setCount(1)
+        ));
     }
 
     private static void _testStats() {

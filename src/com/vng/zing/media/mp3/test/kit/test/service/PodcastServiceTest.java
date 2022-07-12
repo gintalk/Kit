@@ -9,19 +9,25 @@ package com.vng.zing.media.mp3.test.kit.test.service;
 
 import com.vng.zing.media.common.utils.ThriftUtils;
 import com.vng.zing.media.mp3.common.thrift.podcast.TPodcastEpisode;
-import com.vng.zing.media.mp3.common.thrift.podcast.TPodcastEpisodeGetReq;
-import com.vng.zing.media.mp3.common.thrift.podcast.TPodcastListType;
 import com.vng.zing.media.mp3.engine.model.EPodcastEpisodeModel;
 import com.vng.zing.media.mp3.mw.podcast.thrift.client.TZMP3PodcastMWClient;
+import com.vng.zing.media.mp3.mw.podcast.thrift.req.TDecreaseProgramRatingMWReq;
+import com.vng.zing.media.mp3.mw.podcast.thrift.req.TGetProgramRatingByUserMWReq;
+import com.vng.zing.media.mp3.mw.podcast.thrift.req.TGetProgramRatingCountByUserMWReq;
+import com.vng.zing.media.mp3.mw.podcast.thrift.req.TGetProgramRatingMWReq;
+import com.vng.zing.media.mp3.mw.podcast.thrift.req.TGetProgramRatingSliceByUserMWReq;
+import com.vng.zing.media.mp3.mw.podcast.thrift.req.TRemoveProgramRatingByUserMWReq;
+import com.vng.zing.media.mp3.mw.podcast.thrift.req.TRemoveProgramRatingMWReq;
 import com.vng.zing.media.mp3.service.podcast.thrift.client.TZMP3PodcastServiceClient;
-import com.vng.zing.media.mp3.service.podcast.thrift.req.TGetCategoryProgramIdSliceReq;
 import com.vng.zing.media.mp3.service.podcast.thrift.req.TGetProgramEpisodeIdsReq;
-import com.vng.zing.media.mp3.service.podcast.thrift.req.TGetProgramIdSliceReq;
+import com.vng.zing.media.mp3.service.podcast.thrift.req.TGetProgramRatingReq;
 import com.vng.zing.media.mp3.service.podcast.thrift.req.TGetProgramReq;
-import com.vng.zing.media.mp3.service.podcast.thrift.req.TGetSliceReq;
+import com.vng.zing.media.mp3.service.podcast.thrift.req.TMGetEpisodeReq;
+import com.vng.zing.media.mp3.service.podcast.thrift.req.TRateProgramReq;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
 public class PodcastServiceTest extends Test {
 
@@ -34,6 +40,7 @@ public class PodcastServiceTest extends Test {
             _testProgram();
 //            _testCategory();
 //            _testList();
+//            _testRating();
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
@@ -62,10 +69,10 @@ public class PodcastServiceTest extends Test {
 //            System.out.println(ep.id + " " + ep.countryCodes);
 //        }
 
-        TPodcastEpisode ep = MW.getEpisode(new TPodcastEpisodeGetReq()
-                .setId(1127722051)
-        ).value;
-        ThriftUtils.prettyPrint(ep);
+//        TPodcastEpisode ep = MW.getEpisode(new TPodcastEpisodeGetReq()
+//                .setId(1129720036)
+//        ).value;
+//        ThriftUtils.prettyPrint(ep);
 
 //        int userId = NoiseUserIdUtils.denoiseUserId("53b736eec99520cb7984");
 //        System.out.println(userId);
@@ -82,18 +89,18 @@ public class PodcastServiceTest extends Test {
     }
 
     private static void _testProgram() {
-        ThriftUtils.prettyPrint(SERVICE.getProgram(new TGetProgramReq()
-                .setProgramId(1331068752)
-        ).program);
+//        ThriftUtils.prettyPrint(SERVICE.getProgram(new TGetProgramReq()
+//                .setProgramId(1331068752)
+//        ).program);
 
-//        List<Integer> episodeIds = SERVICE.getProgramEpisodeIds(new TGetProgramEpisodeIdsReq()
-//                .setProgramId(1486446175)
-//                .setStart(0)
-//                .setCount(100)
-//        ).values;
-//        System.out.println(episodeIds);
-//        List<TPodcastEpisode> episodes = EPodcastEpisodeModel.INST.multiGetAsList(episodeIds);
-//        episodes.forEach(e -> System.out.println(e.title));
+        List<Integer> episodeIds = SERVICE.getProgramEpisodeIds(new TGetProgramEpisodeIdsReq()
+                .setProgramId(1331068752)
+                .setStart(0)
+                .setCount(0)
+        ).values;
+        System.out.println(episodeIds);
+        List<TPodcastEpisode> episodes = SERVICE.mgetEpisode(new TMGetEpisodeReq().setEpisodeIds(episodeIds).setAsList(true)).dataList;
+        episodes.forEach(e -> System.out.println(e.title));
 
 //        EPaging<TPodcastEpisode> paging = EPodcastProgramModel.INST.getListEpisode(1370253673, TCountryCode.VIETNAM.getValue(), 0, 1, false);
 //        ThriftUtils.prettyPrint(paging.getValues().get(0));
@@ -103,11 +110,16 @@ public class PodcastServiceTest extends Test {
 //        TPodcastCategory category = SERVICE.getCategory(new TGetCateforyReq().setCategoryId(12211)).category;
 //        ThriftUtils.prettyPrint(category);
 
-        System.out.println(SERVICE.getCategoryProgramIdSlice(new TGetCategoryProgramIdSliceReq()
-                .setCategoryId(12321)
-                .setStart(0)
-                .setCount(100)
-        ).values.size());
+//        List<Integer> programIds = SERVICE.getCategoryProgramIdSlice(new TGetCategoryProgramIdSliceReq()
+//                .setCategoryId(12320)
+//                .setStart(0)
+//                .setCount(100)
+//        ).values;
+//        for (TPodcastProgram program : SERVICE.mgetProgram(new TMGetProgramReq().setProgramIds(programIds).setAsList(true)).dataList) {
+//            System.out.println(program.title);
+//        }
+
+        System.out.println(MW.programIdExistsInCategory(12321, 1490013927));
     }
 
     private static void _testList() {
@@ -121,29 +133,102 @@ public class PodcastServiceTest extends Test {
 //        }
 
 //        ThriftUtils.prettyPrint(SERVICE.getSlice(new TGetSliceReq()
-//                .setListType(TPodcastListType.PROGRAM_FOLLOWER.getValue())
-//                .setListId(1450144942)
+//                .setListType(TPodcastListType.CUSTOM_LIST.getValue())
+//                .setListId(TPodcastCustomListID.PROMOTE_CATEGORY.getValue())
 //                .setStart(0)
 //                .setCount(250)
 //        ));
 
 //        System.out.println(EPodcastProgramModel.INST.getFollowerCount(1372611983));
 
-        System.out.println(SERVICE.getProgramIdSlice(new TGetProgramIdSliceReq()
-                .setStart(70)
-                .setCount(200)
+//        System.out.println(SERVICE.getProgramIdSlice(new TGetProgramIdSliceReq()
+//                .setStart(70)
+//                .setCount(200)
+//        ));
+//
+//        System.out.println(SERVICE.getCategoryProgramIdSlice(new TGetCategoryProgramIdSliceReq()
+//                .setStart(0)
+//                .setCount(200)
+//                .setCategoryId(12424)
+//        ));
+//
+//        System.out.println(SERVICE.getCategoryProgramIdSlice(new TGetCategoryProgramIdSliceReq()
+//                .setStart(0)
+//                .setCount(200)
+//                .setCategoryId(12320)
+//        ));
+
+//        List<Integer> values = SERVICE.getSuggestedEpisodeIds(new TGetSuggestedEpisodeIdsReq()
+//                .setEpisodeId(1129957827)
+//                .setUserId(NAMNH16_ZMP3_ID)
+//        ).values;
+//        EPodcastEpisodeModel.INST.multiGetAsList(values).forEach(e -> System.out.println(e.title));
+    }
+
+    private static void _testRating() {
+        int programID = 1489573904;
+        int userID = NAMNH16_ZMP3_ID;
+        Random random = new Random();
+
+        /*
+        Test remove
+         */
+        ThriftUtils.prettyPrint(MW.removeProgramRating(new TRemoveProgramRatingMWReq()
+                .setProgramID(programID)
+                .setUserID(userID)
+        ));
+        ThriftUtils.prettyPrint(MW.removeProgramRatingByUser(new TRemoveProgramRatingByUserMWReq()
+                .setProgramID(programID)
+                .setUserID(userID)
+        ));
+        ThriftUtils.prettyPrint(MW.decreaseRating(new TDecreaseProgramRatingMWReq()
+                .setProgramID(programID)
+                .setIndex(4)
+                .setAmount(1)
         ));
 
-        System.out.println(SERVICE.getCategoryProgramIdSlice(new TGetCategoryProgramIdSliceReq()
-                .setStart(0)
-                .setCount(200)
-                .setCategoryId(12424)
-        ));
+//        for(int i=1; i<=5000; i++){
+//            System.out.println(SERVICE.rateProgram(new TRateProgramReq()
+//                    .setProgramID(programID)
+//                    .setUserID(i)
+//                    .setRatingScore(random.ints(1, 6).findAny().getAsInt())
+//            ).error);
+//        }
 
-        System.out.println(SERVICE.getCategoryProgramIdSlice(new TGetCategoryProgramIdSliceReq()
-                .setStart(0)
-                .setCount(200)
-                .setCategoryId(12320)
+//        for(int i = 1; i <= 2000; i++){
+//            System.out.println(SERVICE.rateProgram(new TRateProgramReq()
+//                    .setProgramID(i)
+//                    .setUserID(5001)
+//                    .setRatingScore(1)
+//            ).error);
+//        }
+
+//        System.out.println(SERVICE.rateProgram(new TRateProgramReq()
+//                .setUserID(NAMNH16_ZMP3_ID)
+//                .setProgramID(programID)
+//                .setRatingScore(5)
+//        ));
+
+        /*
+        Test get
+         */
+        ThriftUtils.prettyPrint(MW.getProgramRating(new TGetProgramRatingMWReq()
+                .setProgramID(programID)
         ));
+        ThriftUtils.prettyPrint(SERVICE.getProgramRating(new TGetProgramRatingReq()
+                .setProgramID(programID)
+        ));
+//        ThriftUtils.prettyPrint(MW.getProgramRatingByUser(new TGetProgramRatingByUserMWReq()
+//                .setProgramID(programID)
+//                .setUserID(userID)
+//        ));
+//        ThriftUtils.prettyPrint(MW.getProgramRatingSliceByUser(new TGetProgramRatingSliceByUserMWReq()
+//                .setUserID(5001)
+//                .setStart(1995)
+//                .setCount(5)
+//        ));
+//        ThriftUtils.prettyPrint(MW.getProgramRatingCountByUser(new TGetProgramRatingCountByUserMWReq()
+//                .setUserID(5001)
+//        ));
     }
 }

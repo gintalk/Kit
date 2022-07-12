@@ -8,37 +8,34 @@ package com.vng.zing.media.mp3.test.kit.test.service;
  */
 
 import com.vng.zing.media.common.utils.ThriftUtils;
-import com.vng.zing.media.mp3.mw.core.thrift.client.TZMP3CoreMWClient;
 import com.vng.zing.media.mp3.service.indie.thrift.client.TZMP3IndieServiceClient;
-import com.vng.zing.media.mp3.service.indie.thrift.req.TClearIndieMediaReq;
-import com.vng.zing.media.mp3.service.indie.thrift.req.TCreateIndieMediaV2Req;
-import com.vng.zing.media.mp3.service.indie.thrift.req.TGetIndieMediaReq;
-import com.vng.zing.media.mp3.service.indie.thrift.req.TSendMailContactReq;
+import com.vng.zing.media.mp3.service.indie.thrift.client.TZMP3IndieUserServiceClient;
+import com.vng.zing.media.mp3.service.indie.thrift.req.TGetIndieArtistReq;
+import com.vng.zing.media.mp3.service.indie.thrift.req.TGetIndiePublishPlaylistsReq;
+import com.vng.zing.media.mp3.service.indie.thrift.res.TGetIndiePublishPlaylistsRes;
 import com.vng.zing.media.mp3.test.kit.test.common.Constant;
 
 public class IndieServiceTest extends Test {
 
-    private static final TZMP3IndieServiceClient STG_SERVICE = new TZMP3IndieServiceClient("staging");
-    //    private static final TZMP3IndieMWClient MW = TZMP3IndieMWClient.INST;
+    //    private static final TZMP3IndieServiceClient STG_SERVICE = new TZMP3IndieServiceClient("staging");
+    //    private static final TZMP3IndieUserServiceClient STG_SERVICE_USER = new TZMP3IndieUserServiceClient("staging");
     private static final TZMP3IndieServiceClient SERVICE = TZMP3IndieServiceClient.INST_INDIE;
+    private static final TZMP3IndieUserServiceClient SERVICE_USER = TZMP3IndieUserServiceClient.INST_USER;
 
     public static void main(String[] args) {
 //        _testUser();
-//        _testArtist();
+        _testArtist();
 //        _testPlaylist();
 //        _testMedia();
 //        _testCreateIndieMediaV2();
-        _testRemoveIndieMedia();
+//        _testRemoveIndieMedia();
 //        _testRemoveIndiePlaylist();
 
         System.exit(0);
     }
 
     private static void _testUser() {
-//        ThriftUtils.prettyPrint(TZMP3IndieServiceClient.INST_INDIE.resendMailVerify(new TResendMailVerifyReq().setUserId()));
 
-//        System.out.println(MW.removeIndieArtistAlias("Dzung-Accoustic1"));
-//        System.out.println(MW.removeArtist(1952175));
     }
 
     private static void _testArtist() {
@@ -62,11 +59,15 @@ public class IndieServiceTest extends Test {
 //                .setEndDay(20210930)
 //        ));
 
-//        ThriftUtils.prettyPrint(STG_SERVICE.getIndieArtist(new TGetIndieArtistReq()
+        ThriftUtils.prettyPrint(SERVICE.getIndieArtist(new TGetIndieArtistReq()
+                        .setAliasName("Thanh-Beso")
 //                .setArtistId(1866305)
-//                        .setUserId(1036815003)
-//                        .setHeader(Constant.HEADER)
-//        ).value);
+                        .setHeader(Constant.HEADER)
+//                        .setUserId(NAMNH16_ZMP3_ID)
+        ));
+//        ThriftUtils.prettyPrint(TZMP3CoreMWClient.INST.getGenericArtist(1020214).value);
+
+//        ThriftUtils.prettyPrint(TZMP3IndieMWClient.INST.getIndieArtistByUserID(1086447105));
 
 //        for(int i=0; i<20; i++) {
 //            System.out.println(TZMP3IndieMWClient.INST.getIndieArtistByAlias("Phan-Tran-Cong-Hieu").value.aliasName);
@@ -74,21 +75,23 @@ public class IndieServiceTest extends Test {
     }
 
     private static void _testPlaylist() {
-//        SERVICE.addMediasToIndiePlaylist(new TAddMediasToIndiePlaylistReq()
-//                .setPlaylistId(1453463877)
-//                .setMediaIds(Collections.singletonList(1113952333))
-//                .setHeader(Constant.HEADER.setUserId(XONE_RADIO_USER_ID))
-//                .setArtistId(XONE_RADIO_INDIE_ARTIST_ID)
-//        );
+        TGetIndiePublishPlaylistsRes res = SERVICE_USER.getIndiePublishPlaylists(new TGetIndiePublishPlaylistsReq()
+                .setHeader(Constant.HEADER)
+                .setArtistId(XONE_RADIO_INDIE)
+                .setStart(0)
+                .setCount(30)
+        );
+//        List<TPlaylist> playlists = EPlaylistModel.INST.multiGetAsList(res.values);
+//        playlists.forEach(p -> System.out.println(p.title + " | " + DateTimeUtils.format(p.createdAt, "dd/MM/yyyy HH:mm")));
     }
 
     private static void _testMedia() {
-        ThriftUtils.prettyPrint(SERVICE.getIndieMedia(new TGetIndieMediaReq()
-                .setHeader(Constant.HEADER)
-                .setArtistId(957809)
-                .setMediaId(1125423470)
-        ).value);
-        ThriftUtils.prettyPrint(TZMP3CoreMWClient.INST.getMedia(1125423470).value);
+//        ThriftUtils.prettyPrint(SERVICE.getIndieMedia(new TGetIndieMediaReq()
+//                .setHeader(Constant.HEADER)
+//                .setArtistId(1930012)
+//                .setMediaId(1129572747)
+//        ).value);
+//        ThriftUtils.prettyPrint(TZMP3CoreServiceClient.INST.getMedia(new TGetMediaReq().setId(1129572747)).value);
 
 //        ThriftUtils.prettyPrint(STG_SERVICE.getIndieMedia(new TGetIndieMediaReq()
 //                .setHeader(Constant.HEADER)
@@ -101,9 +104,30 @@ public class IndieServiceTest extends Test {
 //                .setCountryCode(84)
 //                .setStart(0)
 //                .setCount(20)
-//                .setAritstId(957809)
-//                .setType(TIndiePublicStatus.REJECTED.getValue())
+//                .setAritstId(XONE_RADIO_INDIE_ARTIST_ID)
+//                .setType(TIndiePublicStatus.APPROVED.getValue())
 //        ).values;
+//        media.forEach(m -> {
+//            TMedia tMedia = EMediaModel.INST.get(m.mediaId);
+//            System.out.println(tMedia.id + " | " + tMedia.title + " | " + DateTimeUtils.format(m.publicDate, "yyyy/MM/dd HH:mm"));
+//        });
+
+//        List<Integer> values = TZMP3IndieUserServiceClient.INST_USER.getIndiePublishMedias(new TGetIndiePublishMediasReq()
+//                .setArtistId(XONE_RADIO_INDIE_ARTIST_ID)
+//                .setStart(0)
+//                .setCount(100)
+//        ).values;
+//        System.out.println(values);
+
+//        List<Integer> values = STG_SERVICE_USER.getIndiePublishPlaylists(new TGetIndiePublishPlaylistsReq()
+//                .setHeader(new THeaderReq())
+//                .setArtistId(957809)
+//                .setStart(0)
+//                .setCount(20)
+//        ).values;
+//        System.out.println(values);
+//        EPlaylistModel.INST.multiGetAsList(values).forEach(p -> System.out.println(p.title));
+
 //        List<TMedia> tMedia = EMediaModel.INST.multiGetAsList(Collections.singletonList(1109165218));
 //        tMedia.forEach(m -> System.out.println(m.title));
 //        ThriftUtils.prettyPrint(STG_SERVICE.getIndieMedias(new TGetIndieMediasReq()
@@ -138,16 +162,7 @@ public class IndieServiceTest extends Test {
     }
 
     private static void _testCreateIndieMediaV2() {
-        STG_SERVICE.createIndieMediaV2(new TCreateIndieMediaV2Req()
-                .setArtistId(NAMNH16_INDIE_ARTIST_ID)
-                .setCountryCode(84)
-                .setHeader(Constant.HEADER.setUserId(NAMNH16_ZMP3_ID))
-                .setUserId(NAMNH16_ZMP3_ID)
-                .setFtArtists("None")
-                .setIsLyricist(true)
-                .setIsProducer(true)
-                .setPublicType(2)
-        );
+
     }
 
     private static void _testRemoveIndieMedia() {
@@ -156,13 +171,13 @@ public class IndieServiceTest extends Test {
         int artistId = NAMNH16_INDIE_ARTIST_ID;
         String md5 = "c4140205157c4918113929a770caf4b6";
 
-        ThriftUtils.prettyPrint(SERVICE.clearIndieMedia(new TClearIndieMediaReq()
-                .setMediaId(mediaId)
-                .setUserId(userId)
-                .setArtistId(artistId)
-                .setCountryCode(84)
-                .setHeader(Constant.HEADER)
-        ));
+//        ThriftUtils.prettyPrint(SERVICE.clearIndieMedia(new TClearIndieMediaReq()
+//                .setMediaId(mediaId)
+//                .setUserId(userId)
+//                .setArtistId(artistId)
+//                .setCountryCode(84)
+//                .setHeader(Constant.HEADER)
+//        ));
 //        ThriftUtils.prettyPrint(SERVICE.removeIndieMedia(new TRemoveIndieMediaReq()
 //                .setMediaId(mediaId)
 //                .setUserId(userId)

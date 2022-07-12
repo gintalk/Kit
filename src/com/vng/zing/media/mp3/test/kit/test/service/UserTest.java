@@ -7,31 +7,19 @@ package com.vng.zing.media.mp3.test.kit.test.service;
  * @author namnh16 on 26/04/2021
  */
 
-import com.vng.zing.media.common.thrift.TI32ListResult;
-import com.vng.zing.media.common.utils.ConvertUtils;
 import com.vng.zing.media.common.utils.ThriftUtils;
 import com.vng.zing.media.mp3.common.thrift.TUserListType;
-import com.vng.zing.media.mp3.common.thrift.podcast.TPodcastEpisode;
-import com.vng.zing.media.mp3.common.thrift.podcast.TPodcastListType;
-import com.vng.zing.media.mp3.common.thrift.user.TUserReadAssetReq;
-import com.vng.zing.media.mp3.engine.model.EPodcastEpisodeModel;
+import com.vng.zing.media.mp3.common.thrift.core.TPlaylist;
 import com.vng.zing.media.mp3.mw.user.thrift.client.TZMP3UserMWClient;
-import com.vng.zing.media.mp3.service.podcast.thrift.client.TZMP3PodcastServiceClient;
-import com.vng.zing.media.mp3.service.podcast.thrift.req.TGetProgramEpisodeIdsReq;
-import com.vng.zing.media.mp3.service.podcast.thrift.req.TGetSimilarEpisodeIdsReq;
-import com.vng.zing.media.mp3.service.podcast.thrift.req.TGetSliceReq;
-import com.vng.zing.media.mp3.service.podcast.thrift.req.TMGetEpisodeReq;
-import com.vng.zing.media.mp3.service.podcast.thrift.res.TGetSimilarEpisodeIdsRes;
+import com.vng.zing.media.mp3.service.core.thrift.client.TZMP3CoreServiceClient;
+import com.vng.zing.media.mp3.service.core.thrift.req.TGetPlaylistReq;
 import com.vng.zing.media.mp3.service.user.thrift.client.TZMP3UserServiceClient;
-import com.vng.zing.media.mp3.service.user.thrift.req.TAddAssetReq;
-import com.vng.zing.media.mp3.service.user.thrift.req.TGetAssetSliceReq;
+import com.vng.zing.media.mp3.service.user.thrift.req.TGetHistoryEpisodeReq;
+import com.vng.zing.media.mp3.service.user.thrift.req.TGetProgramHistoryReq;
 import com.vng.zing.media.mp3.service.user.thrift.req.TMultiRemoveAssetReq;
-import com.vng.zing.media.mp3.service.user.thrift.req.TRemoveAssetReq;
-import org.apache.commons.io.FileUtils;
+import com.vng.zing.media.mp3.service.user.thrift.req.TUpdateUserPlaylistReq;
 
-import java.io.File;
 import java.util.Arrays;
-import java.util.List;
 
 public class UserTest extends Test {
 
@@ -43,6 +31,9 @@ public class UserTest extends Test {
 //        _testMultiAssets();
 //        _testMultiAddAssets();
 //        _testSource();
+//        _testPlaylist();
+//        _testProgramHistory();
+        _testEpisodeHistory();
 
         System.exit(0);
     }
@@ -262,5 +253,50 @@ public class UserTest extends Test {
 
     private static void _testSource() {
         System.out.println(USER_MW.getMapSource(1049058769, "04244cbd9831f442ea1ad2479212e8e5"));
+    }
+
+    private static void _testPlaylist() {
+        TPlaylist playlist = TZMP3CoreServiceClient.INST.getPlaylist(new TGetPlaylistReq()
+                .setPlaylistId(1453472515)
+        ).value;
+//        ThriftUtils.prettyPrint(playlist.storageMeta);
+
+        System.out.println(USER_SERVICE.updateUserPlaylist(new TUpdateUserPlaylistReq()
+                .setPlaylistId(playlist.storageMeta.id)
+                .setUserId(playlist.storageMeta.createdBy)
+                .setPrivacy(playlist.storageMeta.privacy)
+                .setMediaIds(playlist.storageMeta.mediaIds)
+                .setTitle(playlist.storageMeta.title)
+                .setShuffe(true)
+        ));
+    }
+
+    private static void _testProgramHistory() {
+//        System.out.println(USER_MW.addProgramHistory(NAMNH16_ZMP3_ID, new TProgramHistory().setProgramId(1331068752).setTime(DateTimeUtils.currentTimeSeconds())));
+//        ThriftUtils.prettyPrint(USER_MW.getProgramHistory(NAMNH16_ZMP3_ID, 1331068752));
+
+//        System.out.println(USER_SERVICE.addProgramHistory(new TAddProgramHistoryReq()
+//                .setUserId(NAMNH16_ZMP3_ID)
+//                .setValue(new TProgramHistory()
+//                        .setProgramId(1331068752)
+//                        .setTime(DateTimeUtils.currentTimeSeconds())
+//                )
+//        ).error);
+//        ThriftUtils.prettyPrint(USER_SERVICE.getProgramHistory(new TGetProgramHistoryReq()
+//                .setUserId(NAMNH16_ZMP3_ID)
+//                .setProgramId(1489477172)
+//        ));
+//        ThriftUtils.prettyPrint(USER_SERVICE.getProgramHistorySlice(new TGetProgramHistorySliceReq()
+//                .setUserId(NAMNH16_ZMP3_ID)
+//                .setStart(0)
+//                .setCount(10)
+//        ));
+    }
+
+    private static void _testEpisodeHistory(){
+        ThriftUtils.prettyPrint(USER_SERVICE.getHistoryEpisode(new TGetHistoryEpisodeReq()
+                .setUserId(NAMNH16_ZMP3_ID)
+                .setEpisodeId(1132347883)
+        ).historyEpisode);
     }
 }

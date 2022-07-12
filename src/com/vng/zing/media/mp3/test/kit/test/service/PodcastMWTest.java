@@ -29,7 +29,7 @@ public class PodcastMWTest extends Test {
     private static final TZMP3PodcastMWClient PODCAST_MW = TZMP3PodcastMWClient.INST;
 
     public static void main(String[] args) {
-        ThriftUtils.prettyPrint(PODCAST_MW.getEpisode(new TPodcastEpisodeGetReq().setId(1078189292)).value);
+        System.out.println(PODCAST_MW.removeEpisode(1129257375));
 
         System.exit(0);
     }

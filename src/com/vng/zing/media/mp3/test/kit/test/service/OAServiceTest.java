@@ -4,16 +4,13 @@
  */
 package com.vng.zing.media.mp3.test.kit.test.service;
 
+import com.vng.zing.media.common.utils.BitUtils;
+import com.vng.zing.media.common.utils.ConvertUtils;
 import com.vng.zing.media.common.utils.ThriftUtils;
-import com.vng.zing.media.mp3.common.thrift.TPrivacy;
-import com.vng.zing.media.mp3.common.thrift.TZMP3OABoxType;
+import com.vng.zing.media.mp3.common.thrift.api.TUserInfoBoolAttribute;
 import com.vng.zing.media.mp3.common.thrift.oa.core.TZMP3OA;
 import com.vng.zing.media.mp3.common.thrift.oa.core.TZMP3OABox;
 import com.vng.zing.media.mp3.common.thrift.oa.core.TZMP3OAHome;
-import com.vng.zing.media.mp3.common.thrift.publisher.TPublisherAssetType;
-import com.vng.zing.media.mp3.mw.core.thrift.client.TZMP3CoreMWClient;
-import com.vng.zing.media.mp3.mw.publisher.thrift.client.TZMP3PublisherMWClient;
-import com.vng.zing.media.mp3.mw.publisher.thrift.req.TGetAssetSliceMWReq;
 import com.vng.zing.media.mp3.service.oa.thrift.client.TZMP3OAServiceClient;
 import com.vng.zing.media.mp3.service.oa.thrift.req.TGetOAAccountPermissionReq;
 import com.vng.zing.media.mp3.service.oa.thrift.req.TGetOABoxReq;
@@ -21,14 +18,15 @@ import com.vng.zing.media.mp3.service.oa.thrift.req.TGetOADashboardReq;
 import com.vng.zing.media.mp3.service.oa.thrift.req.TGetOAHomeReq;
 import com.vng.zing.media.mp3.service.oa.thrift.req.TGetOAPlaylistReq;
 import com.vng.zing.media.mp3.service.oa.thrift.req.TGetOAReq;
-import com.vng.zing.media.mp3.service.oa.thrift.req.TPutOABoxReq;
 import com.vng.zing.media.mp3.service.oa.thrift.req.TPutOAHomeReq;
 import com.vng.zing.media.mp3.service.oa.thrift.req.TPutOAReq;
-import com.vng.zing.media.mp3.service.oa.thrift.req.TRemoveOAPlaylistReq;
-import com.vng.zing.media.mp3.service.oa.thrift.req.TUpdateOAPlaylistReq;
 import com.vng.zing.media.mp3.test.kit.test.common.Constant;
+import com.vng.zing.media.mp3.test.kit.test.common.PrintUtils;
+import org.apache.commons.io.FileUtils;
 
-import java.util.Arrays;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,33 +41,55 @@ public class OAServiceTest extends Test {
 //        _testOA();
 //        _testOABox();
 //        testStats();
-        _testPlaylist();
+//        _testPlaylist();
 //        test();
+        testPermission();
 
         System.exit(0);
     }
 
     private static void _testOA() {
-        TZMP3OA oa = OA_SERVICE.getOA(new TGetOAReq().setOaId(1921897)).value;
-        oa.setDescription("");
-        System.out.println(OA_SERVICE.putOA(new TPutOAReq().setOa(oa)));
+        try {
+            List<String> lines = FileUtils.readLines(new File("data/zmp3oa.csv"), "UTF-8");
+            for (String line : lines) {
+                int oaID = ConvertUtils.toInteger(line);
+
+                TZMP3OA oa = OA_SERVICE.getOA(new TGetOAReq().setOaId(oaID)).value;
+                if (oa == null) {
+                    continue;
+                }
+
+                System.out.println(OA_SERVICE.putOA(new TPutOAReq().setOa(oa)));
+            }
+        } catch (IOException e) {
+            e.printStackTrace(System.err);
+        }
     }
 
     private static void _testOABox() {
         TZMP3OABox box = OA_SERVICE.getOABox(new TGetOABoxReq()
-                .setBoxId(14906)
+                .setBoxId(14934)
         ).value;
-        box.setType(TZMP3OABoxType.PODCAST_EPISODE.getValue());
-        System.out.println(OA_SERVICE.putOABox(new TPutOABoxReq()
-                .setBox(box)
-        ));
+        box.setItemType(11);
+
+//        ThriftUtils.prettyPrint(box);
+//        box.setType(TZMP3OABoxType.PODCAST_EPISODE.getValue());
+//        System.out.println(OA_SERVICE.putOABox(new TPutOABoxReq()
+//                .setBox(box)
+//        ));
+
+//        ThriftUtils.prettyPrint(OA_SERVICE.removeOABox(new TRemoveOABoxReq()
+//                .setBoxId(15146)
+//                .setUserId(NAMNH16_ZMP3_ID)
+//        ));
 
         TZMP3OAHome home = OA_SERVICE.getOAHome(new TGetOAHomeReq()
-                .setOaId(947376)
+                .setOaId(XONE_RADIO)
         ).value;
         Map<Integer, Integer> boxMap = home.boxMap;
-        boxMap.remove(15);
-        boxMap.put(12, 1);
+        boxMap.remove(2);
+        List<Integer> boxIds = home.boxIds;
+        boxIds.remove(new Integer(15146));
         System.out.println(OA_SERVICE.putOAHome(new TPutOAHomeReq()
                 .setHome(home)
         ));
@@ -122,9 +142,19 @@ public class OAServiceTest extends Test {
     }
 
     private static void test() {
-        System.out.println(OA_SERVICE.getOAAccountPermission(new TGetOAAccountPermissionReq()
-                .setUserID(QUYENDB2_ZMP3_ID)
-                .setOaID(813577)
-        ));
+//        ThriftUtils.prettyPrint(OA_SERVICE.getOAAccountSlice(new TGetOAAccountSliceReq()
+//                .setUserID(LUONGPC_ZMP3_ID)
+//                .setStart(0)
+//                .setCount(1)
+//        ));
+
+        System.out.println(BitUtils.hasBit(18, TUserInfoBoolAttribute.IS_OA_MANAGER.getValue()));
+    }
+
+    private static void testPermission() {
+        PrintUtils.printOAAccountPermission(OA_SERVICE.getOAAccountPermission(new TGetOAAccountPermissionReq()
+                .setOaID(VED_DNARB)
+                .setUserID(NGUYENLT4_ZMP3_ID)
+        ).values);
     }
 }

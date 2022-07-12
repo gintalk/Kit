@@ -7,11 +7,9 @@ package com.vng.zing.media.mp3.test.kit.test.service;
  * @author namnh16 on 15/02/2022
  */
 
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
-public class SparkSQLTest extends Test {
+public class SparkSQLTest {
 
     public static void main(String[] args) {
         SparkSession spark = SparkSession
@@ -19,11 +17,6 @@ public class SparkSQLTest extends Test {
                 .appName("Spark SQL basic example")
                 .config("spark.master", "local")
                 .getOrCreate();
-
-        Dataset<Row> ds = spark
-                .read()
-                .parquet("data/parquet")
-                .select("user_id");
 
         System.exit(0);
     }

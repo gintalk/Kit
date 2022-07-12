@@ -3,30 +3,46 @@ plugins {
     id 'maven-publish'
 }
 
-project.ext.appGroup = 'com.vng.zing.media'
+project.ext.appGroup = 'com.vng.zing.media.mp3'
 project.ext.appJarVersion = '1.0.0.1'
-project.ext.thriftJarVersion = '1.0.0.1'
-project.ext.thriftJarName = 'zm-service-comment'
-project.ext.thriftJarPackage = 'com/vng/zing/media/service/comment/thrift'
+project.ext.thriftJarVersion = '1.0.6.9'
+project.ext.thriftJarName = 'zmp3-proxy-cms'
+project.ext.thriftJarPackage = 'com/vng/zing/media/mp3/proxy/cms/thrift'
 
 dependencies {
-    implementation project("ZMP3Engine")
+    implementation project(":ZMP3Engine")
     implementation "com.rometools:rome:1.18.0"
-    implementation 'com.google.api-client:google-api-client:1.33.4'
-    implementation 'com.google.oauth-client:google-oauth-client-jetty:1.33.1'
-    implementation 'com.google.apis:google-api-services-youtube:v3-rev20220320-1.32.1'
-    implementation 'org.apache.commons:commons-lang3:3.12.0'
-    implementation 'org.scala-lang:scala-library:2.13.8'
     implementation 'com.google.guava:guava:31.1-jre'
     implementation 'nz.ac.waikato.cms.weka:weka-stable:3.8.6'
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'org.scala-lang:scala-library:2.13.8'
     implementation 'org.apache.spark:spark-sql_2.13:3.2.1'
     implementation 'org.apache.spark:spark-core_2.13:3.2.1'
     implementation 'org.apache.spark:spark-graphx_2.13:3.2.1'
     implementation 'org.apache.spark:spark-mllib_2.13:3.2.1'
 
+    // Test
+    testImplementation 'com.vng.zing.media.mp3:zmp3-lib-thrift:1.0.1'
+    testImplementation 'com.vng.zing.media.mp3:zmp3-mw-oa:1.0.1'
+
     // default
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+
+//    Test SQL Lib
+//    implementation project(":ZTMSQLLib")
+//    Test API Lib
+//    implementation project(":ZTMAPILib")
+//    Test API Lib
+//    implementation project(":ZTMCMSLib")
+//    Test Common Lib
+//    implementation project(":ZTMCommonLib")
+//    Test Utils Lib
+//    implementation project(":ZTMUtilsLib")
+//    Test Packed Lib
+//    implementation project(":ZTMPackedLib")
+//    Test Thrift Lib
+//    implementation project(":ZTMThriftLib")
 }
 
-apply from: '../../zmp3-new/common/ZMP3TplGradle/zmp3.gradle'
+apply from: '/zserver/lib/zmt/common/ZMP3Engine/zmp3.gradle'

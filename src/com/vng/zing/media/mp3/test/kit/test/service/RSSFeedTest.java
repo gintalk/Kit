@@ -15,6 +15,7 @@ import com.rometools.rome.io.XmlReader;
 import com.vng.zing.media.common.utils.HttpUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.parser.Parser;
 import org.jsoup.safety.Whitelist;
 
 import java.io.IOException;
@@ -29,17 +30,13 @@ public class RSSFeedTest extends Test {
 
     private static void _escapeHtml() {
         try {
-//            String url = "https://anchor.fm/s/39118fa8/podcast/rss";
-//
-//            SyndFeedInput input = new SyndFeedInput();
-//            SyndFeed feed = input.build(new XmlReader(new URL(url)));
-//            SyndEntry entry = feed.getEntries().get(0);
-//
-//            String description = "abc &amp; &nbsp; jhwuiq";
-//
-//            System.out.println(Parser.unescapeEntities(_convertHTMLText(description), false));
+            String url = "https://anchor.fm/s/6b9f15bc/podcast/rss";
 
-            _getEnclosures();
+            SyndFeedInput input = new SyndFeedInput();
+            SyndFeed feed = input.build(new XmlReader(new URL(url)));
+            System.out.println(feed.getEntries().size());
+
+//            _getEnclosures();
         } catch (Exception e) {
             System.err.println(e.getMessage());
             System.exit(1);
