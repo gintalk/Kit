@@ -38,37 +38,25 @@ public class OAServiceTest extends Test {
     private static final TZMP3OAServiceClient OA_SERVICE_STG = new TZMP3OAServiceClient("staging");
 
     public static void main(String[] args) {
-//        _testOA();
+        _testOA();
 //        _testOABox();
 //        testStats();
 //        _testPlaylist();
 //        test();
-        testPermission();
+//        testPermission();
 
         System.exit(0);
     }
 
     private static void _testOA() {
-        try {
-            List<String> lines = FileUtils.readLines(new File("data/zmp3oa.csv"), "UTF-8");
-            for (String line : lines) {
-                int oaID = ConvertUtils.toInteger(line);
-
-                TZMP3OA oa = OA_SERVICE.getOA(new TGetOAReq().setOaId(oaID)).value;
-                if (oa == null) {
-                    continue;
-                }
-
-                System.out.println(OA_SERVICE.putOA(new TPutOAReq().setOa(oa)));
-            }
-        } catch (IOException e) {
-            e.printStackTrace(System.err);
-        }
+        PrintUtils.printTBase(OA_SERVICE.getOA(new TGetOAReq()
+                .setOaId(7907)
+        ).value);
     }
 
     private static void _testOABox() {
         TZMP3OABox box = OA_SERVICE.getOABox(new TGetOABoxReq()
-                .setBoxId(14934)
+                .setBoxId(7907)
         ).value;
         box.setItemType(11);
 
