@@ -5,9 +5,8 @@
 package com.vng.zing.media.mp3.test.kit.test.service;
 
 
-import com.vng.zing.media.common.utils.ThriftUtils;
-import com.vng.zing.media.mp3.common.thrift.podcast.TPodcastEpisodeStatus;
-import com.vng.zing.media.mp3.common.thrift.publisher.TPublisherAssetType;
+import com.vng.zing.media.mp3.commonlib.thrift.podcast.TPodcastEpisodeStatus;
+import com.vng.zing.media.mp3.commonlib.thrift.publisher.TPublisherAssetType;
 import com.vng.zing.media.mp3.mw.publisher.thrift.client.TZMP3PublisherMWClient;
 import com.vng.zing.media.mp3.mw.publisher.thrift.req.TGetAssetCountMWReq;
 import com.vng.zing.media.mp3.mw.publisher.thrift.req.TGetAssetSliceMWReq;
@@ -17,6 +16,7 @@ import com.vng.zing.media.mp3.mw.publisher.thrift.req.TGetFollowerSliceMWReq;
 import com.vng.zing.media.mp3.mw.publisher.thrift.req.TPutAssetMWReq;
 import com.vng.zing.media.mp3.mw.publisher.thrift.req.TRemoveAssetMWReq;
 import com.vng.zing.media.mp3.test.kit.test.common.Constant;
+import com.vng.zing.media.mp3.test.kit.test.common.PrintUtils;
 
 /**
  * @author namnh16
@@ -126,7 +126,7 @@ public class PublisherMWTest extends Test {
     }
 
     private static void _testGetFollowerSlice() {
-        ThriftUtils.prettyPrint(MW.getFollowerSlice(new TGetFollowerSliceMWReq()
+        PrintUtils.printTBase(MW.getFollowerSlice(new TGetFollowerSliceMWReq()
                 .setPublisherId(24591)
                 .setStart(0)
                 .setCount(10000)

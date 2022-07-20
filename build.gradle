@@ -15,20 +15,21 @@ conf {
 dependencies {
     /* --- Libs begin --- */
     /* ZTM */
-//    implementation 'com.vng.zing.media:ztm-lib-thrift:1.0.7'
+    implementation 'com.vng.zing.media:ztm-lib-thrift:1.0.9'
 //    implementation 'com.vng.zing.media:ztm-lib-profiler:1.0.1'
-//    implementation 'com.vng.zing.media:ztm-lib-common:1.0.24'
-//    implementation "com.vng.zing.media:ztm-lib-thrift-service:1.0.2"
-//    implementation "com.vng.zing.media:ztm-lib-utils:1.0.6"
+    implementation 'com.vng.zing.media:ztm-lib-common:1.0.24'
+    implementation "com.vng.zing.media:ztm-lib-thrift-service:1.0.2"
+    implementation "com.vng.zing.media:ztm-lib-utils:1.0.6"
 //    implementation "com.vng.zing.media:ztm-lib-nosql:1.0.1"
 //    implementation "com.vng.zing.media:ztm-lib-api:1.0.4"
 //    implementation "com.vng.zing.media:ztm-lib-sql:1.0.9"
 //    implementation "com.vng.zing.media:ztm-lib-cms:1.0.4"
 
     /* ZMP3 */
-//    implementation "com.vng.zing.media.mp3:zmp3-lib-thrift:1.0.5"
+    implementation "com.vng.zing.media.mp3:zmp3-lib-thrift:1.0.6"
 //    implementation "com.vng.zing.media.mp3:zmp3-lib-sql:1.0.1"
-//    implementation "com.vng.zing.media.mp3:zmp3-lib-common:1.0.3"
+    implementation "com.vng.zing.media.mp3:zmp3-lib-common:1.0.3"
+    implementation "com.vng.zing.media.mp3:zmp3-mw-publisher:1.0.2"
 
     /* Core */
     implementation 'com.vng.zing:jzcommon-corelib:1.2.3.8'
