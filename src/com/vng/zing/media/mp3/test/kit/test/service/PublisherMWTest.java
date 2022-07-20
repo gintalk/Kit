@@ -5,6 +5,7 @@
 package com.vng.zing.media.mp3.test.kit.test.service;
 
 
+import com.vng.zing.media.mp3.commonlib.thrift.TPublisherType;
 import com.vng.zing.media.mp3.commonlib.thrift.podcast.TPodcastEpisodeStatus;
 import com.vng.zing.media.mp3.commonlib.thrift.publisher.TPublisherAssetType;
 import com.vng.zing.media.mp3.mw.publisher.thrift.client.TZMP3PublisherMWClient;
@@ -13,10 +14,20 @@ import com.vng.zing.media.mp3.mw.publisher.thrift.req.TGetAssetSliceMWReq;
 import com.vng.zing.media.mp3.mw.publisher.thrift.req.TGetAssetSliceWithScoreMWReq;
 import com.vng.zing.media.mp3.mw.publisher.thrift.req.TGetFollowerCountMWReq;
 import com.vng.zing.media.mp3.mw.publisher.thrift.req.TGetFollowerSliceMWReq;
+import com.vng.zing.media.mp3.mw.publisher.thrift.req.TGetPublisherIDMWReq;
+import com.vng.zing.media.mp3.mw.publisher.thrift.req.TMGetPublisherIDMWReq;
+import com.vng.zing.media.mp3.mw.publisher.thrift.req.TMPutPublisherAliasMWReq;
+import com.vng.zing.media.mp3.mw.publisher.thrift.req.TMRemovePublisherAliasMWReq;
+import com.vng.zing.media.mp3.mw.publisher.thrift.req.TPublisherAliasExistsMWReq;
 import com.vng.zing.media.mp3.mw.publisher.thrift.req.TPutAssetMWReq;
+import com.vng.zing.media.mp3.mw.publisher.thrift.req.TPutPublisherAliasMWReq;
 import com.vng.zing.media.mp3.mw.publisher.thrift.req.TRemoveAssetMWReq;
-import com.vng.zing.media.mp3.test.kit.test.common.Constant;
+import com.vng.zing.media.mp3.mw.publisher.thrift.req.TRemovePublisherAliasMWReq;
 import com.vng.zing.media.mp3.test.kit.test.common.PrintUtils;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author namnh16
@@ -36,6 +47,8 @@ public class PublisherMWTest extends Test {
 //        _testGetFollowerCount();
 //        _testPutFollower();
 //        _testRemoveFollower();
+
+        _testAlias();
 
         System.exit(0);
     }
@@ -65,7 +78,7 @@ public class PublisherMWTest extends Test {
 
     private static void _testGetAssetSlice() {
         System.out.println(MW.getAssetSlice(new TGetAssetSliceMWReq()
-                .setPublisherId(Constant.OA_PETER_SERKIN)
+                .setPublisherId(PETER_SERKIN_OA_ID)
                 .setAssetType(TPublisherAssetType.PODCAST_EPISODE.getValue())
                 .setAssetStatus(0)
                 .setStart(0)
@@ -150,6 +163,46 @@ public class PublisherMWTest extends Test {
 //        System.out.println(MW.removeFollower(new TRemoveFollowerMWReq()
 //                .setPublisherId(6980)
 //                .setFollowerId(1)
+//        ));
+    }
+
+    private static void _testAlias() {
+//        PrintUtils.printTBase(MW.putPublisherAlias(new TPutPublisherAliasMWReq()
+//                .setPublisherType(TPublisherType.INDIE_ARTIST.getValue())
+//                .setAliasName("rubyourcamel")
+//                .setPublisherID(2222)
+//        ));
+
+        PrintUtils.printTBase(MW.publisherAliasExists(new TPublisherAliasExistsMWReq()
+                .setAliasName("rubyourcamel")
+        ));
+
+//        PrintUtils.printTBase(MW.removePublisherAlias(new TRemovePublisherAliasMWReq()
+//                .setPublisherType(TPublisherType.INDIE_ARTIST.getValue())
+//                .setAliasName("rubyourcamel")
+//        ));
+
+//        PrintUtils.printTBase(MW.getPublisherID(new TGetPublisherIDMWReq()
+//                .setPublisherType(TPublisherType.INDIE_ARTIST.getValue())
+//                .setAliasName("rubyourcamel")
+//        ));
+
+//        Map<String, Integer> dataMap = new HashMap<>();
+//        dataMap.put("rubyourcamel", 333);
+//        dataMap.put("dontrubyourcamel", 444);
+//        System.out.println(MW.mputPublisherAlias(new TMPutPublisherAliasMWReq()
+//                .setPublisherType(TPublisherType.INDIE_ARTIST.getValue())
+//                .setDataMap(dataMap)
+//        ));
+
+//        System.out.println(MW.mremovePublisherAlias(new TMRemovePublisherAliasMWReq()
+//                .setPublisherType(TPublisherType.ARTIST.getValue())
+//                .setAliasNames(Arrays.asList("rubyourcamel", "dontrubyourcamel"))
+//        ));
+//
+//        PrintUtils.printTBase(MW.mgetPublisherID(new TMGetPublisherIDMWReq()
+//                .setPublisherType(TPublisherType.ARTIST.getValue())
+//                .setAliasNames(Arrays.asList("rubyourcamel", "dontrubyourcamel"))
 //        ));
     }
 }
