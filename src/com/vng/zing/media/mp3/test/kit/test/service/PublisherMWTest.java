@@ -38,7 +38,7 @@ public class PublisherMWTest extends Test {
 
     public static void main(String[] args) {
 //        _testGetAssetSlice();
-        _testGetAssetAssetSliceWithScore();
+//        _testGetAssetAssetSliceWithScore();
 //        _testGetAssetCount();
 //        _testPutAsset();
 //        _testRemoveAsset();
@@ -173,19 +173,19 @@ public class PublisherMWTest extends Test {
 //                .setPublisherID(2222)
 //        ));
 
-        PrintUtils.printTBase(MW.publisherAliasExists(new TPublisherAliasExistsMWReq()
-                .setAliasName("rubyourcamel")
-        ));
+//        PrintUtils.printTBase(MW.publisherAliasExists(new TPublisherAliasExistsMWReq()
+//                .setAliasName("karik")
+//        ));
 
 //        PrintUtils.printTBase(MW.removePublisherAlias(new TRemovePublisherAliasMWReq()
 //                .setPublisherType(TPublisherType.INDIE_ARTIST.getValue())
 //                .setAliasName("rubyourcamel")
 //        ));
 
-//        PrintUtils.printTBase(MW.getPublisherID(new TGetPublisherIDMWReq()
-//                .setPublisherType(TPublisherType.INDIE_ARTIST.getValue())
-//                .setAliasName("rubyourcamel")
-//        ));
+        PrintUtils.printTBase(MW.getPublisherID(new TGetPublisherIDMWReq()
+                .setPublisherType(TPublisherType.OA_ARTIST.getValue())
+                .setAliasName("apple1")
+        ));
 
 //        Map<String, Integer> dataMap = new HashMap<>();
 //        dataMap.put("rubyourcamel", 333);
