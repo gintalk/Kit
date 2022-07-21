@@ -49,8 +49,13 @@ public class OAServiceTest extends Test {
     }
 
     private static void _testOA() {
+//        PrintUtils.printTBase(OA_SERVICE.getOA(new TGetOAReq()
+//                .setOaId(7907)
+//        ).value);
+
         PrintUtils.printTBase(OA_SERVICE.getOA(new TGetOAReq()
-                .setOaId(7907)
+                .setIsOrigin(false)
+                .setAliasName("Jack-J97")
         ).value);
     }
 

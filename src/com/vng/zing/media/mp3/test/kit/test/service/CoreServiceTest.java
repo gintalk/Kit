@@ -7,6 +7,7 @@ package com.vng.zing.media.mp3.test.kit.test.service;
  * @author namnh16 on 24/03/2021
  */
 
+import com.vng.zing.media.common.utils.ThriftUtils;
 import com.vng.zing.media.mp3.common.thrift.TCounterTotalIndex;
 import com.vng.zing.media.mp3.common.thrift.TCounterTotalType;
 import com.vng.zing.media.mp3.common.thrift.TFollowType;
@@ -14,6 +15,7 @@ import com.vng.zing.media.mp3.common.thrift.core.TListInfo;
 import com.vng.zing.media.mp3.mw.core.thrift.client.TZMP3CoreMWClient;
 import com.vng.zing.media.mp3.service.core.thrift.client.TZMP3CoreServiceClient;
 import com.vng.zing.media.mp3.service.core.thrift.req.TGetCounterTotalReq;
+import com.vng.zing.media.mp3.service.core.thrift.req.TGetGenericArtistReq;
 import com.vng.zing.media.mp3.service.core.thrift.req.TGetPlaylistReq;
 import com.vng.zing.media.mp3.service.core.thrift.req.TGetTotalFollowReq;
 import com.vng.zing.media.mp3.test.kit.test.common.PrintUtils;
@@ -124,9 +126,9 @@ public class CoreServiceTest extends Test {
 //                THomeSectionType.PROMOTE_PODCAST_PROGRAM
 //        ));
 
-//        ThriftUtils.prettyPrint(CORE_SERVICE.getGenericArtist(new TGetGenericArtistReq()
-//                .setId(813997)
-//        ).value);
+        ThriftUtils.prettyPrint(CORE_SERVICE.getGenericArtist(new TGetGenericArtistReq()
+                .setId(2251273)
+        ).value);
 
 //        List<String> lines = FileUtils.readLines(new File("data/indie_artist.csv"), "UTF-8");
 //        for (String line : lines) {
