@@ -38,6 +38,9 @@ dependencies {
     implementation 'com.vng.zing:slf4j-api:1.7.2'
     implementation 'com.vng.zing:slf4j-log4j12:1.7.2'
     implementation 'com.vng.zing:zthrift:0.9.3.8'
+
+    /* 3rd-party */
+    implementation 'commons-io:commons-io:2.11.0'
     /* --- Libs end --- */
 
     /* --- Thrifts begin --- */
@@ -62,4 +65,8 @@ dependencies {
     /* ZMP3 */
 //    implementation project(":ZMP3ThriftLib")
     /* --- Development ends --- */
+}
+
+repositories {
+    mavenCentral()
 }
