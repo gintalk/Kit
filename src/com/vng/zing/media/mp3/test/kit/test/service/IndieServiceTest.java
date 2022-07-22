@@ -7,19 +7,21 @@ package com.vng.zing.media.mp3.test.kit.test.service;
  * @author namnh16 on 05/08/2021
  */
 
-import com.vng.zing.media.common.utils.ThriftUtils;
+import com.vng.zing.media.common.thrift.THeaderReq;
+import com.vng.zing.media.mp3.common.thrift.indie.TIndieArtistValidatingType;
 import com.vng.zing.media.mp3.service.indie.thrift.client.TZMP3IndieServiceClient;
 import com.vng.zing.media.mp3.service.indie.thrift.client.TZMP3IndieUserServiceClient;
-import com.vng.zing.media.mp3.service.indie.thrift.req.TGetIndieArtistReq;
 import com.vng.zing.media.mp3.service.indie.thrift.req.TGetIndiePublishPlaylistsReq;
+import com.vng.zing.media.mp3.service.indie.thrift.req.TValidateIndieArtistInfoReq;
 import com.vng.zing.media.mp3.service.indie.thrift.res.TGetIndiePublishPlaylistsRes;
 import com.vng.zing.media.mp3.test.kit.test.common.Constant;
+import com.vng.zing.media.mp3.test.kit.test.common.PrintUtils;
 
 public class IndieServiceTest extends Test {
 
-    //    private static final TZMP3IndieServiceClient STG_SERVICE = new TZMP3IndieServiceClient("staging");
+    private static final TZMP3IndieServiceClient STG_SERVICE = new TZMP3IndieServiceClient("staging");
     //    private static final TZMP3IndieUserServiceClient STG_SERVICE_USER = new TZMP3IndieUserServiceClient("staging");
-    private static final TZMP3IndieServiceClient SERVICE = TZMP3IndieServiceClient.INST_INDIE;
+//    private static final TZMP3IndieServiceClient SERVICE = TZMP3IndieServiceClient.INST_INDIE;
     private static final TZMP3IndieUserServiceClient SERVICE_USER = TZMP3IndieUserServiceClient.INST_USER;
 
     public static void main(String[] args) {
@@ -59,12 +61,12 @@ public class IndieServiceTest extends Test {
 //                .setEndDay(20210930)
 //        ));
 
-        ThriftUtils.prettyPrint(SERVICE.getIndieArtist(new TGetIndieArtistReq()
-                        .setAliasName("Thanh-Beso")
-//                .setArtistId(1866305)
-                        .setHeader(Constant.HEADER)
-//                        .setUserId(NAMNH16_ZMP3_ID)
-        ));
+//        ThriftUtils.prettyPrint(STG_SERVICE.getIndieArtist(new TGetIndieArtistReq()
+//                        .setAliasName("Tran-Dang-Dang-Dong")
+////                .setArtistId(1866305)
+//                        .setHeader(Constant.HEADER)
+////                        .setUserId(NAMNH16_ZMP3_ID)
+//        ));
 //        ThriftUtils.prettyPrint(TZMP3CoreMWClient.INST.getGenericArtist(1020214).value);
 
 //        ThriftUtils.prettyPrint(TZMP3IndieMWClient.INST.getIndieArtistByUserID(1086447105));
@@ -72,6 +74,12 @@ public class IndieServiceTest extends Test {
 //        for(int i=0; i<20; i++) {
 //            System.out.println(TZMP3IndieMWClient.INST.getIndieArtistByAlias("Phan-Tran-Cong-Hieu").value.aliasName);
 //        }
+
+        PrintUtils.printTBase(STG_SERVICE.validateIndieArtistInfo(new TValidateIndieArtistInfoReq()
+                .setHeader(new THeaderReq())
+                .setType(TIndieArtistValidatingType.ALIAS_NAME.getValue())
+                .setInfo("Jack-J97")
+        ));
     }
 
     private static void _testPlaylist() {
