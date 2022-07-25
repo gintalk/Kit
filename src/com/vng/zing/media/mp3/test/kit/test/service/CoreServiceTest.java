@@ -11,16 +11,23 @@ import com.vng.zing.media.common.utils.ThriftUtils;
 import com.vng.zing.media.mp3.common.thrift.TCounterTotalIndex;
 import com.vng.zing.media.mp3.common.thrift.TCounterTotalType;
 import com.vng.zing.media.mp3.common.thrift.TFollowType;
+import com.vng.zing.media.mp3.common.thrift.core.TArtist;
 import com.vng.zing.media.mp3.common.thrift.core.TListInfo;
 import com.vng.zing.media.mp3.mw.core.thrift.client.TZMP3CoreMWClient;
 import com.vng.zing.media.mp3.service.core.thrift.client.TZMP3CoreServiceClient;
+import com.vng.zing.media.mp3.service.core.thrift.req.TGetArtistReq;
 import com.vng.zing.media.mp3.service.core.thrift.req.TGetCounterTotalReq;
 import com.vng.zing.media.mp3.service.core.thrift.req.TGetGenericArtistReq;
 import com.vng.zing.media.mp3.service.core.thrift.req.TGetPlaylistReq;
 import com.vng.zing.media.mp3.service.core.thrift.req.TGetTotalFollowReq;
+import com.vng.zing.media.mp3.service.core.thrift.req.TMGetArtistReq;
+import com.vng.zing.media.mp3.service.core.thrift.req.TMRemoveArtistReq;
+import com.vng.zing.media.mp3.service.core.thrift.req.TPutArtistReq;
+import com.vng.zing.media.mp3.service.core.thrift.req.TRemoveArtistReq;
 import com.vng.zing.media.mp3.test.kit.test.common.PrintUtils;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class CoreServiceTest extends Test {
 
@@ -126,9 +133,9 @@ public class CoreServiceTest extends Test {
 //                THomeSectionType.PROMOTE_PODCAST_PROGRAM
 //        ));
 
-        ThriftUtils.prettyPrint(CORE_SERVICE.getGenericArtist(new TGetGenericArtistReq()
-                .setId(2251273)
-        ).value);
+//        ThriftUtils.prettyPrint(CORE_SERVICE.getGenericArtist(new TGetGenericArtistReq()
+//                .setId(2251273)
+//        ).value);
 
 //        List<String> lines = FileUtils.readLines(new File("data/indie_artist.csv"), "UTF-8");
 //        for (String line : lines) {
@@ -141,6 +148,30 @@ public class CoreServiceTest extends Test {
 //        PrintUtils.printTBase(CORE_SERVICE.getPlaylist(new TGetPlaylistReq()
 //                .setPlaylistId(1491854332)
 //        ).value.storageMeta);
+
+//        PrintUtils.printTBase(CORE_SERVICE.putArtist(new TPutArtistReq().setArtist(new TArtist()
+//                .setId(9999998)
+//                .setAliasName("Rub-Thy-Camel")
+//        )));
+
+//        PrintUtils.printTBase(CORE_SERVICE.removeArtist(new TRemoveArtistReq()
+//                .setId(9999999)
+//        ));
+
+//        PrintUtils.printTBase(CORE_SERVICE.mremoveArtist(new TMRemoveArtistReq()
+//                .setIds(Arrays.asList(9999999, 9999998))
+//        ));
+
+        PrintUtils.printTBase(CORE_SERVICE.getArtist(new TGetArtistReq()
+                .setAliasName("Armin-Grgic.IW7BBDEI")
+        ));
+
+//        PrintUtils.printTBase(CORE_SERVICE.mgetArtist(new TMGetArtistReq()
+//                .setAsList(true)
+//                .setAliasNames(Arrays.asList("Jack-J97", "Liz-Kim-Cuong"))
+//        ));
+
+//        PrintUtils.printTBase(CORE_MW.getArtist(100789));
 
         System.exit(0);
     }

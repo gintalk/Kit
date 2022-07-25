@@ -34,7 +34,7 @@ public class CMSProxyTest extends Test {
 //        _testOAHome();
 //        _testOABox();
 //        _testOAStats();
-        _testEvent();
+//        _testEvent();
 //        _testEpisode();
 //        _testProgram();
 //        _testCategory();
@@ -45,7 +45,7 @@ public class CMSProxyTest extends Test {
 //        _testPodcastProgramStats();
 //        _testPodcastEpisodeStats();
 //        _testPlaylist();
-//        _testPromotion();
+        _testPromotion();
 
         System.exit(0);
     }
@@ -318,16 +318,16 @@ public class CMSProxyTest extends Test {
     }
 
     private static void _testPromotion() {
-        TCMSHeader header = CMS_HEADER.apply(6980, NAMNH16_ZMP3_ID);
+        TCMSHeader header = CMS_HEADER.apply(DEMO_4_DEV, NIENDT_ZMP3_ID);
 
-//        System.out.println(WRAPPER.addOAPromotion(
-//                header,
-//                TZMP3OABoxItemType.PLAYLIST.getValue(),
-//                Collections.singletonList(5),
-//                1657169540,
-//                1657169600,
-//                TZMP3OAPromotionStatus.SHOWN.getValue()
-//        ));
+        System.out.println(WRAPPER.addOAPromotion(
+                header,
+                TZMP3OABoxItemType.PLAYLIST.getValue(),
+                Collections.singletonList(5),
+                1657169540,
+                1657169541,
+                TZMP3OAPromotionStatus.SHOWN.getValue()
+        ));
 
 //        System.out.println(WRAPPER.updateOAPromotion(
 //                header,
@@ -339,6 +339,6 @@ public class CMSProxyTest extends Test {
 //                TZMP3OAPromotionStatus.SHOWN.getValue()
 //        ));
 
-        WRAPPER.multiGetOAPromotionAsList(header, WRAPPER.getOAPromotionIDSlice(header, 0, 100).values).forEach(PrintUtils::printTBase);
+//        WRAPPER.multiGetOAPromotionAsList(header, WRAPPER.getOAPromotionIDSlice(header, 0, 100).values).forEach(PrintUtils::printTBase);
     }
 }
