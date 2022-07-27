@@ -21,8 +21,8 @@ rootProject.name = rootProject.projectDir.getName()
 //project(':ZTMCMSLib').projectDir = file('/zserver/lib/zmt/common/ZTMCMSLib')
 
 // Test Common Lib
-//include 'ZTMCommonLib'
-//project(':ZTMCommonLib').projectDir = file('/zserver/lib/zmt/common/ZTMCommonLib')
+include 'ZTMCommonLib'
+project(':ZTMCommonLib').projectDir = file('/zserver/lib/zmt/common/ZTMCommonLib')
 
 // Test Utils Lib
 //include 'ZTMUtilsLib'

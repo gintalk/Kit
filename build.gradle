@@ -17,7 +17,7 @@ dependencies {
     /* ZTM */
     implementation 'com.vng.zing.media:ztm-lib-thrift:1.0.9'
     implementation 'com.vng.zing.media:ztm-lib-profiler:1.0.1'
-    implementation 'com.vng.zing.media:ztm-lib-common:1.0.24'
+//    implementation 'com.vng.zing.media:ztm-lib-common:1.0.24'
     implementation "com.vng.zing.media:ztm-lib-thrift-service:1.0.2"
     implementation "com.vng.zing.media:ztm-lib-utils:1.0.6"
     implementation "com.vng.zing.media:ztm-lib-nosql:1.0.1"
@@ -38,9 +38,11 @@ dependencies {
     implementation 'com.vng.zing:slf4j-api:1.7.2'
     implementation 'com.vng.zing:slf4j-log4j12:1.7.2'
     implementation 'com.vng.zing:zthrift:0.9.3.8'
+    implementation 'com.vng.zing:jzodt-thrift9:1.0.4.8'
 
     /* 3rd-party */
     implementation 'commons-io:commons-io:2.11.0'
+    implementation 'org.json:json:20220320'
     /* --- Libs end --- */
 
     /* --- Thrifts begin --- */
@@ -54,7 +56,7 @@ dependencies {
 
     /* --- Development begins --- */
     /* ZTM */
-//    implementation project(":ZTMCommonLib")
+    implementation project(":ZTMCommonLib")
 //    implementation project(":ZTMThriftLib")
 //    implementation project(":ZTMUtilsLib")
 //    implementation project(":ZTMAPILib")
