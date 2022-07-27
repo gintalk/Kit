@@ -30,6 +30,7 @@ public class Test {
     protected static final int ON_AIR_OA_ID = 1223281;
     protected static final int DEMO = 1921897;
     protected static final int DEMO_4_DEV = 1001371;
+    protected static final int PETER_SERKIN = 6980;
     protected static final BiFunction<Integer, Integer, TCMSHeader> CMS_HEADER = (oaID, userID) ->
             new TCMSHeader().setClientPlatformID(TCMSClient.OA_CMS.getValue()).setObjectID(oaID).setUserID(userID);
 }
