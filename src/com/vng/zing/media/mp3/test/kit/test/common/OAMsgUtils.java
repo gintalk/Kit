@@ -4,6 +4,7 @@ import com.vng.zing.common.ZErrorDef;
 import com.vng.zing.common.ZErrorHelper;
 import com.vng.zing.configer.ZConfig;
 import com.vng.zing.logger.ZLogger;
+import com.vng.zing.media.commonlib.helper.HttpRequestHelperHelper;
 import com.vng.zing.media.commonlib.helper.ProxyHelper;
 import com.vng.zing.media.commonlib.utils.CommonUtils;
 import com.vng.zing.media.commonlib.utils.LogUtils;
@@ -12,12 +13,11 @@ import com.vng.zing.zalooauth.ZCypher;
 import com.vng.zing.zcommon.thrift.ECode;
 import org.apache.log4j.Logger;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author lamtd
@@ -160,52 +160,24 @@ public class OAMsgUtils {
         MessageResult sendResult = new MessageResult(0);
         try {
             message.oaIdRaw = this.oaIdRaw;
-            String sendRs = useProxy ?
-                    HttpUtils.sendPostJSON(API_OA_MESSAGE + this.accessToken, this.proxyHost, this.proxyPort, message.getJson(), READ_TIMEOUT) :
-                    HttpUtils.sendPostJSON(API_OA_MESSAGE + this.accessToken, message.getJson(), READ_TIMEOUT);
-//            HttpRequestHelper.Response sendRs =
+//            String sendRs = useProxy ?
+//                    HttpUtils.sendPostJSON(API_OA_MESSAGE + this.accessToken, this.proxyHost, this.proxyPort, message.getJson(), READ_TIMEOUT) :
+//                    HttpUtils.sendPostJSON(API_OA_MESSAGE + this.accessToken, message.getJson(), READ_TIMEOUT);
+            HttpRequestHelperHelper.Response sendRs =
 //                    useProxy ?
 //                    HttpRequestHelper.newPost().setUrl(API_OA_MESSAGE + this.accessToken).setProxy(this.proxyHost, this.proxyPort).setContentType(HttpRequestHelper.ContentType.APPLICATION_JSON).setBody(message.getMap()).setTimeout(READ_TIMEOUT, TimeUnit.MILLISECONDS).execute() :
-//                    HttpRequestHelper.newPost().setUrl(API_OA_MESSAGE + this.accessToken).setContentType(HttpRequestHelper.ContentType.APPLICATION_JSON).setBody(message.getMap()).setTimeout(READ_TIMEOUT, TimeUnit.MILLISECONDS).execute();
+                    HttpRequestHelperHelper.newPost().setUrl(API_OA_MESSAGE + this.accessToken).setContentType(HttpRequestHelperHelper.ContentType.APPLICATION_JSON).setBody(message.getMap()).setTimeout(READ_TIMEOUT, TimeUnit.MILLISECONDS).execute();
             LOG.info(LogUtils.buildTabLog("sendRs", sendRs));
-//            if (sendRs.getCode() != 200) {
-//                sendResult.errorCode = sendRs.getCode();
-//                LOG.error(LogUtils.buildTabLog("sendOAMessageError", sendRs));
-//            }
-//            sendResult.setErrorMsg(sendRs.getMsg());
+            if (sendRs.getCode() != 200) {
+                sendResult.errorCode = sendRs.getCode();
+                LOG.error(LogUtils.buildTabLog("sendOAMessageError", sendRs));
+            }
+            sendResult.setErrorMsg(sendRs.getMsg());
         } catch (Throwable e) {
             LOG.error(e.getMessage(), e);
             sendResult.setErrorCode(-ECode.EXCEPTION.getValue());
         }
         return sendResult;
-    }
-
-    public UploadResult uploadFile(File file) {
-        UploadResult result = new UploadResult(ZErrorDef.FAIL);
-        try {
-            String command = "curl --proxy http://" + this.proxyHost + ":" + this.proxyPort + " --location --request POST '" + API_OA_UPLOAD_FILE + this.accessToken + "' \\--form 'file=@" + file.getCanonicalFile() + "'";
-            String responseBody = CommonUtils.executeCommandV2(command);
-            if (CommonUtils.isEmpty(responseBody)) {
-                return result;
-            }
-            LOG.info(LogUtils.buildTabLog("responseBody", responseBody));
-            JsonWrapper responseJson = JsonWrapper.build(responseBody);
-            if (!responseJson.isExists("error")) {
-                return result;
-            }
-            if (responseJson.getInt("error", -1) >= 0) {
-                result.error = ZErrorDef.SUCCESS;
-            } else {
-                return result;
-            }
-            result.message = responseJson.getString("message", "");
-            JsonWrapper dataJson = responseJson.getJson("data", JsonWrapper.EMPTY_OBJ);
-            result.attachmentId = dataJson.getString("token", "");
-            return result;
-        } catch (Exception ex) {
-            LOG.error(ex.getMessage(), ex);
-            return result;
-        }
     }
 
     public MessageResult sendTextMessage(String message, List<Integer> zaloIds) {
@@ -217,24 +189,6 @@ public class OAMsgUtils {
             MessageResult rsSend = sendMessage(new TextOAMessage(zaloId, message));
             if (ZErrorHelper.isFail(rsSend.errorCode)) {
                 LOG.error(LogUtils.buildTabLog("sendTextMessageFail", rsSend, zaloId, message));
-            }
-        }
-        return new MessageResult(ECode.C_SUCCESS.getValue());
-    }
-
-    public MessageResult sendImageMessage(String imageUrl, String title, List<Integer> zaloIds) {
-        if (CommonUtils.isEmpty(imageUrl) || CommonUtils.isEmpty(zaloIds)) {
-            LOG.error(LogUtils.buildTabLog("invalidParam", imageUrl, zaloIds));
-            return new MessageResult(-ECode.INVALID_PARAM.getValue());
-        }
-        if (title == null) {
-            title = "";
-        }
-
-        for (Integer zaloId : zaloIds) {
-            MessageResult rsSend = sendMessage(new ImageOAMessage(zaloId, title, imageUrl));
-            if (ZErrorHelper.isFail(rsSend.errorCode)) {
-                LOG.error(LogUtils.buildTabLog("sendImageMessageFail", rsSend, zaloId, title, imageUrl));
             }
         }
         return new MessageResult(ECode.C_SUCCESS.getValue());
@@ -297,159 +251,6 @@ public class OAMsgUtils {
             return super.getMap();
         }
 
-    }
-
-    public static class FileOAMessage extends _BaseOAMessage {
-
-        String attachtId;
-
-        public FileOAMessage(int zaloId, String attachId) {
-            super(zaloId);
-            this.attachtId = attachId;
-        }
-
-        @Override
-        public JsonWrapper getJson() {
-            JsonWrapper payload = JsonWrapper.createObj()
-                    .put("token", attachtId);
-            JsonWrapper attachment = JsonWrapper.createObj()
-                    .put("type", "file")
-                    .put("payload", payload);
-            this.message.put("attachment", attachment);
-
-            return super.getJson();
-        }
-
-        @Override
-        public Map<String, String> getMap() {
-            JsonWrapper payload = JsonWrapper.createObj()
-                    .put("token", attachtId);
-            JsonWrapper attachment = JsonWrapper.createObj()
-                    .put("type", "file")
-                    .put("payload", payload);
-            this.message.put("attachment", attachment);
-
-            return super.getMap();
-        }
-    }
-
-    public final static class ImageOAMessage extends TextOAMessage {
-
-        String image;
-
-        public ImageOAMessage(int zaloId, String text, String image) {
-            super(zaloId, text);
-            this.image = image;
-        }
-
-        @Override
-        public JsonWrapper getJson() {
-            JsonWrapper elements = JsonWrapper.createArr().add(JsonWrapper.createObj()
-                    .put("media_type", "image")
-                    .put("url", this.image));
-            JsonWrapper payload = JsonWrapper.createObj()
-                    .put("template_type", "media")
-                    .put("elements", elements);
-            JsonWrapper attachment = JsonWrapper.createObj()
-                    .put("type", "template")
-                    .put("payload", payload);
-            this.message.put("attachment", attachment);
-
-            return super.getJson();
-        }
-
-        @Override
-        public Map<String, String> getMap() {
-            JsonWrapper elements = JsonWrapper.createArr().add(JsonWrapper.createObj()
-                    .put("media_type", "image")
-                    .put("url", this.image));
-            JsonWrapper payload = JsonWrapper.createObj()
-                    .put("template_type", "media")
-                    .put("elements", elements);
-            JsonWrapper attachment = JsonWrapper.createObj()
-                    .put("type", "template")
-                    .put("payload", payload);
-            this.message.put("attachment", attachment);
-
-            return super.getMap();
-        }
-    }
-
-    public final static class ListActionOAMessage extends _BaseOAMessage {
-
-        List<OAActionItem> attachedItems;
-        String title;
-        String image;
-
-        public ListActionOAMessage(int zaloId, String title, String subTitle, String image, String actionLink) {
-            super(zaloId);
-            this.attachedItems = new ArrayList<>(Collections.singletonList(new OAActionItem(title, subTitle, image, actionLink)));
-        }
-
-        public ListActionOAMessage(int zaloId, List<OAActionItem> attachedItems) {
-            super(zaloId);
-            this.attachedItems = new ArrayList<>(attachedItems);
-        }
-
-        @Override
-        public JsonWrapper getJson() {
-            JsonWrapper elements = JsonWrapper.createArr();
-            if (!CommonUtils.isEmpty(this.attachedItems)) {
-                this.attachedItems.forEach(item -> {
-                    JsonWrapper default_action = JsonWrapper.createObj()
-                            .put("type", "oa.open.url")
-                            .put("url", item.actionLink);
-
-                    JsonWrapper element = JsonWrapper.createObj()
-                            .put("title", item.title)
-                            .put("subtitle", item.subTitle)
-                            .put("image_url", item.image)
-                            .put("default_action", default_action);
-
-                    elements.add(element);
-                });
-            }
-
-            JsonWrapper payload = JsonWrapper.createObj()
-                    .put("template_type", "list")
-                    .put("elements", elements);
-            JsonWrapper attachment = JsonWrapper.createObj()
-                    .put("type", "template")
-                    .put("payload", payload);
-            message.put("attachment", attachment);
-
-            return super.getJson();
-        }
-
-        @Override
-        public Map<String, String> getMap() {
-            JsonWrapper elements = JsonWrapper.createArr();
-            if (!CommonUtils.isEmpty(this.attachedItems)) {
-                this.attachedItems.forEach(item -> {
-                    JsonWrapper default_action = JsonWrapper.createObj()
-                            .put("type", "oa.open.url")
-                            .put("url", item.actionLink);
-
-                    JsonWrapper element = JsonWrapper.createObj()
-                            .put("title", item.title)
-                            .put("subtitle", item.subTitle)
-                            .put("image_url", item.image)
-                            .put("default_action", default_action);
-
-                    elements.add(element);
-                });
-            }
-
-            JsonWrapper payload = JsonWrapper.createObj()
-                    .put("template_type", "list")
-                    .put("elements", elements);
-            JsonWrapper attachment = JsonWrapper.createObj()
-                    .put("type", "template")
-                    .put("payload", payload);
-            message.put("attachment", attachment);
-
-            return super.getMap();
-        }
     }
 
     public static class OAActionItem {

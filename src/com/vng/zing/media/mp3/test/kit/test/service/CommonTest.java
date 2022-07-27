@@ -4,7 +4,7 @@
  */
 package com.vng.zing.media.mp3.test.kit.test.service;
 
-import com.vng.zing.media.commonlib.helper.OAMessageHelper;
+import com.vng.zing.media.mp3.test.kit.test.common.OAMsgUtils;
 
 import java.util.Collections;
 
@@ -14,7 +14,7 @@ import java.util.Collections;
 public class CommonTest extends Test {
 
     public static void main(String[] args) {
-        System.out.println(OAMessageHelper.ZMP3_INST.sendTextMessage("Thử HttpRequestHelper", Collections.singletonList(NAMNH16_ZALO_ID)));
+        System.out.println(OAMsgUtils.ZMP3_INST.sendTextMessage("Thử HttpRequestHelper", Collections.singletonList(NAMNH16_ZALO_ID)));
 
         System.exit(0);
     }
