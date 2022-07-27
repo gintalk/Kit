@@ -12,6 +12,7 @@ import com.vng.zing.media.commonlib.wrapper.JsonWrapper;
 import com.vng.zing.zalooauth.ZCypher;
 import com.vng.zing.zcommon.thrift.ECode;
 import org.apache.log4j.Logger;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -160,7 +161,8 @@ public class OAMsgUtils {
         MessageResult sendResult = new MessageResult(0);
         try {
             message.oaIdRaw = this.oaIdRaw;
-//            String sendRs = useProxy ?
+//            String sendRs =
+//                    useProxy ?
 //                    HttpUtils.sendPostJSON(API_OA_MESSAGE + this.accessToken, this.proxyHost, this.proxyPort, message.getJson(), READ_TIMEOUT) :
 //                    HttpUtils.sendPostJSON(API_OA_MESSAGE + this.accessToken, message.getJson(), READ_TIMEOUT);
             HttpRequestHelperHelper.Response sendRs =
@@ -199,7 +201,7 @@ public class OAMsgUtils {
         private int oaIdRaw = 0;
         private final int zaloId;
 
-        protected JsonWrapper message = JsonWrapper.createObj();
+        protected JSONObject message = new JSONObject();
         protected String user_id;
 
         public JsonWrapper getJson() {
@@ -216,7 +218,7 @@ public class OAMsgUtils {
             this.user_id = String.valueOf(encodedUserID);
 
             Map<String, String> map = new HashMap<>();
-            map.put("recipient", JsonWrapper.createObj().put("user_id", user_id).toString());
+            map.put("recipient",new JSONObject().put("user_id", user_id).toString());
             map.put("message", message.toString());
 
             return map;

@@ -185,7 +185,7 @@ public class PublisherMWTest extends Test {
 
         PrintUtils.printTBase(MW.getPublisherID(new TGetPublisherIDMWReq()
                 .setPublisherType(TPublisherType.INDIE_ARTIST.getValue())
-                .setAliasName("DT0710")
+                .setAliasName("Dinh.Linh")
         ));
 
 //        Map<String, Integer> dataMap = new HashMap<>();
