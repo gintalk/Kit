@@ -4,7 +4,6 @@ import com.vng.zing.common.ZErrorDef;
 import com.vng.zing.common.ZErrorHelper;
 import com.vng.zing.configer.ZConfig;
 import com.vng.zing.logger.ZLogger;
-import com.vng.zing.media.commonlib.helper.HttpRequestHelperHelper;
 import com.vng.zing.media.commonlib.helper.ProxyHelper;
 import com.vng.zing.media.commonlib.utils.CommonUtils;
 import com.vng.zing.media.commonlib.utils.LogUtils;
@@ -14,11 +13,18 @@ import com.vng.zing.zcommon.thrift.ECode;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author lamtd
@@ -161,20 +167,17 @@ public class OAMsgUtils {
         MessageResult sendResult = new MessageResult(0);
         try {
             message.oaIdRaw = this.oaIdRaw;
-//            String sendRs =
+            String sendRs =
 //                    useProxy ?
-//                    HttpUtils.sendPostJSON(API_OA_MESSAGE + this.accessToken, this.proxyHost, this.proxyPort, message.getJson(), READ_TIMEOUT) :
-//                    HttpUtils.sendPostJSON(API_OA_MESSAGE + this.accessToken, message.getJson(), READ_TIMEOUT);
-            HttpRequestHelperHelper.Response sendRs =
-//                    useProxy ?
-//                    HttpRequestHelper.newPost().setUrl(API_OA_MESSAGE + this.accessToken).setProxy(this.proxyHost, this.proxyPort).setContentType(HttpRequestHelper.ContentType.APPLICATION_JSON).setBody(message.getMap()).setTimeout(READ_TIMEOUT, TimeUnit.MILLISECONDS).execute() :
-                    HttpRequestHelperHelper.newPost().setUrl(API_OA_MESSAGE + this.accessToken).setContentType(HttpRequestHelperHelper.ContentType.APPLICATION_JSON).setBody(message.getMap()).setTimeout(READ_TIMEOUT, TimeUnit.MILLISECONDS).execute();
+//                            _sendPostJSON(API_OA_MESSAGE + this.accessToken, this.proxyHost, this.proxyPort, message.getJson(), READ_TIMEOUT) :
+                            _sendPostJSON(API_OA_MESSAGE + this.accessToken, message.getJson(), READ_TIMEOUT);
             LOG.info(LogUtils.buildTabLog("sendRs", sendRs));
-            if (sendRs.getCode() != 200) {
-                sendResult.errorCode = sendRs.getCode();
+            JsonWrapper rsJw = JsonWrapper.build(sendRs);
+            if (rsJw.isExists("error")) {
+                sendResult.errorCode = rsJw.getInt("error", 0);
                 LOG.error(LogUtils.buildTabLog("sendOAMessageError", sendRs));
             }
-            sendResult.setErrorMsg(sendRs.getMsg());
+            sendResult.setErrorMsg(rsJw.getString("message", ""));
         } catch (Throwable e) {
             LOG.error(e.getMessage(), e);
             sendResult.setErrorCode(-ECode.EXCEPTION.getValue());
@@ -201,7 +204,7 @@ public class OAMsgUtils {
         private int oaIdRaw = 0;
         private final int zaloId;
 
-        protected JSONObject message = new JSONObject();
+        protected JsonWrapper message = JsonWrapper.createObj();
         protected String user_id;
 
         public JsonWrapper getJson() {
@@ -218,7 +221,7 @@ public class OAMsgUtils {
             this.user_id = String.valueOf(encodedUserID);
 
             Map<String, String> map = new HashMap<>();
-            map.put("recipient",new JSONObject().put("user_id", user_id).toString());
+            map.put("recipient", new JSONObject().put("user_id", user_id).toString());
             map.put("message", message.toString());
 
             return map;
@@ -451,5 +454,67 @@ public class OAMsgUtils {
                 }
             }
         }
+    }
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Private
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    private String _getResponseStream(InputStreamReader stream) throws Exception {
+        BufferedReader in = new BufferedReader(stream);
+        String inputLine;
+        StringBuilder response = new StringBuilder();
+
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+        return response.toString();
+    }
+
+    public String _sendPostJSON(String url, JsonWrapper data, int readTimeoutInMili) throws Exception {
+        return _sendPostJSON(url, "", 0, data, readTimeoutInMili);
+    }
+
+    private String _sendPostJSON(String url, String proxyHost, int proxyPort, JsonWrapper data, int timeoutMillis) throws Exception {
+        HttpURLConnection conn = _sendJSONData(url, data, proxyHost, proxyPort, timeoutMillis);
+        int responseCode = conn.getResponseCode();
+        if (responseCode != 200) {
+            return String.valueOf(responseCode);
+        }
+        //print result
+        return _getResponseStream(new InputStreamReader(conn.getInputStream()));
+    }
+
+    private HttpURLConnection _sendJSONData(String url, JsonWrapper data, String proxyHost, int proxyPort, int timeoutMillis) throws Exception {
+        String srtParams = data.toString();
+        byte[] postData = srtParams.getBytes(StandardCharsets.UTF_8);
+        int postDataLength = postData.length;
+
+        URL obj = new URL(url);
+        HttpURLConnection conn = null;
+        if (CommonUtils.isEmpty(proxyHost) || proxyPort < 1) {
+            conn = (HttpURLConnection) obj.openConnection();
+        } else {
+            Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxyHost, proxyPort));
+            conn = (HttpURLConnection) obj.openConnection(proxy);
+        }
+
+        //add request header
+        conn.setDoOutput(true);
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Content-Type", "application/json");
+        conn.setRequestProperty("charset", "utf-8");
+        conn.setRequestProperty("Content-Length", Integer.toString(postDataLength));
+        conn.setUseCaches(false);
+        if (timeoutMillis > 0) {
+            conn.setReadTimeout(timeoutMillis);
+        }
+
+        // Send post request
+        DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+        wr.write(postData);
+        wr.flush();
+        wr.close();
+        return conn;
     }
 }

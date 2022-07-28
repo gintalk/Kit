@@ -15,7 +15,7 @@ import java.util.Collections;
 public class CommonTest extends Test {
 
     public static void main(String[] args) {
-        System.out.println(OAMsgUtils.ZMP3_INST.sendTextMessage("Thử HttpRequestHelper", Collections.singletonList(NAMNH16_ZALO_ID)));
+//        System.out.println(OAMsgUtils.ZMP3_INST.sendTextMessage("Test method", Collections.singletonList(NAMNH16_ZALO_ID)));
 
 //        String s = "{\"wqqwd\": \"sad\"}";
 //        System.out.println(isJsonObject(s));
