@@ -14,6 +14,8 @@ import com.vng.zing.media.common.thrift.comment.TCommentReactionType;
 import com.vng.zing.media.common.thrift.comment.TCommentSortBy;
 import com.vng.zing.media.common.utils.CommonUtils;
 import com.vng.zing.media.common.utils.DateTimeUtils;
+import com.vng.zing.media.common.utils.EncodeUtils;
+import com.vng.zing.media.common.utils.EncryptUtils;
 import com.vng.zing.media.common.utils.ThriftUtils;
 import com.vng.zing.media.service.comment.thrift.client.TZMediaCommentServiceClient;
 import com.vng.zing.media.service.comment.thrift.req.TAddCommentReq;
@@ -61,13 +63,13 @@ public class CommentServiceTest extends Test {
 //        _mgetComment();
 //        _getCommentSlice();
 //        _getReplySlice();
-//        _getCommentCount();
-//        _mgetCommentCount();
+        _getCommentCount();
+        _mgetCommentCount();
 //        _getReplyCount();
 //        _getCommentReaction();
 //        _addComment();
 //        _removeComment();
-        _mremoveComment();
+//        _mremoveComment();
 //        _approveComment();
 //        _rejectComment();
 //        _mrejectComment();
@@ -94,9 +96,9 @@ public class CommentServiceTest extends Test {
     }
 
     private static void _getCommentSlice() {
-        print(DEF_COMMENT_SERVICE.getCommentSlice(new TGetCommentSliceReq()
-                .setAppId(TCommentApp.ZMP3_PLAYLIST.getValue())
-                .setObjectId(1073929922)
+        print(FEED_COMMENT_SERVICE.getCommentSlice(new TGetCommentSliceReq()
+                .setAppId(TCommentApp.ZMP3_NEWS_FEED.getValue())
+                .setObjectId(1984461)
                 .setStart(0)
                 .setCount(100)
                 .setGetType(TCommentGetType.N_DAYS.getValue())
@@ -116,17 +118,17 @@ public class CommentServiceTest extends Test {
     }
 
     private static void _getCommentCount() {
-        print(DEF_COMMENT_SERVICE.getCommentCount(new TGetCommentCountReq()
-                .setAppId(12)
-                .setObjectId(1127256743)
+        System.out.println(FEED_COMMENT_SERVICE.getCommentCount(new TGetCommentCountReq()
+                .setAppId(10)
+                .setObjectId(1984461)
                 .setGetType(TCommentGetType.N_DAYS.getValue())
         ));
     }
 
     private static void _mgetCommentCount() {
-        print(FEED_COMMENT_SERVICE.mgetCommentCount(new TMGetCommentCountReq()
+        System.out.println(FEED_COMMENT_SERVICE.mgetCommentCount(new TMGetCommentCountReq()
                 .setAppId(10)
-                .setObjectIds(Arrays.asList(1739266, 1737550, 1738761, 1736712))
+                .setObjectIds(Arrays.asList(1984461, 1984423, 1984442, 1984435, 1984494, 1984481, 1984474, 1984469, 1984458, 1984452))
                 .setGetType(TCommentGetType.N_DAYS.getValue())
         ));
     }

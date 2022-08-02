@@ -7,27 +7,14 @@ package com.vng.zing.media.mp3.test.kit.test.service;
  * @author namnh16 on 24/03/2021
  */
 
-import com.vng.zing.media.common.utils.ThriftUtils;
-import com.vng.zing.media.mp3.common.thrift.TCounterTotalIndex;
-import com.vng.zing.media.mp3.common.thrift.TCounterTotalType;
-import com.vng.zing.media.mp3.common.thrift.TFollowType;
-import com.vng.zing.media.mp3.common.thrift.core.TArtist;
-import com.vng.zing.media.mp3.common.thrift.core.TListInfo;
 import com.vng.zing.media.mp3.mw.core.thrift.client.TZMP3CoreMWClient;
 import com.vng.zing.media.mp3.service.core.thrift.client.TZMP3CoreServiceClient;
 import com.vng.zing.media.mp3.service.core.thrift.req.TGetArtistReq;
-import com.vng.zing.media.mp3.service.core.thrift.req.TGetCounterTotalReq;
-import com.vng.zing.media.mp3.service.core.thrift.req.TGetGenericArtistReq;
-import com.vng.zing.media.mp3.service.core.thrift.req.TGetPlaylistReq;
-import com.vng.zing.media.mp3.service.core.thrift.req.TGetTotalFollowReq;
-import com.vng.zing.media.mp3.service.core.thrift.req.TMGetArtistReq;
-import com.vng.zing.media.mp3.service.core.thrift.req.TMRemoveArtistReq;
-import com.vng.zing.media.mp3.service.core.thrift.req.TPutArtistReq;
-import com.vng.zing.media.mp3.service.core.thrift.req.TRemoveArtistReq;
+import com.vng.zing.media.mp3.service.oa.thrift.client.TZMP3OAServiceClient;
+import com.vng.zing.media.mp3.service.oa.thrift.req.TGetOAReq;
 import com.vng.zing.media.mp3.test.kit.test.common.PrintUtils;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 public class CoreServiceTest extends Test {
 
@@ -163,8 +150,13 @@ public class CoreServiceTest extends Test {
 //        ));
 
         PrintUtils.printTBase(CORE_SERVICE.getArtist(new TGetArtistReq()
-                .setAliasName("Armin-Grgic.IW7BBDEI")
-        ));
+                        .setArtistId(6980)
+        ).value);
+
+        PrintUtils.printTBase(TZMP3OAServiceClient.INST.getOA(new TGetOAReq()
+                .setOaId(6980)
+                .setIsOrigin(true)
+        ).value);
 
 //        PrintUtils.printTBase(CORE_SERVICE.mgetArtist(new TMGetArtistReq()
 //                .setAsList(true)
