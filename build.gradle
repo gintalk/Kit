@@ -29,7 +29,6 @@ dependencies {
     implementation "com.vng.zing.media.mp3:zmp3-lib-thrift:1.0.6"
     implementation "com.vng.zing.media.mp3:zmp3-lib-sql:1.0.1"
     implementation "com.vng.zing.media.mp3:zmp3-lib-common:1.0.3"
-    implementation "com.vng.zing.media.mp3:zmp3-mw-publisher:1.0.2"
 
     /* Core */
     implementation 'com.vng.zing:jzcommon-corelib:1.2.3.8'
@@ -42,6 +41,7 @@ dependencies {
 
     /* 3rd-party */
     implementation 'commons-io:commons-io:2.11.0'
+    implementation 'commons-codec:commons-codec:1.15'
     implementation 'org.json:json:20220320'
     /* --- Libs end --- */
 
@@ -49,6 +49,9 @@ dependencies {
     /* ZTM */
 
     /* ZMP3 */
+    implementation "com.vng.zing.media.mp3:zmp3-mw-publisher:1.0.2"
+    implementation 'com.vng.zing.media.mp3:zmp3-mw-oa:1.0.1'
+    implementation 'com.vng.zing.media.mp3:zmp3-mw-core:1.0.1'
 
     /* Core */
 

@@ -21,6 +21,7 @@ import com.vng.zing.media.mp3.mw.publisher.thrift.req.TGetPublisherIDMWReq;
 import com.vng.zing.media.mp3.mw.publisher.thrift.req.TPutAssetMWReq;
 import com.vng.zing.media.mp3.mw.publisher.thrift.req.TPutPublisherAliasMWReq;
 import com.vng.zing.media.mp3.mw.publisher.thrift.req.TRemoveAssetMWReq;
+import com.vng.zing.media.mp3.mw.publisher.thrift.req.TRemovePublisherAliasMWReq;
 import com.vng.zing.media.mp3.mw.publisher.thrift.res.TPutPublisherAliasMWRes;
 import com.vng.zing.media.mp3.test.kit.test.common.PrintUtils;
 import org.apache.commons.io.FileUtils;
@@ -179,13 +180,13 @@ public class PublisherMWTest extends Test {
 //        ));
 
 //        PrintUtils.printTBase(MW.removePublisherAlias(new TRemovePublisherAliasMWReq()
-//                .setPublisherType(TPublisherType.INDIE_ARTIST.getValue())
-//                .setAliasName("rubyourcamel")
+//                .setPublisherType(TPublisherType.OA_ARTIST.getValue())
+//                .setAliasName("followthechild")
 //        ));
 
         PrintUtils.printTBase(MW.getPublisherID(new TGetPublisherIDMWReq()
-                .setPublisherType(TPublisherType.INDIE_ARTIST.getValue())
-                .setAliasName("Dinh.Linh")
+                .setPublisherType(TPublisherType.OA_ARTIST.getValue())
+                .setAliasName("followthechild")
         ));
 
 //        Map<String, Integer> dataMap = new HashMap<>();

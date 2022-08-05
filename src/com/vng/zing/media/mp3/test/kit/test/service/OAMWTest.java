@@ -4,23 +4,28 @@
  */
 package com.vng.zing.media.mp3.test.kit.test.service;
 
+import com.vng.zing.media.mp3.commonlib.thrift.oa.TZMP3OABox;
+import com.vng.zing.media.mp3.mw.oa.thrift.client.TZMP3OAMWClient;
+import com.vng.zing.media.mp3.mw.oa.thrift.req.TGetOABoxMWReq;
+import com.vng.zing.media.mp3.test.kit.test.common.PrintUtils;
+
 /**
  * @author namnh16
  */
 public class OAMWTest extends Test {
 
-//    private static final TZMP3OAMWClient OA_MW = TZMP3OAMWClient.INST;
+    private static final TZMP3OAMWClient OA_MW = TZMP3OAMWClient.INST;
 //    private static final TZMP3OAStatsMWClient OA_STATS_MW = TZMP3OAStatsMWClient.INST;
 //
-//    public static void main(String[] args) {
+    public static void main(String[] args) {
 //        _testOA();
-////        _testOABox();
+        _testOABox();
 ////        _testOAHome();
 ////        _testOAOwner();
 ////        _testStats();
 //
 //        System.exit(0);
-//    }
+    }
 //
 //    private static void _testOA() {
 ////        TZMP3OA oa = OA_MW.getOA(new TGetOAMWReq()
@@ -54,18 +59,18 @@ public class OAMWTest extends Test {
 //        }
 //    }
 //
-//    private static void _testOABox() {
-//        TZMP3OABox box = OA_MW.getOABox(new TGetOABoxMWReq().setBoxId(14788)).value;
-//        ThriftUtils.prettyPrint(box);
-//
-////        Map<Integer, TZMP3OABox> boxes = CLIENT.multiGetZMP3OABox(Arrays.asList(10807, 10808, 10809)).values;
-////        for(Map.Entry<Integer, TZMP3OABox> entry: boxes.entrySet()){
-////            System.out.println(ThriftUtils.getStructAsString(entry.getValue()));
-////        }
-//
-////        ThriftUtils.prettyPrint(OA_MW.removeOABox(new TRemoveOABoxMWReq().setBoxId(14688)));
-////        ThriftUtils.prettyPrint(OA_MW.removeOABox(new TRemoveOABoxMWReq().setBoxId(14695)));
-//    }
+    private static void _testOABox() {
+        TZMP3OABox box = OA_MW.getOABox(new TGetOABoxMWReq().setBoxId(15330)).value;
+        PrintUtils.printTBase(box);
+
+//        Map<Integer, TZMP3OABox> boxes = CLIENT.multiGetZMP3OABox(Arrays.asList(10807, 10808, 10809)).values;
+//        for(Map.Entry<Integer, TZMP3OABox> entry: boxes.entrySet()){
+//            System.out.println(ThriftUtils.getStructAsString(entry.getValue()));
+//        }
+
+//        ThriftUtils.prettyPrint(OA_MW.removeOABox(new TRemoveOABoxMWReq().setBoxId(14688)));
+//        ThriftUtils.prettyPrint(OA_MW.removeOABox(new TRemoveOABoxMWReq().setBoxId(14695)));
+    }
 //
 //    private static void _testOAHome() {
 //        TZMP3OAHome home = OA_MW.getOAHome(new TGetOAHomeMWReq()
