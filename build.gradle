@@ -15,9 +15,9 @@ conf {
 dependencies {
     /* --- Libs begin --- */
     /* ZTM */
-    implementation 'com.vng.zing.media:ztm-lib-thrift:1.0.9'
+    implementation 'com.vng.zing.media:ztm-lib-thrift:1.0.15'
     implementation 'com.vng.zing.media:ztm-lib-profiler:1.0.1'
-//    implementation 'com.vng.zing.media:ztm-lib-common:1.0.24'
+    implementation 'com.vng.zing.media:ztm-lib-common:1.0.32'
     implementation "com.vng.zing.media:ztm-lib-thrift-service:1.0.2"
     implementation "com.vng.zing.media:ztm-lib-utils:1.0.6"
     implementation "com.vng.zing.media:ztm-lib-nosql:1.0.1"
@@ -29,6 +29,7 @@ dependencies {
     implementation "com.vng.zing.media.mp3:zmp3-lib-thrift:1.0.6"
     implementation "com.vng.zing.media.mp3:zmp3-lib-sql:1.0.1"
     implementation "com.vng.zing.media.mp3:zmp3-lib-common:1.0.3"
+    implementation "com.vng.zing.media.mp3:zmp3-lib-content-collection:1.0.3"
 
     /* Core */
     implementation 'com.vng.zing:jzcommon-corelib:1.2.3.8'
@@ -43,6 +44,10 @@ dependencies {
     implementation 'commons-io:commons-io:2.11.0'
     implementation 'commons-codec:commons-codec:1.15'
     implementation 'org.json:json:20220320'
+    implementation 'com.jsoniter:jsoniter:0.9.23'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.3.0'
+    implementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.3.0'
+    implementation 'io.github.bonigarcia:webdrivermanager:5.2.3'
     /* --- Libs end --- */
 
     /* --- Thrifts begin --- */
@@ -59,13 +64,14 @@ dependencies {
 
     /* --- Development begins --- */
     /* ZTM */
-    implementation project(":ZTMCommonLib")
+//    implementation project(":ZTMCommonLib")
 //    implementation project(":ZTMThriftLib")
 //    implementation project(":ZTMUtilsLib")
 //    implementation project(":ZTMAPILib")
 //    implementation project(":ZTMCMSLib")
 //    implementation project(":ZTMThriftServiceLib")
 //    implementation project(":ZTMNoSQLLib")
+//    implementation project(":ZMP3ContentCollectionLib")
 
     /* ZMP3 */
 //    implementation project(":ZMP3ThriftLib")

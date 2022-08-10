@@ -11,6 +11,9 @@ import com.vng.zing.media.commonlib.utils.ConvertUtils;
 import com.vng.zing.media.mp3.commonlib.thrift.TPublisherType;
 import com.vng.zing.media.mp3.commonlib.thrift.podcast.TPodcastEpisodeStatus;
 import com.vng.zing.media.mp3.commonlib.thrift.publisher.TPublisherAssetType;
+import com.vng.zing.media.mp3.mw.oa.thrift.client.TZMP3OAMWClient;
+import com.vng.zing.media.mp3.mw.oa.thrift.req.TGetOAMWReq;
+import com.vng.zing.media.mp3.mw.oa.thrift.req.TRemoveOAMWReq;
 import com.vng.zing.media.mp3.mw.publisher.thrift.client.TZMP3PublisherMWClient;
 import com.vng.zing.media.mp3.mw.publisher.thrift.req.TGetAssetCountMWReq;
 import com.vng.zing.media.mp3.mw.publisher.thrift.req.TGetAssetSliceMWReq;
@@ -181,12 +184,12 @@ public class PublisherMWTest extends Test {
 
 //        PrintUtils.printTBase(MW.removePublisherAlias(new TRemovePublisherAliasMWReq()
 //                .setPublisherType(TPublisherType.OA_ARTIST.getValue())
-//                .setAliasName("followthechild")
+//                .setAliasName("spectre")
 //        ));
 
         PrintUtils.printTBase(MW.getPublisherID(new TGetPublisherIDMWReq()
                 .setPublisherType(TPublisherType.OA_ARTIST.getValue())
-                .setAliasName("followthechild")
+                .setAliasName("spectre")
         ));
 
 //        Map<String, Integer> dataMap = new HashMap<>();

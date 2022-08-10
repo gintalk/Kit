@@ -4,10 +4,19 @@
  */
 package com.vng.zing.media.mp3.test.kit.test.service;
 
+import com.vng.zing.media.mp3.commonlib.thrift.oa.TZMP3OA;
 import com.vng.zing.media.mp3.commonlib.thrift.oa.TZMP3OABox;
+import com.vng.zing.media.mp3.commonlib.thrift.oa.TZMP3OAHome;
 import com.vng.zing.media.mp3.mw.oa.thrift.client.TZMP3OAMWClient;
 import com.vng.zing.media.mp3.mw.oa.thrift.req.TGetOABoxMWReq;
+import com.vng.zing.media.mp3.mw.oa.thrift.req.TGetOAHomeMWReq;
+import com.vng.zing.media.mp3.mw.oa.thrift.req.TGetOAMWReq;
+import com.vng.zing.media.mp3.mw.oa.thrift.req.TMRemoveOABoxMWReq;
+import com.vng.zing.media.mp3.mw.oa.thrift.req.TRemoveOAMWReq;
 import com.vng.zing.media.mp3.test.kit.test.common.PrintUtils;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author namnh16
@@ -18,8 +27,8 @@ public class OAMWTest extends Test {
 //    private static final TZMP3OAStatsMWClient OA_STATS_MW = TZMP3OAStatsMWClient.INST;
 //
     public static void main(String[] args) {
-//        _testOA();
-        _testOABox();
+        _testOA();
+//        _testOABox();
 ////        _testOAHome();
 ////        _testOAOwner();
 ////        _testStats();
@@ -27,41 +36,19 @@ public class OAMWTest extends Test {
 //        System.exit(0);
     }
 //
-//    private static void _testOA() {
-////        TZMP3OA oa = OA_MW.getOA(new TGetOAMWReq()
-////                .setOaId(Constant.OA_PETER_SERKIN)
-////                .setIsOrigin(true)
-////        ).value;
-////        ThriftUtils.prettyPrint(oa);
-//
-////        oa.setType(TZMP3OAType.BRAND.getValue());
-////        System.out.println(CLIENT.putZMP3OA(oa));
-//
-////        oa.setShortDescription("OA của nghệ sĩ Peter Serkin");
-////        oa.setDescription("Peter Serkin sinh ra ở New York City, là con trai của nghệ sĩ dương cầm Rudolf Serkin , và là cháu nội của nghệ sĩ vĩ cầm có ảnh hưởng Adolf Busch , người con gái Irene đã kết hôn với Rudolf Serkin. Peter được đặt tên Adolf để vinh danh ông nội của ông.\n" +
-////                "Năm 1958, ở tuổi 11, Serkin bắt đầu học tại Học viện Âm nhạc Curtis, giáo viên của ông bao gồm các nghệ sĩ dương cầm Ba Lan Mieczysław Horszowski, các bậc thầy người Mỹ Lee Luvisi, cũng như cha của mình. Ông tốt nghiệp vào năm 1965. Buổi hòa nhạc của ông bắt đầu sự nghiệp vào năm 1959, khi ông lần đầu tiên biểu diễn tại Liên hoan Âm nhạc Marlboro.");
-////        System.out.println(CLIENT.putOA(new TPutOAMWReq()
-////                .setValue(oa)
-////        ));
-//
-////        Map<Integer, TZMP3OA> oas = CLIENT.multiGetZMP3OA(Arrays.asList(PETER_SERKIN, RALPH_FELIX)).values;
-////        for(Map.Entry<Integer, TZMP3OA> entry: oas.entrySet()){
-////            System.out.println(ThriftUtils.getStructAsString(entry.getValue()));
-////        }
-//
-//        List<Integer> oaIDs = Arrays.asList(637886, 637887, 637888, 637889, 637990, 638098, 638199, 638200, 638201, 638331);
-//        for (int oaID : oaIDs) {
-//            ThriftUtils.prettyPrint(OA_MW.removeOA(new TRemoveOAMWReq().setOaId(oaID)));
-//
-//            TZMP3OAHome home = OA_MW.getOAHome(new TGetOAHomeMWReq().setOaId(oaID)).value;
-//            if(home == null || home.boxIds == null) continue;
-//            ThriftUtils.prettyPrint(OA_MW.mremoveOABox(new TMRemoveOABoxMWReq().setBoxIds(home.boxIds)));
-//        }
-//    }
-//
+    private static void _testOA() {
+        TZMP3OA oa = OA_MW.getOA(new TGetOAMWReq()
+                .setOaId(2288316)
+                .setIsOrigin(true)
+        ).value;
+        PrintUtils.printTBase(oa);
+
+        System.exit(0);
+    }
+
     private static void _testOABox() {
-        TZMP3OABox box = OA_MW.getOABox(new TGetOABoxMWReq().setBoxId(15330)).value;
-        PrintUtils.printTBase(box);
+//        TZMP3OABox box = OA_MW.getOABox(new TGetOABoxMWReq().setBoxId(15330)).value;
+//        PrintUtils.printTBase(box);
 
 //        Map<Integer, TZMP3OABox> boxes = CLIENT.multiGetZMP3OABox(Arrays.asList(10807, 10808, 10809)).values;
 //        for(Map.Entry<Integer, TZMP3OABox> entry: boxes.entrySet()){
