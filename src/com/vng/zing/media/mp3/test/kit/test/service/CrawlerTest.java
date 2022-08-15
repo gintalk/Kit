@@ -9,6 +9,7 @@ package com.vng.zing.media.mp3.test.kit.test.service;
 
 import com.jsoniter.output.JsonStream;
 import com.vng.zing.logger.ZLogger;
+import com.vng.zing.media.commonlib.utils.ConvertUtils;
 import com.vng.zing.media.mp3.commonlib.entity.Track;
 import com.vng.zing.media.mp3.commonlib.entity.wrapper.GetAlbumTracks;
 import com.vng.zing.media.mp3.commonlib.entity.wrapper.GetNewReleases;
@@ -146,19 +147,19 @@ public class CrawlerTest extends Test {
 
 
 
-//        SearchTrack st = STAPIWrapper.INST.searchTrack("godzilla", "", "eminem", STAPIWrapper.Country.UNITED_STATED, 0, 10);
+//        SearchTrack st = STAPIWrapper.INST.searchTrack("Nhìn về phía em", "", "", STAPIWrapper.Country.VIET_NAM, 0, 50);
 //        System.out.println(st);
 
 //        SearchAlbum sa = STAPIWrapper.INST.searchAlbum("kamikaze", "", STAPIWrapper.Country.UNITED_STATED, 0, 1);
 //        System.out.println(sa);
 
-//        SearchArtist sa = STAPIWrapper.INST.searchArtist("emi", STAPIWrapper.Country.UNITED_STATED, 1001, 10);
-//        System.out.println(JsonStream.serialize(sa));
+        SearchArtist sa = STAPIWrapper.INST.searchArtist("Jack - J97", STAPIWrapper.Country.UNITED_STATED, 0, 10);
+        sa.items.forEach(a -> System.out.println(a));
 
-        GetNewReleases gnr = STAPIWrapper.INST.getNewReleases(STAPIWrapper.Country.UNITED_STATED, 0, 1);
-        System.out.println(gnr);
-
-        GetAlbumTracks gat = STAPIWrapper.INST.getAlbumTracks("49DV9eFp2xTdtO7veew5xS", STAPIWrapper.Country.UNITED_STATED, 1000, 1);
-        System.out.println(gat);
+//        GetNewReleases gnr = STAPIWrapper.INST.getNewReleases(STAPIWrapper.Country.UNITED_STATED, 0, 1);
+//        System.out.println(gnr);
+//
+//        GetAlbumTracks gat = STAPIWrapper.INST.getAlbumTracks("49DV9eFp2xTdtO7veew5xS", STAPIWrapper.Country.UNITED_STATED, 1000, 1);
+//        System.out.println(gat);
     }
 }
