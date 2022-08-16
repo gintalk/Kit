@@ -28,21 +28,6 @@ dependencies {
     // default
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
-
-//    Test SQL Lib
-//    implementation project(":ZTMSQLLib")
-//    Test API Lib
-//    implementation project(":ZTMAPILib")
-//    Test API Lib
-//    implementation project(":ZTMCMSLib")
-//    Test Common Lib
-//    implementation project(":ZTMCommonLib")
-//    Test Utils Lib
-//    implementation project(":ZTMUtilsLib")
-//    Test Packed Lib
-//    implementation project(":ZTMPackedLib")
-//    Test Thrift Lib
-//    implementation project(":ZTMThriftLib")
 }
 
 apply from: '/zserver/lib/zmt/common/ZMP3Engine/zmp3.gradle'

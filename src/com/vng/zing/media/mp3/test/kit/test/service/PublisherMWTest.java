@@ -5,19 +5,7 @@
 package com.vng.zing.media.mp3.test.kit.test.service;
 
 
-import com.vng.zing.media.common.utils.ThriftUtils;
-import com.vng.zing.media.mp3.common.thrift.publisher.TPublisherAssetType;
-import com.vng.zing.media.mp3.common.thrift.publisher.TPublisherListType;
-import com.vng.zing.media.mp3.engine.model.EEventModel;
 import com.vng.zing.media.mp3.mw.publisher.thrift.client.TZMP3PublisherMWClient;
-import com.vng.zing.media.mp3.mw.publisher.thrift.req.TExistsMWReq;
-import com.vng.zing.media.mp3.mw.publisher.thrift.req.TGetAssetCountMWReq;
-import com.vng.zing.media.mp3.mw.publisher.thrift.req.TGetAssetSliceMWReq;
-import com.vng.zing.media.mp3.mw.publisher.thrift.req.TGetAssetSliceWithScoreMWReq;
-import com.vng.zing.media.mp3.mw.publisher.thrift.req.TGetFollowerCountMWReq;
-import com.vng.zing.media.mp3.mw.publisher.thrift.req.TGetFollowerSliceMWReq;
-import com.vng.zing.media.mp3.mw.publisher.thrift.req.TRemoveAssetMWReq;
-import com.vng.zing.media.mp3.test.kit.test.common.Constant;
 
 /**
  * @author namnh16
@@ -64,17 +52,17 @@ public class PublisherMWTest extends Test {
     }
 
     private static void _testRemoveAsset() {
-        System.out.println(MW.removeAsset(new TRemoveAssetMWReq()
-                .setPublisherId(2031318)
-                .setAssetType(TPublisherAssetType.PODCAST_EPISODE.getValue())
-                .setAssetId(1129257375)
-        ));
-
-        System.out.println(MW.exists(new TExistsMWReq()
-                .setPublisherId(2031318)
-                .setAssetType(TPublisherAssetType.PODCAST_EPISODE.getValue())
-                .setAssetId(1129257375)
-        ));
+//        System.out.println(MW.removeAsset(new TRemoveAssetMWReq()
+//                .setPublisherId(2031318)
+//                .setAssetType(TPublisherAssetType.PODCAST_EPISODE.getValue())
+//                .setAssetId(1129257375)
+//        ));
+//
+//        System.out.println(MW.exists(new TExistsMWReq()
+//                .setPublisherId(2031318)
+//                .setAssetType(TPublisherAssetType.PODCAST_EPISODE.getValue())
+//                .setAssetId(1129257375)
+//        ));
     }
 
     private static void _testGetAssetSlice() {
@@ -86,13 +74,13 @@ public class PublisherMWTest extends Test {
 //                .setCount(0)
 //        ).values);
 
-        ThriftUtils.prettyPrint(MW.getTypedAssetSlice(new TGetAssetSliceMWReq()
-                .setPublisherId(105478)
-                .setListType(TPublisherListType.EVENT_AS_GUEST.getValue())
-                .setAssetType(TPublisherAssetType.EVENT.getValue())
-                .setStart(0)
-                .setCount(10)
-        ));
+//        ThriftUtils.prettyPrint(MW.getTypedAssetSlice(new TGetAssetSliceMWReq()
+//                .setPublisherId(105478)
+//                .setListType(TPublisherListType.EVENT_AS_GUEST.getValue())
+//                .setAssetType(TPublisherAssetType.EVENT.getValue())
+//                .setStart(0)
+//                .setCount(10)
+//        ));
     }
 
     private static void _testGetAssetAssetSliceWithScore() {
@@ -138,35 +126,35 @@ public class PublisherMWTest extends Test {
 //                .setCount(200)
 //        ));
 
-        ThriftUtils.prettyPrint(MW.getTypedAssetSliceWithScore(new TGetAssetSliceWithScoreMWReq()
-                .setPublisherId(6980)
-                .setListType(TPublisherListType.NEW_CONTENT_BY_ARTIST.getValue())
-                .setAssetType(TPublisherAssetType.PLAYLIST.getValue())
-                .setStart(0)
-                .setCount(10)
-        ));
+//        ThriftUtils.prettyPrint(MW.getTypedAssetSliceWithScore(new TGetAssetSliceWithScoreMWReq()
+//                .setPublisherId(6980)
+//                .setListType(TPublisherListType.NEW_CONTENT_BY_ARTIST.getValue())
+//                .setAssetType(TPublisherAssetType.PLAYLIST.getValue())
+//                .setStart(0)
+//                .setCount(10)
+//        ));
     }
 
     private static void _testGetAssetCount() {
-        System.out.println(MW.getAssetCount(new TGetAssetCountMWReq()
-                .setPublisherId(1866305)
-                .setAssetType(TPublisherAssetType.MEDIA.getValue())
-                .setAssetStatus(0)
-        ));
+//        System.out.println(MW.getAssetCount(new TGetAssetCountMWReq()
+//                .setPublisherId(1866305)
+//                .setAssetType(TPublisherAssetType.MEDIA.getValue())
+//                .setAssetStatus(0)
+//        ));
     }
 
     private static void _testGetFollowerSlice() {
-        ThriftUtils.prettyPrint(MW.getFollowerSlice(new TGetFollowerSliceMWReq()
-                .setPublisherId(24591)
-                .setStart(0)
-                .setCount(10000)
-        ));
+//        ThriftUtils.prettyPrint(MW.getFollowerSlice(new TGetFollowerSliceMWReq()
+//                .setPublisherId(24591)
+//                .setStart(0)
+//                .setCount(10000)
+//        ));
     }
 
     private static void _testGetFollowerCount() {
-        System.out.println(MW.getFollowerCount(new TGetFollowerCountMWReq()
-                .setPublisherId(6980)
-        ));
+//        System.out.println(MW.getFollowerCount(new TGetFollowerCountMWReq()
+//                .setPublisherId(6980)
+//        ));
     }
 
     private static void _testPutFollower() {
