@@ -189,8 +189,11 @@ public class PublisherMWTest extends Test {
 
         PrintUtils.printTBase(MW.getPublisherID(new TGetPublisherIDMWReq()
                 .setPublisherType(TPublisherType.OA_ARTIST.getValue())
-                .setAliasName("spectre")
+                .setAliasName("thutrang")
         ));
+        PrintUtils.printTBase(TZMP3OAMWClient.INST.getOA(new TGetOAMWReq()
+                .setOaId(2137088)
+        ).value);
 
 //        Map<String, Integer> dataMap = new HashMap<>();
 //        dataMap.put("rubyourcamel", 333);

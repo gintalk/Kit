@@ -49,8 +49,8 @@ rootProject.name = rootProject.projectDir.getName()
 //project(':ZMP3ThriftLib').projectDir = file('/zserver/lib/zmp3/common/ZMP3ThriftLib')
 
 // Test MP3 Thrift Lib
-//include 'ZMP3SQLLib'
-//project(':ZMP3SQLLib').projectDir = file('/zserver/lib/zmp3/common/ZMP3SQLLib')
+include 'ZMP3SQLLib'
+project(':ZMP3SQLLib').projectDir = file('/zserver/lib/zmp3/common/ZMP3SQLLib')
 
 // Test MP3 Content Collection Lib
 //include 'ZMP3ContentCollectionLib'
