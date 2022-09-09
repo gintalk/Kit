@@ -10,6 +10,8 @@ package com.vng.zing.media.mp3.test.kit.test.service;
 import com.vng.zing.media.common.thrift.TCMSClient;
 import com.vng.zing.media.common.thrift.TCMSHeader;
 import com.vng.zing.media.mp3.common.thrift.TCountryCode;
+import com.vng.zing.media.mp3.common.thrift.oa.core.TZMP3OAAccount;
+import com.vng.zing.media.mp3.common.thrift.oa.core.TZMP3OAAccountRole;
 import com.vng.zing.media.mp3.common.thrift.oa.core.TZMP3OABoxItemType;
 import com.vng.zing.media.mp3.common.thrift.oa.core.TZMP3OAPromotionStatus;
 import com.vng.zing.media.mp3.common.thrift.podcast.TPodcastEpisode;
@@ -22,8 +24,8 @@ import com.vng.zing.media.mp3.searchservice.thrift.client.TZMP3SearchServiceClie
 import com.vng.zing.media.mp3.searchservice.thrift.req.TSearchESReq;
 import com.vng.zing.media.mp3.test.kit.test.common.PrintUtils;
 
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 public class CMSProxyTest extends Test {
 
@@ -40,12 +42,12 @@ public class CMSProxyTest extends Test {
 //        _testCategory();
 //        _testLivestream();
 //        _testsPerformance();
-//        _testAccount();
+        _testAccount();
 //        _testLivestreamStats();
 //        _testPodcastProgramStats();
 //        _testPodcastEpisodeStats();
 //        _testPlaylist();
-        _testPromotion();
+//        _testPromotion();
 
         System.exit(0);
     }
@@ -200,10 +202,12 @@ public class CMSProxyTest extends Test {
     }
 
     private static void _testAccount() {
-        PrintUtils.printOAAccountPermission(WRAPPER.getOAAccountPermission(CMS_HEADER.apply(1001371, NAMNH16_ZMP3_ID), 1021507292));
+        List<TZMP3OAAccount> accounts = WRAPPER.getOAAccountSlice(CMS_HEADER.apply(1013702, NAMNH16_ZMP3_ID), 0, 10);
+        accounts.forEach(PrintUtils::printTBase);
+//        PrintUtils.printOAAccountPermission(WRAPPER.getOAAccountPermission(CMS_HEADER.apply(1013702, 2072500), 2072500));
 
-//        List<TZMP3OAAccount> slice = WRAPPER.getMyOAAccountSlice(new TCMSHeader().setClientPlatformID(TCMSClient.OA_CMS.getValue()).setUserID(1016197014), 0, 200);
-//        slice.forEach(i -> System.out.println(i.zmp3oaId));
+//        System.out.println(WRAPPER.putOAAccount(CMS_HEADER.apply(1013702, 2072500), 1084267889, TZMP3OAAccountRole.MEMBER.getValue()));
+//        System.out.println(WRAPPER.removeOAAccount(CMS_HEADER.apply(2247056, 1036815003), 1033327547));
     }
 
     private static void _testLivestreamStats() {

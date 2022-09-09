@@ -9,6 +9,7 @@ package com.vng.zing.media.mp3.test.kit.test.service;
 
 import com.vng.zing.media.common.thrift.THeaderReq;
 import com.vng.zing.media.common.utils.ThriftUtils;
+import com.vng.zing.media.mp3.common.thrift.indie.TIndieArtistStatus;
 import com.vng.zing.media.mp3.common.thrift.indie.TIndieArtistValidatingType;
 import com.vng.zing.media.mp3.service.indie.thrift.client.TZMP3IndieServiceClient;
 import com.vng.zing.media.mp3.service.indie.thrift.client.TZMP3IndieUserServiceClient;
@@ -65,9 +66,9 @@ public class IndieServiceTest extends Test {
 
         ThriftUtils.prettyPrint(STG_SERVICE.getIndieArtist(new TGetIndieArtistReq()
 //                        .setAliasName("Tran-Dang-Dang-Dong")
-//                .setArtistId(1866305)
+                .setArtistId(2325511)
                         .setHeader(Constant.HEADER)
-                        .setUserId(NAMNH16_ZMP3_ID)
+//                        .setUserId(NAMNH16_ZMP3_ID)
         ));
 //        ThriftUtils.prettyPrint(TZMP3CoreMWClient.INST.getGenericArtist(1020214).value);
 
