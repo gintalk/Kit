@@ -7,15 +7,20 @@ package com.vng.zing.media.mp3.test.kit.test.service;
  * @author namnh16 on 22/02/2022
  */
 
+import com.vng.zing.media.mp3.commonlib.thrift.TMediaSourceFormat;
+import com.vng.zing.media.mp3.service.buildlink.thrift.TBuildLinkReq;
+import com.vng.zing.media.mp3.service.buildlink.thrift.client.ZMP3BuildLinkServiceClient;
+import com.vng.zing.media.mp3.test.kit.test.common.PrintUtils;
+
 public class BuildLinkServiceTest extends Test {
 
-//    private static final ZMP3BuildLinkServiceClient SERVICE = ZMP3BuildLinkServiceClient.INST;
-//
-//    public static void main(String[] args) {
-//        ThriftUtils.prettyPrint(SERVICE.getAudioZMCLinks(new TBuildLinkReq()
-//                .setZmcId("92225ad35b89b2d7eb98")
-//        ));
-//
-//        System.exit(0);
-//    }
+    private static final ZMP3BuildLinkServiceClient SERVICE = ZMP3BuildLinkServiceClient.INST;
+
+    public static void main(String[] args) {
+        PrintUtils.printTBase(SERVICE.getAudioZMCLinks(new TBuildLinkReq()
+                .setZmcId("2a4a35dc1bbdf2e3abac")
+        ));
+
+        System.exit(0);
+    }
 }

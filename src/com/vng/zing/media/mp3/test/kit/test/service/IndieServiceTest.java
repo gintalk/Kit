@@ -7,24 +7,31 @@ package com.vng.zing.media.mp3.test.kit.test.service;
  * @author namnh16 on 05/08/2021
  */
 
+import com.vng.zing.media.mp3.mw.indie.thrift.client.TZMP3IndieMWClient;
+import com.vng.zing.media.mp3.service.indie.thrift.client.TZMP3IndieServiceClient;
+import com.vng.zing.media.mp3.service.indie.thrift.req.TGetIndieArtistReq;
+import com.vng.zing.media.mp3.test.kit.test.common.PrintUtils;
+
 public class IndieServiceTest extends Test {
 
-//    private static final TZMP3IndieServiceClient STG_SERVICE = new TZMP3IndieServiceClient("staging");
-//    //    private static final TZMP3IndieMWClient MW = TZMP3IndieMWClient.INST;
-//    private static final TZMP3IndieServiceClient SERVICE = TZMP3IndieServiceClient.INST_INDIE;
-//
-//    public static void main(String[] args) {
-////        _testUser();
-////        _testArtist();
-////        _testPlaylist();
-////        _testMedia();
-////        _testCreateIndieMediaV2();
+    //    private static final TZMP3IndieServiceClient STG_SERVICE = new TZMP3IndieServiceClient("staging");
+    private static final TZMP3IndieMWClient MW = TZMP3IndieMWClient.INST;
+    private static final TZMP3IndieServiceClient SERVICE = TZMP3IndieServiceClient.INST_INDIE;
+
+    //
+    public static void main(String[] args) {
+//        _testUser();
+        _testArtist();
+//        _testPlaylist();
+//        _testMedia();
+//        _testCreateIndieMediaV2();
 //        _testRemoveIndieMedia();
-////        _testRemoveIndiePlaylist();
-//
-//        System.exit(0);
-//    }
-//
+//        _testRemoveIndiePlaylist();
+
+        System.exit(0);
+    }
+
+    //
 //    private static void _testUser() {
 ////        ThriftUtils.prettyPrint(TZMP3IndieServiceClient.INST_INDIE.resendMailVerify(new TResendMailVerifyReq().setUserId()));
 //
@@ -32,37 +39,38 @@ public class IndieServiceTest extends Test {
 ////        System.out.println(MW.removeArtist(1952175));
 //    }
 //
-//    private static void _testArtist() {
-////        System.out.println(STG_SERVICE.isValidVipUser(new TIsValidVipUserReq()
-////                .setHeader(Constant.HEADER)
-////                .setUserId(WhiteListUserUtils.TRUONGDT)
-////        ));
-//
-////        ThriftUtils.prettyPrint(SERVICE.getIndieDashboard(new TGetIndieDashboardReq()
-////                .setHeader(Constant.HEADER)
-////                .setArtistId(1873062)
-////                .setCountryCode(84)
-////                .setIsGetAll(true)
-////        ).value);
-//
-////        ThriftUtils.prettyPrint(SERVICE.getIndieStats(new TGetIndieStatsReq()
-////                .setHeader(Constant.HEADER)
-////                .setCountryCode(84)
-////                .setArtistId(1873062)
-////                .setStartDay(20210926)
-////                .setEndDay(20210930)
-////        ));
-//
-////        ThriftUtils.prettyPrint(STG_SERVICE.getIndieArtist(new TGetIndieArtistReq()
-////                .setArtistId(1866305)
-////                        .setUserId(1036815003)
-////                        .setHeader(Constant.HEADER)
-////        ).value);
-//
-////        for(int i=0; i<20; i++) {
-////            System.out.println(TZMP3IndieMWClient.INST.getIndieArtistByAlias("Phan-Tran-Cong-Hieu").value.aliasName);
-////        }
-//    }
+    private static void _testArtist() {
+//        System.out.println(STG_SERVICE.isValidVipUser(new TIsValidVipUserReq()
+//                .setHeader(Constant.HEADER)
+//                .setUserId(WhiteListUserUtils.TRUONGDT)
+//        ));
+
+//        ThriftUtils.prettyPrint(SERVICE.getIndieDashboard(new TGetIndieDashboardReq()
+//                .setHeader(Constant.HEADER)
+//                .setArtistId(1873062)
+//                .setCountryCode(84)
+//                .setIsGetAll(true)
+//        ).value);
+
+//        ThriftUtils.prettyPrint(SERVICE.getIndieStats(new TGetIndieStatsReq()
+//                .setHeader(Constant.HEADER)
+//                .setCountryCode(84)
+//                .setArtistId(1873062)
+//                .setStartDay(20210926)
+//                .setEndDay(20210930)
+//        ));
+
+        PrintUtils.printTBase(SERVICE.getIndieArtist(new TGetIndieArtistReq()
+//                        .setArtistId(2335270)
+                        .setUserId(1016254788)
+//                        .setAliasName("Ovenis")
+        ).value);
+        PrintUtils.printTBase(MW.getIndieArtistByUserID(1016254788).value);
+
+//        for(int i=0; i<20; i++) {
+//            System.out.println(TZMP3IndieMWClient.INST.getIndieArtistByAlias("Phan-Tran-Cong-Hieu").value.aliasName);
+//        }
+    }
 //
 //    private static void _testPlaylist() {
 ////        SERVICE.addMediasToIndiePlaylist(new TAddMediasToIndiePlaylistReq()
