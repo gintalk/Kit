@@ -18,7 +18,7 @@ public class BuildLinkServiceTest extends Test {
 
     public static void main(String[] args) {
         PrintUtils.printTBase(SERVICE.getAudioZMCLinks(new TBuildLinkReq()
-                .setZmcId("2a4a35dc1bbdf2e3abac")
+                .setZmcId("44e221d336bedfe086af")
         ));
 
         System.exit(0);

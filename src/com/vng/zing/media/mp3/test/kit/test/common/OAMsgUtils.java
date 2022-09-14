@@ -4,10 +4,10 @@ import com.vng.zing.common.ZErrorDef;
 import com.vng.zing.common.ZErrorHelper;
 import com.vng.zing.configer.ZConfig;
 import com.vng.zing.logger.ZLogger;
+import com.vng.zing.media.commonlib.helper.JsoniterHelper;
 import com.vng.zing.media.commonlib.helper.ProxyHelper;
 import com.vng.zing.media.commonlib.utils.CommonUtils;
 import com.vng.zing.media.commonlib.utils.LogUtils;
-import com.vng.zing.media.commonlib.wrapper.JsonWrapper;
 import com.vng.zing.zalooauth.ZCypher;
 import com.vng.zing.zcommon.thrift.ECode;
 import org.apache.log4j.Logger;
@@ -170,9 +170,9 @@ public class OAMsgUtils {
             String sendRs =
 //                    useProxy ?
 //                            _sendPostJSON(API_OA_MESSAGE + this.accessToken, this.proxyHost, this.proxyPort, message.getJson(), READ_TIMEOUT) :
-                            _sendPostJSON(API_OA_MESSAGE + this.accessToken, message.getJson(), READ_TIMEOUT);
+                    _sendPostJSON(API_OA_MESSAGE + this.accessToken, message.getJson(), READ_TIMEOUT);
             LOG.info(LogUtils.buildTabLog("sendRs", sendRs));
-            JsonWrapper rsJw = JsonWrapper.build(sendRs);
+            JsoniterHelper rsJw = JsoniterHelper.build(sendRs);
             if (rsJw.isExists("error")) {
                 sendResult.errorCode = rsJw.getInt("error", 0);
                 LOG.error(LogUtils.buildTabLog("sendOAMessageError", sendRs));
@@ -204,15 +204,15 @@ public class OAMsgUtils {
         private int oaIdRaw = 0;
         private final int zaloId;
 
-        protected JsonWrapper message = JsonWrapper.createObj();
+        protected JsoniterHelper message = JsoniterHelper.createObj();
         protected String user_id;
 
-        public JsonWrapper getJson() {
+        public JsoniterHelper getJson() {
             long encodedUserID = ZCypher.encodeUserIdByPage(this.zaloId, this.oaIdRaw);
             this.user_id = String.valueOf(encodedUserID);
 
-            return JsonWrapper.createObj()
-                    .put("recipient", JsonWrapper.createObj().put("user_id", user_id))
+            return JsoniterHelper.createObj()
+                    .put("recipient", JsoniterHelper.createObj().put("user_id", user_id))
                     .put("message", message);
         }
 
@@ -243,7 +243,7 @@ public class OAMsgUtils {
         }
 
         @Override
-        public JsonWrapper getJson() {
+        public JsoniterHelper getJson() {
             this.message.put("text", this.text);
 
             return super.getJson();
@@ -286,11 +286,11 @@ public class OAMsgUtils {
         }
 
         @Override
-        public JsonWrapper getJson() {
-            JsonWrapper buttons = JsonWrapper.createObj();
+        public JsoniterHelper getJson() {
+            JsoniterHelper buttons = JsoniterHelper.createObj();
             if (!CommonUtils.isEmpty(this.buttons)) {
                 this.buttons.forEach(item -> {
-                    JsonWrapper button = JsonWrapper.createObj()
+                    JsoniterHelper button = JsoniterHelper.createObj()
                             .put("title", item.title)
                             .put("type", item.type)
                             .put("payload", item.payload);
@@ -299,9 +299,9 @@ public class OAMsgUtils {
                 });
             }
 
-            JsonWrapper payload = JsonWrapper.createObj()
+            JsoniterHelper payload = JsoniterHelper.createObj()
                     .put("buttons", buttons);
-            JsonWrapper attachment = JsonWrapper.createObj()
+            JsoniterHelper attachment = JsoniterHelper.createObj()
                     .put("type", "template")
                     .put("payload", payload);
             message.put("attachment", attachment)
@@ -312,10 +312,10 @@ public class OAMsgUtils {
 
         @Override
         public Map<String, String> getMap() {
-            JsonWrapper buttons = JsonWrapper.createObj();
+            JsoniterHelper buttons = JsoniterHelper.createObj();
             if (!CommonUtils.isEmpty(this.buttons)) {
                 this.buttons.forEach(item -> {
-                    JsonWrapper button = JsonWrapper.createObj()
+                    JsoniterHelper button = JsoniterHelper.createObj()
                             .put("title", item.title)
                             .put("type", item.type)
                             .put("payload", item.payload);
@@ -324,9 +324,9 @@ public class OAMsgUtils {
                 });
             }
 
-            JsonWrapper payload = JsonWrapper.createObj()
+            JsoniterHelper payload = JsoniterHelper.createObj()
                     .put("buttons", buttons);
-            JsonWrapper attachment = JsonWrapper.createObj()
+            JsoniterHelper attachment = JsoniterHelper.createObj()
                     .put("type", "template")
                     .put("payload", payload);
             message.put("attachment", attachment)
@@ -402,8 +402,8 @@ public class OAMsgUtils {
             this.payload = payload;
         }
 
-        public JsonWrapper getJson() {
-            return JsonWrapper.createObj()
+        public JsoniterHelper getJson() {
+            return JsoniterHelper.createObj()
                     .put("title", title)
                     .put("type", type)
                     .put("payload", payload);
@@ -411,9 +411,9 @@ public class OAMsgUtils {
 
         public static final class OpenURLButton extends ButtonOA {
             public OpenURLButton(String title, String url) {
-                super(title, "oa.open.url", JsonWrapper.createObj());
+                super(title, "oa.open.url", JsoniterHelper.createObj());
                 try {
-                    ((JsonWrapper) payload).put("url", url);
+                    ((JsoniterHelper) payload).put("url", url);
                 } catch (Exception ex) {
                     LOG.error(ex.getMessage(), ex);
                 }
@@ -434,10 +434,10 @@ public class OAMsgUtils {
 
         public static final class OpenSmsButton extends ButtonOA {
             public OpenSmsButton(String title, String content, String phoneNumber) {
-                super(title, "oa.open.sms", JsonWrapper.createObj());
+                super(title, "oa.open.sms", JsoniterHelper.createObj());
                 try {
-                    ((JsonWrapper) payload).put("content", content);
-                    ((JsonWrapper) payload).put("phone_code", phoneNumber);
+                    ((JsoniterHelper) payload).put("content", content);
+                    ((JsoniterHelper) payload).put("phone_code", phoneNumber);
                 } catch (Exception ex) {
                     LOG.error(ex.getMessage(), ex);
                 }
@@ -446,9 +446,9 @@ public class OAMsgUtils {
 
         public static final class OpenCallButton extends ButtonOA {
             public OpenCallButton(String title, String phoneNumber) {
-                super(title, "oa.open.phone", JsonWrapper.createObj());
+                super(title, "oa.open.phone", JsoniterHelper.createObj());
                 try {
-                    ((JsonWrapper) payload).put("phone_code", phoneNumber);
+                    ((JsoniterHelper) payload).put("phone_code", phoneNumber);
                 } catch (Exception ex) {
                     LOG.error(ex.getMessage(), ex);
                 }
@@ -471,11 +471,11 @@ public class OAMsgUtils {
         return response.toString();
     }
 
-    public String _sendPostJSON(String url, JsonWrapper data, int readTimeoutInMili) throws Exception {
+    public String _sendPostJSON(String url, JsoniterHelper data, int readTimeoutInMili) throws Exception {
         return _sendPostJSON(url, "", 0, data, readTimeoutInMili);
     }
 
-    private String _sendPostJSON(String url, String proxyHost, int proxyPort, JsonWrapper data, int timeoutMillis) throws Exception {
+    private String _sendPostJSON(String url, String proxyHost, int proxyPort, JsoniterHelper data, int timeoutMillis) throws Exception {
         HttpURLConnection conn = _sendJSONData(url, data, proxyHost, proxyPort, timeoutMillis);
         int responseCode = conn.getResponseCode();
         if (responseCode != 200) {
@@ -485,7 +485,7 @@ public class OAMsgUtils {
         return _getResponseStream(new InputStreamReader(conn.getInputStream()));
     }
 
-    private HttpURLConnection _sendJSONData(String url, JsonWrapper data, String proxyHost, int proxyPort, int timeoutMillis) throws Exception {
+    private HttpURLConnection _sendJSONData(String url, JsoniterHelper data, String proxyHost, int proxyPort, int timeoutMillis) throws Exception {
         String srtParams = data.toString();
         byte[] postData = srtParams.getBytes(StandardCharsets.UTF_8);
         int postDataLength = postData.length;
