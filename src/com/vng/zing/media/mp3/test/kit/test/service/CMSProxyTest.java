@@ -11,7 +11,6 @@ import com.vng.zing.media.common.thrift.TCMSClient;
 import com.vng.zing.media.common.thrift.TCMSHeader;
 import com.vng.zing.media.mp3.common.thrift.TCountryCode;
 import com.vng.zing.media.mp3.common.thrift.oa.core.TZMP3OAAccount;
-import com.vng.zing.media.mp3.common.thrift.oa.core.TZMP3OAAccountRole;
 import com.vng.zing.media.mp3.common.thrift.oa.core.TZMP3OABoxItemType;
 import com.vng.zing.media.mp3.common.thrift.oa.core.TZMP3OAPromotionStatus;
 import com.vng.zing.media.mp3.common.thrift.podcast.TPodcastEpisode;
@@ -42,11 +41,11 @@ public class CMSProxyTest extends Test {
 //        _testCategory();
 //        _testLivestream();
 //        _testsPerformance();
-        _testAccount();
+//        _testAccount();
 //        _testLivestreamStats();
 //        _testPodcastProgramStats();
 //        _testPodcastEpisodeStats();
-//        _testPlaylist();
+        _testPlaylist();
 //        _testPromotion();
 
         System.exit(0);
@@ -306,7 +305,19 @@ public class CMSProxyTest extends Test {
 
 //        System.out.println(CMSProxyWrapper.INST.searchOAPlaylist(VED_DNARB_OA_ID, NIENDT_ZMP3_ID, 0, 100, "kaka"));
 //        System.out.println(CMSProxyWrapper.INST.searchOAPlaylist(CMS_HEADER.setObjectID(XONE_RADIO_OA_ID).setUserID(NAMNH16_ZMP3_ID), 0, 100, "In the Asia"));
-        System.out.println(TZMP3SearchServiceClient.INST.searchES(new TSearchESReq().setSearchESType(TZMP3SearchESType.PLAYLIST.getValue()).setKeyword("in the asia").setCountryCode(TCountryCode.VIETNAM.getValue()).setStart(0).setCount(100).setFields(Collections.emptyList()).setSort(TZMP3SearchSort.DEFAULT.getValue()).setFilters(Collections.singletonList(new TZMP3SearchFilterParam().setFieldId(TZMP3SearchFilter.CREATED_BY.getValue()).setValueNum(1059126461)))));
+        System.out.println(TZMP3SearchServiceClient.INST.searchES(new TSearchESReq()
+                .setSearchESType(TZMP3SearchESType.PLAYLIST.getValue())
+                .setKeyword("in the asia")
+                .setCountryCode(TCountryCode.VIETNAM.getValue())
+                .setStart(0)
+                .setCount(100)
+                .setFields(Collections.emptyList())
+                .setSort(TZMP3SearchSort.DEFAULT.getValue())
+                .setFilters(Collections.singletonList(new TZMP3SearchFilterParam()
+                        .setFieldId(TZMP3SearchFilter.CREATED_BY.getValue()).
+                        setValueNum(1059126461))
+                )
+        ));
 
 //        System.out.println(WRAPPER.updateOAPlaylist(
 //                BAO_QUYEN_OA_ID, NAMNH16_ZMP3_ID, 1489750475, playlist.storageMeta.title, playlist.storageMeta.description,

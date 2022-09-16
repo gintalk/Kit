@@ -24,7 +24,7 @@ public class IndieServiceTest extends Test {
 
     private static final TZMP3IndieServiceClient STG_SERVICE = new TZMP3IndieServiceClient("staging");
     //    private static final TZMP3IndieUserServiceClient STG_SERVICE_USER = new TZMP3IndieUserServiceClient("staging");
-//    private static final TZMP3IndieServiceClient SERVICE = TZMP3IndieServiceClient.INST_INDIE;
+    private static final TZMP3IndieServiceClient SERVICE = TZMP3IndieServiceClient.INST_INDIE;
     private static final TZMP3IndieUserServiceClient SERVICE_USER = TZMP3IndieUserServiceClient.INST_USER;
 
     public static void main(String[] args) {
@@ -64,12 +64,12 @@ public class IndieServiceTest extends Test {
 //                .setEndDay(20210930)
 //        ));
 
-        ThriftUtils.prettyPrint(STG_SERVICE.getIndieArtist(new TGetIndieArtistReq()
+//        ThriftUtils.prettyPrint(STG_SERVICE.getIndieArtist(new TGetIndieArtistReq()
 //                        .setAliasName("Tran-Dang-Dang-Dong")
-                .setArtistId(2325511)
-                        .setHeader(Constant.HEADER)
+//                .setArtistId(2325511)
+//                        .setHeader(Constant.HEADER)
 //                        .setUserId(NAMNH16_ZMP3_ID)
-        ));
+//        ));
 //        ThriftUtils.prettyPrint(TZMP3CoreMWClient.INST.getGenericArtist(1020214).value);
 
 //        ThriftUtils.prettyPrint(TZMP3IndieMWClient.INST.getIndieArtistByUserID(1086447105));
@@ -78,11 +78,11 @@ public class IndieServiceTest extends Test {
 //            System.out.println(TZMP3IndieMWClient.INST.getIndieArtistByAlias("Phan-Tran-Cong-Hieu").value.aliasName);
 //        }
 
-//        PrintUtils.printTBase(STG_SERVICE.validateIndieArtistInfo(new TValidateIndieArtistInfoReq()
-//                .setHeader(new THeaderReq())
-//                .setType(TIndieArtistValidatingType.ALIAS_NAME.getValue())
-//                .setInfo("Leethin")
-//        ));
+        PrintUtils.printTBase(SERVICE.validateIndieArtistInfo(new TValidateIndieArtistInfoReq()
+                .setHeader(new THeaderReq())
+                .setType(TIndieArtistValidatingType.NICK_NAME.getValue())
+                .setInfo("Kenni9")
+        ));
     }
 
     private static void _testPlaylist() {
