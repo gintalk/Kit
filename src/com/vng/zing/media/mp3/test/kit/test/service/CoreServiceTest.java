@@ -8,6 +8,7 @@ package com.vng.zing.media.mp3.test.kit.test.service;
  */
 
 import com.vng.zing.media.mp3.mw.core.thrift.client.TZMP3CoreMWClient;
+import com.vng.zing.media.mp3.test.kit.test.common.PrintUtils;
 
 public class CoreServiceTest extends Test {
 
@@ -15,7 +16,9 @@ public class CoreServiceTest extends Test {
     private static final TZMP3CoreMWClient CORE_MW = TZMP3CoreMWClient.INST;
 //
     public static void main(String[] args) {
-        System.out.println(CORE_MW.getMediaIdsOfPlaylist(1073896871));
+//        PrintUtils.printTBase(CORE_MW.getArtist(14182).value);
+
+//        System.out.println(CORE_MW.getMediaIdsOfPlaylist(1073896871));
 
 ////        ThriftUtils.prettyPrint(CORE_SERVICE.getMedia(new TGetMediaReq()
 ////                .setId(1125869134)
