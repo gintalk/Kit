@@ -7,22 +7,28 @@ package com.vng.zing.media.mp3.test.kit.test.service;
  * @author namnh16 on 24/03/2021
  */
 
+import com.vng.zing.media.mp3.commonlib.thrift.TMP3ItemType;
+import com.vng.zing.media.mp3.commonlib.thrift.TMP3ListType;
+import com.vng.zing.media.mp3.commonlib.thrift.core.TListInfo;
 import com.vng.zing.media.mp3.mw.core.thrift.client.TZMP3CoreMWClient;
+import com.vng.zing.media.mp3.service.core.thrift.client.TZMP3CoreServiceClient;
+import com.vng.zing.media.mp3.service.core.thrift.req.TGetMediaReq;
 import com.vng.zing.media.mp3.test.kit.test.common.PrintUtils;
 
 public class CoreServiceTest extends Test {
 
-//    private static final TZMP3CoreServiceClient CORE_SERVICE = TZMP3CoreServiceClient.INST;
+    private static final TZMP3CoreServiceClient CORE_SERVICE = TZMP3CoreServiceClient.INST;
     private static final TZMP3CoreMWClient CORE_MW = TZMP3CoreMWClient.INST;
 //
     public static void main(String[] args) {
 //        PrintUtils.printTBase(CORE_MW.getArtist(14182).value);
 
-//        System.out.println(CORE_MW.getMediaIdsOfPlaylist(1073896871));
+        PrintUtils.printTBase(CORE_MW.getPlaylist(1073921674).value.storageMeta);
+        System.out.println(CORE_MW.getMediaIdsOfPlaylist(1073939414));
 
-////        ThriftUtils.prettyPrint(CORE_SERVICE.getMedia(new TGetMediaReq()
-////                .setId(1125869134)
-////        ));
+//        PrintUtils.printTBase(CORE_SERVICE.getMedia(new TGetMediaReq()
+//                .setId(1073869429)
+//        ).value);
 //
 ////        System.out.println(EMediaModel.INST.get(1126720611).audio.releaseDate);
 ////        ThriftUtils.prettyPrint(CORE_MW.getMedia(1126774785).value.audio);
@@ -35,12 +41,12 @@ public class CoreServiceTest extends Test {
 ////                .setCount(100)
 ////        ));
 //
-////        System.out.println(CORE_MW.getSliceIds(new TListInfo()
-////                .setId(1873062)
-////                .setType(TMP3ListType.LIST_BY_ARTIST.getValue())
-////                .setItemType(TMP3ItemType.MEDIA.getValue())
-////                .setCountryCode(84)
-////        , 0, 100));
+//        System.out.println(CORE_MW.getSliceIds(new TListInfo()
+//                .setId(12215)
+//                .setType(TMP3ListType.LIST_BY_GENRE.getValue())
+//                .setItemType(TMP3ItemType.MEDIA.getValue())
+//                .setCountryCode(84)
+//        , 0, 100));
 //
 ////        System.out.println(CORE_SERVICE.getTotalFollow(new TGetTotalFollowReq()
 ////                .setType(TFollowType.ARTIST.getValue())

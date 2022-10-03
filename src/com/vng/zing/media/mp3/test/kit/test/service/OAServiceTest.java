@@ -4,23 +4,29 @@
  */
 package com.vng.zing.media.mp3.test.kit.test.service;
 
+import com.vng.zing.media.mp3.commonlib.thrift.oa.TZMP3OABox;
+import com.vng.zing.media.mp3.service.oa.thrift.client.TZMP3OAServiceClient;
+import com.vng.zing.media.mp3.service.oa.thrift.req.TGetOABoxReq;
+import com.vng.zing.media.mp3.service.oa.thrift.req.TPutOABoxReq;
+import com.vng.zing.media.mp3.test.kit.test.common.PrintUtils;
+
 /**
  * @author namnh16
  */
 public class OAServiceTest extends Test {
 
-//    private static final TZMP3OAServiceClient OA_SERVICE = TZMP3OAServiceClient.INST;
+    private static final TZMP3OAServiceClient OA_SERVICE = TZMP3OAServiceClient.INST;
 //    private static final TZMP3OAServiceClient OA_SERVICE_STG = new TZMP3OAServiceClient("staging");
 //
-//    public static void main(String[] args) {
+    public static void main(String[] args) {
 ////        _testOA();
-////        _testOABox();
-////        testStats();
+        _testOABox();
+//        testStats();
 //        _testPlaylist();
 ////        test();
 //
 //        System.exit(0);
-//    }
+    }
 //
 //    private static void _testOA() {
 //        TZMP3OA oa = OA_SERVICE.getOA(new TGetOAReq().setOaId(1921897)).value;
@@ -28,14 +34,15 @@ public class OAServiceTest extends Test {
 //        System.out.println(OA_SERVICE.putOA(new TPutOAReq().setOa(oa)));
 //    }
 //
-//    private static void _testOABox() {
-//        TZMP3OABox box = OA_SERVICE.getOABox(new TGetOABoxReq()
-//                .setBoxId(14906)
-//        ).value;
+    private static void _testOABox() {
+        TZMP3OABox box = OA_SERVICE.getOABox(new TGetOABoxReq()
+                .setBoxId(15586)
+        ).value;
+//        PrintUtils.printTBase(box);
 //        box.setType(TZMP3OABoxType.PODCAST_EPISODE.getValue());
-//        System.out.println(OA_SERVICE.putOABox(new TPutOABoxReq()
-//                .setBox(box)
-//        ));
+        System.out.println(OA_SERVICE.putOABox(new TPutOABoxReq()
+                .setBox(box)
+        ));
 //
 //        TZMP3OAHome home = OA_SERVICE.getOAHome(new TGetOAHomeReq()
 //                .setOaId(947376)
@@ -46,7 +53,7 @@ public class OAServiceTest extends Test {
 //        System.out.println(OA_SERVICE.putOAHome(new TPutOAHomeReq()
 //                .setHome(home)
 //        ));
-//    }
+    }
 //
 //    private static void _testStats() {
 //        ThriftUtils.prettyPrint(OA_SERVICE.getOADashboard(new TGetOADashboardReq()

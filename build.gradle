@@ -54,13 +54,15 @@ dependencies {
     /* ZTM */
 
     /* ZMP3 */
-    implementation "com.vng.zing.media.mp3:zmp3-mw-publisher:1.0.2"
+    implementation 'com.vng.zing.media.mp3:zmp3-mw-publisher:1.0.2'
     implementation 'com.vng.zing.media.mp3:zmp3-mw-oa:1.0.1'
-    implementation 'com.vng.zing.media.mp3:zmp3-mw-core:1.0.1'
+    implementation 'com.vng.zing.media.mp3:zmp3-mw-core:1.0.2'
     implementation 'com.vng.zing.media.mp3:zmp3-mw-indie:1.0.1'
     implementation 'com.vng.zing.media.mp3:zmp3-service-forbiddenfilter:1.0.1'
-    implementation "com.vng.zing.media.mp3:zmp3-service-indie:1.0.2"
-    implementation "com.vng.zing.media.mp3:zmp3-service-buildlink:1.0.1"
+    implementation 'com.vng.zing.media.mp3:zmp3-service-indie:1.0.2'
+    implementation 'com.vng.zing.media.mp3:zmp3-service-buildlink:1.0.1'
+    implementation 'com.vng.zing.media.mp3:zmp3-service-core:1.0.1'
+    implementation 'com.vng.zing.media.mp3:zmp3-service-oa:1.0.1'
 
     /* Core */
 

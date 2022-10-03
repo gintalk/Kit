@@ -53,8 +53,8 @@ public class SourceAndThumbFetcher extends Test {
 
     private static final Logger LOG = ZLogger.getLogger(SourceAndThumbFetcher.class);
     private static final String PHOTO_DOMAIN = "https://photo-zmp3.zmdcdn.me/";
-    private static final String MEDIA_OUTPUT_FOLDER = "/media/namnh16/Transcend/Media/%s - %s - %s/";
-    private static final String ALBUM_OUTPUT_FOLDER = "/media/namnh16/Transcend/Albums/%s - %s - %s/";
+    private static final String MEDIA_OUTPUT_FOLDER = "/home/namnh16/Data/Media/%s - %s - %s/";
+    private static final String ALBUM_OUTPUT_FOLDER = "/home/namnh16/Data/Albums/%s - %s - %s/";
     private static final String MEDIA_OUTPUT_SOURCE_NAME = "%s - %s - %s.%s";
     private static final String ALBUM_MEDIA_OUTPUT_SOURCE_NAME = "%d - %s - %s - %s.%s";
     private static final String MEDIA_OUTPUT_THUMB_NAME = "%s - %s - %s.%s";
@@ -68,55 +68,23 @@ public class SourceAndThumbFetcher extends Test {
     public static void main(String[] args) {
         ZMProfiler.open("ThumbAndSourceFetcher");
         try {
-            List<String> lines = FileUtils.readLines(new File("data/media.csv"), StandardCharsets.UTF_8);
-            lines = lines.subList(0, 200);
+            List<String> lines = FileUtils.readLines(new File("data/temp.csv"), StandardCharsets.UTF_8);
 
             int total = lines.size();
 
             List<List<String>> batches = ZUtil.splitList(lines, MAX_CONCURRENCY);
 
-//            new Thread(() -> {
-//                ZMProfiler.open("AlbumSourceFetcher");
-//                try {
-//                    ZMProfiler.count(SourceAndThumbFetcher.class, "main", "SOURCE", "TOTAL", total);
-//
-//                    Set<String> sourcelessAlbums = Collections.synchronizedSet(new HashSet<>());
-//                    for (List<String> batch : batches) {
-//                        List<CompletableFuture<Void>> cfs = new ArrayList<>();
-//                        for (String line : batch) {
-//                            String[] split = line.split(SEPARATOR);
-//                            cfs.add(CompletableFuture.runAsync(() -> _downloadAlbumSource(sourcelessAlbums, split[0], split[1].replaceAll("[*:<>?|\\\\/\"]", " "), split[2].replaceAll("[*:<>?|\\\\/\"]", " ")), EXECUTOR));
-//                        }
-//                        for (CompletableFuture<Void> cf : cfs) {
-//                            cf.get();
-//
-//                            ZMProfiler.count(SourceAndThumbFetcher.class, "main", "SOURCE", "PROGRESS");
-//                        }
-//                    }
-//
-//                    if (!CommonUtils.isEmpty(sourcelessAlbums)) {
-//                        StringBuilder sb = new StringBuilder();
-//                        for (String s : sourcelessAlbums) {
-//                            sb.append(s).append('\n');
-//                        }
-//                        FileUtils.writeStringToFile(new File("/media/namnh16/Transcend/Albums/sourceless-albums.csv"), sb.toString(), StandardCharsets.UTF_8, true);
-//                    }
-//                } catch (Exception e) {
-//                    LOG.error(e.getMessage(), e);
-//                }
-//            }).start();
-
             new Thread(() -> {
-                ZMProfiler.open("MediaSourceFetcher");
+                ZMProfiler.open("AlbumSourceFetcher");
                 try {
                     ZMProfiler.count(SourceAndThumbFetcher.class, "main", "SOURCE", "TOTAL", total);
 
-                    Set<String> sourcelessMedia = Collections.synchronizedSet(new HashSet<>());
+                    Set<String> sourcelessAlbums = Collections.synchronizedSet(new HashSet<>());
                     for (List<String> batch : batches) {
                         List<CompletableFuture<Void>> cfs = new ArrayList<>();
                         for (String line : batch) {
                             String[] split = line.split(SEPARATOR);
-                            cfs.add(CompletableFuture.runAsync(() -> _downloadSource(sourcelessMedia, split[0], split[1].replaceAll("[*:<>?|\\\\/\"]", " "), split[2].replaceAll("[*:<>?|\\\\/\"]", " ")), EXECUTOR));
+                            cfs.add(CompletableFuture.runAsync(() -> _downloadAlbumSource(sourcelessAlbums, split[0], split[1].replaceAll("[*:<>?|\\\\/\"]", " "), split[2].replaceAll("[*:<>?|\\\\/\"]", " ")), EXECUTOR));
                         }
                         for (CompletableFuture<Void> cf : cfs) {
                             cf.get();
@@ -125,12 +93,12 @@ public class SourceAndThumbFetcher extends Test {
                         }
                     }
 
-                    if (!CommonUtils.isEmpty(sourcelessMedia)) {
+                    if (!CommonUtils.isEmpty(sourcelessAlbums)) {
                         StringBuilder sb = new StringBuilder();
-                        for (String s : sourcelessMedia) {
+                        for (String s : sourcelessAlbums) {
                             sb.append(s).append('\n');
                         }
-                        FileUtils.writeStringToFile(new File("/media/namnh16/Transcend/Media/sourceless-media.csv"), sb.toString(), StandardCharsets.UTF_8, true);
+                        FileUtils.writeStringToFile(new File("/home/namnh16/Data/Albums/sourceless-albums.csv"), sb.toString(), StandardCharsets.UTF_8, true);
                     }
                 } catch (Exception e) {
                     LOG.error(e.getMessage(), e);
@@ -138,30 +106,30 @@ public class SourceAndThumbFetcher extends Test {
             }).start();
 
 //            new Thread(() -> {
-//                ZMProfiler.open("AlbumThumbFetcher");
+//                ZMProfiler.open("MediaSourceFetcher");
 //                try {
-//                    ZMProfiler.count(SourceAndThumbFetcher.class, "main", "THUMB", "TOTAL", total);
+//                    ZMProfiler.count(SourceAndThumbFetcher.class, "main", "SOURCE", "TOTAL", total);
 //
-//                    Set<String> thumblessAlbums = Collections.synchronizedSet(new HashSet<>());
+//                    Set<String> sourcelessMedia = Collections.synchronizedSet(new HashSet<>());
 //                    for (List<String> batch : batches) {
 //                        List<CompletableFuture<Void>> cfs = new ArrayList<>();
 //                        for (String line : batch) {
 //                            String[] split = line.split(SEPARATOR);
-//                            cfs.add(CompletableFuture.runAsync(() -> _downloadAlbumThumb(thumblessAlbums, split[0], split[1].replaceAll("[*:<>?|\\\\/\"]", " "), split[2].replaceAll("[*:<>?|\\\\/\"]", " ")), EXECUTOR));
+//                            cfs.add(CompletableFuture.runAsync(() -> _downloadSource(sourcelessMedia, split[0], split[1].replaceAll("[*:<>?|\\\\/\"]", " "), split[2].replaceAll("[*:<>?|\\\\/\"]", " ")), EXECUTOR));
 //                        }
 //                        for (CompletableFuture<Void> cf : cfs) {
 //                            cf.get();
 //
-//                            ZMProfiler.count(SourceAndThumbFetcher.class, "main", "THUMB", "PROGRESS");
+//                            ZMProfiler.count(SourceAndThumbFetcher.class, "main", "SOURCE", "PROGRESS");
 //                        }
 //                    }
 //
-//                    if (!CommonUtils.isEmpty(thumblessAlbums)) {
+//                    if (!CommonUtils.isEmpty(sourcelessMedia)) {
 //                        StringBuilder sb = new StringBuilder();
-//                        for (String s : thumblessAlbums) {
+//                        for (String s : sourcelessMedia) {
 //                            sb.append(s).append('\n');
 //                        }
-//                        FileUtils.writeStringToFile(new File("/media/namnh16/Transcend/Albums/thumbless-albums.csv"), sb.toString(), StandardCharsets.UTF_8, true);
+//                        FileUtils.writeStringToFile(new File("/home/namnh16/Data/Media/sourceless-media.csv"), sb.toString(), StandardCharsets.UTF_8, true);
 //                    }
 //                } catch (Exception e) {
 //                    LOG.error(e.getMessage(), e);
@@ -169,7 +137,7 @@ public class SourceAndThumbFetcher extends Test {
 //            }).start();
 
             new Thread(() -> {
-                ZMProfiler.open("MediaThumbFetcher");
+                ZMProfiler.open("AlbumThumbFetcher");
                 try {
                     ZMProfiler.count(SourceAndThumbFetcher.class, "main", "THUMB", "TOTAL", total);
 
@@ -178,7 +146,7 @@ public class SourceAndThumbFetcher extends Test {
                         List<CompletableFuture<Void>> cfs = new ArrayList<>();
                         for (String line : batch) {
                             String[] split = line.split(SEPARATOR);
-                            cfs.add(CompletableFuture.runAsync(() -> _downloadSongThumb(thumblessAlbums, split[0], split[1].replaceAll("[*:<>?|\\\\/\"]", " "), split[2].replaceAll("[*:<>?|\\\\/\"]", " ")), EXECUTOR));
+                            cfs.add(CompletableFuture.runAsync(() -> _downloadAlbumThumb(thumblessAlbums, split[0], split[1].replaceAll("[*:<>?|\\\\/\"]", " "), split[2].replaceAll("[*:<>?|\\\\/\"]", " ")), EXECUTOR));
                         }
                         for (CompletableFuture<Void> cf : cfs) {
                             cf.get();
@@ -192,12 +160,43 @@ public class SourceAndThumbFetcher extends Test {
                         for (String s : thumblessAlbums) {
                             sb.append(s).append('\n');
                         }
-                        FileUtils.writeStringToFile(new File("/media/namnh16/Transcend/Media/thumbless-media.csv"), sb.toString(), StandardCharsets.UTF_8, true);
+                        FileUtils.writeStringToFile(new File("/home/namnh16/Data/Albums/thumbless-albums.csv"), sb.toString(), StandardCharsets.UTF_8, true);
                     }
                 } catch (Exception e) {
                     LOG.error(e.getMessage(), e);
                 }
             }).start();
+
+//            new Thread(() -> {
+//                ZMProfiler.open("MediaThumbFetcher");
+//                try {
+//                    ZMProfiler.count(SourceAndThumbFetcher.class, "main", "THUMB", "TOTAL", total);
+//
+//                    Set<String> thumblessAlbums = Collections.synchronizedSet(new HashSet<>());
+//                    for (List<String> batch : batches) {
+//                        List<CompletableFuture<Void>> cfs = new ArrayList<>();
+//                        for (String line : batch) {
+//                            String[] split = line.split(SEPARATOR);
+//                            cfs.add(CompletableFuture.runAsync(() -> _downloadSongThumb(thumblessAlbums, split[0], split[1].replaceAll("[*:<>?|\\\\/\"]", " "), split[2].replaceAll("[*:<>?|\\\\/\"]", " ")), EXECUTOR));
+//                        }
+//                        for (CompletableFuture<Void> cf : cfs) {
+//                            cf.get();
+//
+//                            ZMProfiler.count(SourceAndThumbFetcher.class, "main", "THUMB", "PROGRESS");
+//                        }
+//                    }
+//
+//                    if (!CommonUtils.isEmpty(thumblessAlbums)) {
+//                        StringBuilder sb = new StringBuilder();
+//                        for (String s : thumblessAlbums) {
+//                            sb.append(s).append('\n');
+//                        }
+//                        FileUtils.writeStringToFile(new File("/home/namnh16/Data/Media/thumbless-media.csv"), sb.toString(), StandardCharsets.UTF_8, true);
+//                    }
+//                } catch (Exception e) {
+//                    LOG.error(e.getMessage(), e);
+//                }
+//            }).start();
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         } finally {
@@ -254,7 +253,7 @@ public class SourceAndThumbFetcher extends Test {
                                     TMediaSourceFormat.Audio320.getValue(),
                                     TMediaSourceFormat.Audio128.getValue())
                             )
-                            .setMediaId(ConvertUtils.toInteger(media.id))
+                            .setMediaId(media.id)
                     );
                     if (ZErrorHelper.isFail(res.error)) {
                         sourcelessMedia.add(String.format("%d - %d - %s - %s (%s)", (idx + 1), media.id, media.title, media.artists, "BUILD_LINK_SERVICE.fullGetAudioBigFileLinks." + res.error));
@@ -281,7 +280,6 @@ public class SourceAndThumbFetcher extends Test {
                         sourcelessMedia.add(String.format("%d - %d - %s - %s (%s)", (idx + 1), media.id, media.title, media.artists, "NO_SOURCE_AVAILABLE"));
 
                         LOG.info(LogUtils.buildTabLog("NO_SOURCE_AVAILABLE", media.id, media.title, media.artists, res));
-                        return;
                     }
 
                     _downloadSource(link, String.format(ALBUM_OUTPUT_FOLDER, albumID, albumTitle, artistNames) + String.format(ALBUM_MEDIA_OUTPUT_SOURCE_NAME, (idx + 1), media.id, media.title, artistNames, extension));
@@ -313,6 +311,15 @@ public class SourceAndThumbFetcher extends Test {
     }
 
     private static void _downloadSource(Set<String> sourcelessMedia, String mediaID, String mediaTitle, String artistNames) {
+        Path path = Paths.get(String.format(MEDIA_OUTPUT_FOLDER, mediaID, mediaTitle, artistNames));
+        if (!Files.exists(path)) {
+            try {
+                Files.createDirectories(path);
+            } catch (IOException e) {
+                LOG.error(e.getMessage(), e);
+            }
+        }
+
         TBuildLinkRes res = BUILD_LINK_SERVICE.fullGetAudioBigFileLinks(new TBuildLinkReq()
                 .setCountryCode(TCountryCode.VIETNAM.getValue())
                 .setFormats(Arrays.asList(
@@ -347,10 +354,9 @@ public class SourceAndThumbFetcher extends Test {
             sourcelessMedia.add(String.format("%s - %s - %s (%s)", mediaID, mediaTitle, artistNames, "NO_SOURCE_AVAILABLE"));
 
             LOG.info(LogUtils.buildTabLog("NO_SOURCE_AVAILABLE", mediaID, mediaTitle, artistNames, res));
-            return;
         }
 
-        _downloadSource(link, String.format(MEDIA_OUTPUT_FOLDER, mediaID, mediaTitle, artistNames) + String.format(MEDIA_OUTPUT_SOURCE_NAME, mediaID, mediaTitle, artistNames, extension));
+//        _downloadSource(link, String.format(MEDIA_OUTPUT_FOLDER, mediaID, mediaTitle, artistNames) + String.format(MEDIA_OUTPUT_SOURCE_NAME, mediaID, mediaTitle, artistNames, extension));
     }
 
     private static void _downloadSource(String url, String outputPath) {
@@ -374,6 +380,15 @@ public class SourceAndThumbFetcher extends Test {
     }
 
     private static void _downloadSongThumb(Set<String> thumblessMedia, String mediaID, String mediaTitle, String artistNames) {
+        Path path = Paths.get(String.format(MEDIA_OUTPUT_FOLDER, mediaID, mediaTitle, artistNames));
+        if (!Files.exists(path)) {
+            try {
+                Files.createDirectories(path);
+            } catch (IOException e) {
+                LOG.error(e.getMessage(), e);
+            }
+        }
+
         TMediaResult res = CORE_MW.getMedia(ConvertUtils.toInteger(mediaID));
         if (ZErrorHelper.isFail(res.error) || res.value == null) {
             thumblessMedia.add(String.format("%s - %s - %s (%s)", mediaID, mediaTitle, artistNames, "CORE_MW.getMedia." + res.error));
@@ -392,10 +407,9 @@ public class SourceAndThumbFetcher extends Test {
         if (CommonUtils.isEmpty(thumbnail)) {
             thumblessMedia.add(String.format("%s - %s - %s (%s)", mediaID, mediaTitle, artistNames, "NO_THUMB_AVAILABLE"));
 
-            return;
         }
 
-        _downloadThumb(thumbnail, String.format(MEDIA_OUTPUT_FOLDER, mediaID, mediaTitle, artistNames) + String.format(MEDIA_OUTPUT_THUMB_NAME, mediaID, mediaTitle, artistNames, "jpg"));
+//        _downloadThumb(thumbnail, String.format(MEDIA_OUTPUT_FOLDER, mediaID, mediaTitle, artistNames) + String.format(MEDIA_OUTPUT_THUMB_NAME, mediaID, mediaTitle, artistNames, "jpg"));
     }
 
     private static void _downloadAlbumThumb(Set<String> thumblessAlbums, String albumID, String albumTitle, String artistNames) {
