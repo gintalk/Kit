@@ -36,13 +36,13 @@ public class OAServiceTest extends Test {
 //
     private static void _testOABox() {
         TZMP3OABox box = OA_SERVICE.getOABox(new TGetOABoxReq()
-                .setBoxId(15586)
+                .setBoxId(15664)
         ).value;
-//        PrintUtils.printTBase(box);
+        PrintUtils.printTBase(box);
 //        box.setType(TZMP3OABoxType.PODCAST_EPISODE.getValue());
-        System.out.println(OA_SERVICE.putOABox(new TPutOABoxReq()
-                .setBox(box)
-        ));
+//        System.out.println(OA_SERVICE.putOABox(new TPutOABoxReq()
+//                .setBox(box)
+//        ));
 //
 //        TZMP3OAHome home = OA_SERVICE.getOAHome(new TGetOAHomeReq()
 //                .setOaId(947376)

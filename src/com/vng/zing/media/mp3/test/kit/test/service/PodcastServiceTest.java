@@ -7,24 +7,31 @@ package com.vng.zing.media.mp3.test.kit.test.service;
  * @author namnh16 on 14/01/2021
  */
 
+import com.vng.zing.media.mp3.commonlib.thrift.podcast.TPodcastProgramGetEpisodeIdsReq;
+import com.vng.zing.media.mp3.mw.podcast.thrift.client.TZMP3PodcastMWClient;
+import com.vng.zing.media.mp3.test.kit.test.common.PrintUtils;
+import org.apache.commons.codec.digest.DigestUtils;
+
 public class PodcastServiceTest extends Test {
 
-//    private static final TZMP3PodcastMWClient MW = TZMP3PodcastMWClient.INST;
-//    private static final TZMP3PodcastServiceClient SERVICE = TZMP3PodcastServiceClient.INST;
+    private static final TZMP3PodcastMWClient MW = TZMP3PodcastMWClient.INST;
+
+    //    private static final TZMP3PodcastServiceClient SERVICE = TZMP3PodcastServiceClient.INST;
 //
-//    public static void main(String[] args) {
-//        try {
-////            _testEpisode();
-//            _testProgram();
-////            _testCategory();
-////            _testList();
-//        } catch (Exception e) {
-//            System.err.println(e.getMessage());
-//        }
-//
-//        System.exit(0);
-//    }
-//
+    public static void main(String[] args) {
+        try {
+//            _testEpisode();
+            _testProgram();
+//            _testCategory();
+//            _testList();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+
+        System.exit(0);
+    }
+
+    //
 //    private static void _testEpisode() throws IOException {
 ////        ThriftUtils.prettyPrint(SERVICE.getEpisodeHistorySlice(new TGetEpisodeHistorySliceReq()
 ////                .setUserId(WhiteListUserUtils.NAMNH16)
@@ -65,23 +72,11 @@ public class PodcastServiceTest extends Test {
 ////        eps.forEach(e -> System.out.println(e.status + " - " + e.title));
 //    }
 //
-//    private static void _testProgram() {
-//        ThriftUtils.prettyPrint(SERVICE.getProgram(new TGetProgramReq()
-//                .setProgramId(1331068752)
-//        ).program);
-//
-////        List<Integer> episodeIds = SERVICE.getProgramEpisodeIds(new TGetProgramEpisodeIdsReq()
-////                .setProgramId(1486446175)
-////                .setStart(0)
-////                .setCount(100)
-////        ).values;
-////        System.out.println(episodeIds);
-////        List<TPodcastEpisode> episodes = EPodcastEpisodeModel.INST.multiGetAsList(episodeIds);
-////        episodes.forEach(e -> System.out.println(e.title));
-//
-////        EPaging<TPodcastEpisode> paging = EPodcastProgramModel.INST.getListEpisode(1370253673, TCountryCode.VIETNAM.getValue(), 0, 1, false);
-////        ThriftUtils.prettyPrint(paging.getValues().get(0));
-//    }
+    private static void _testProgram() {
+        PrintUtils.printTBase(MW.getEpisodeIdsOfProgram(new TPodcastProgramGetEpisodeIdsReq()
+                .setProgramId(1492946538)
+        ));
+    }
 //
 //    private static void _testCategory() {
 ////        TPodcastCategory category = SERVICE.getCategory(new TGetCateforyReq().setCategoryId(12211)).category;

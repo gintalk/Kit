@@ -5,14 +5,13 @@
 package com.vng.zing.media.mp3.test.kit.app;
 
 /**
- *
  * @author namnq
  */
 public class MainApp {
 
-	/**
-	 * @param args the command line arguments
-	 */
-	public static void main(String[] args) {
-	}
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+    }
 }

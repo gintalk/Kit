@@ -7,15 +7,15 @@ package com.vng.zing.media.mp3.test.kit.test.service;
  * @author namnh16 on 05/08/2021
  */
 
-import com.vng.zing.media.mp3.mw.indie.thrift.client.TZMP3IndieMWClient;
+import com.vng.zing.media.mp3.commonlib.thrift.indie.TIndieArtistValidatingType;
 import com.vng.zing.media.mp3.service.indie.thrift.client.TZMP3IndieServiceClient;
-import com.vng.zing.media.mp3.service.indie.thrift.req.TGetIndieArtistReq;
+import com.vng.zing.media.mp3.service.indie.thrift.req.TValidateIndieArtistInfoReq;
 import com.vng.zing.media.mp3.test.kit.test.common.PrintUtils;
 
 public class IndieServiceTest extends Test {
 
-    //    private static final TZMP3IndieServiceClient STG_SERVICE = new TZMP3IndieServiceClient("staging");
-    private static final TZMP3IndieMWClient MW = TZMP3IndieMWClient.INST;
+//        private static final TZMP3IndieServiceClient STG_SERVICE = new TZMP3IndieServiceClient("staging");
+//    private static final TZMP3IndieMWClient MW = TZMP3IndieMWClient.INST;
     private static final TZMP3IndieServiceClient SERVICE = TZMP3IndieServiceClient.INST_INDIE;
 
     //
@@ -60,16 +60,21 @@ public class IndieServiceTest extends Test {
 //                .setEndDay(20210930)
 //        ));
 
-        PrintUtils.printTBase(SERVICE.getIndieArtist(new TGetIndieArtistReq()
+//        PrintUtils.printTBase(SERVICE.getIndieArtist(new TGetIndieArtistReq()
 //                        .setArtistId(2335270)
-                        .setUserId(1016254788)
+//                        .setUserId(1016254788)
 //                        .setAliasName("Ovenis")
-        ).value);
-        PrintUtils.printTBase(MW.getIndieArtistByUserID(1016254788).value);
+//        ).value);
+//        PrintUtils.printTBase(MW.getIndieArtistByUserID(1016254788).value);
 
 //        for(int i=0; i<20; i++) {
 //            System.out.println(TZMP3IndieMWClient.INST.getIndieArtistByAlias("Phan-Tran-Cong-Hieu").value.aliasName);
 //        }
+
+        PrintUtils.printTBase(SERVICE.validateIndieArtistInfo(new TValidateIndieArtistInfoReq()
+                .setType(TIndieArtistValidatingType.BIOGRAPHY.getValue())
+                .setInfo("\uD83D\uDC49Fanpage: https://www.facebook.com/vudinhphuoc1503")
+        ));
     }
 //
 //    private static void _testPlaylist() {
