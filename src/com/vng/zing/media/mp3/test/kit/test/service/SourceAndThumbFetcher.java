@@ -4,36 +4,27 @@
  */
 package com.vng.zing.media.mp3.test.kit.test.service;
 
-import com.vng.zing.common.ZErrorHelper;
 import com.vng.zing.common.ZUtil;
 import com.vng.zing.logger.ZLogger;
-import com.vng.zing.media.common.profiler.ZMProfiler;
-import com.vng.zing.media.common.utils.CommonUtils;
-import com.vng.zing.media.common.utils.ConvertUtils;
-import com.vng.zing.media.common.utils.HttpUtils;
-import com.vng.zing.media.common.utils.LogUtils;
-import com.vng.zing.media.mp3.common.thrift.TCountryCode;
-import com.vng.zing.media.mp3.common.thrift.TMediaSourceFormat;
-import com.vng.zing.media.mp3.common.thrift.core.TMedia;
-import com.vng.zing.media.mp3.common.thrift.core.TMediaResult;
-import com.vng.zing.media.mp3.common.thrift.core.TPlaylist;
-import com.vng.zing.media.mp3.common.thrift.core.TPlaylistResult;
-import com.vng.zing.media.mp3.common.thrift.core.TStreamingLink;
-import com.vng.zing.media.mp3.mw.core.thrift.client.TZMP3CoreMWClient;
-import com.vng.zing.media.mp3.service.buildlink.thrift.TBuildLinkReq;
-import com.vng.zing.media.mp3.service.buildlink.thrift.TBuildLinkRes;
-import com.vng.zing.media.mp3.service.buildlink.thrift.client.ZMP3BuildLinkServiceClient;
+import com.vng.zing.media.commonlib.helper.HttpRequestHelper;
+import com.vng.zing.media.commonlib.profiler.ZMProfiler;
+import com.vng.zing.media.commonlib.utils.CommonUtils;
+import com.vng.zing.media.commonlib.utils.LogUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -43,155 +34,154 @@ import java.util.concurrent.Executors;
 public class SourceAndThumbFetcher extends Test {
 
     private static final Logger LOG = ZLogger.getLogger(SourceAndThumbFetcher.class);
-    private static final String PHOTO_DOMAIN = "https://photo-zmp3.zmdcdn.me/";
-    private static final String MEDIA_OUTPUT_FOLDER = "/home/namnh16/Data/Media/%s - %s - %s/";
-    private static final String ALBUM_OUTPUT_FOLDER = "/home/namnh16/Data/Albums/%s - %s - %s/";
-    private static final String MEDIA_OUTPUT_SOURCE_NAME = "%s - %s - %s.%s";
-    private static final String ALBUM_MEDIA_OUTPUT_SOURCE_NAME = "%s - %s - %s.%s";
-    private static final String MEDIA_OUTPUT_THUMB_NAME = "%s - %s - %s.%s";
-    private static final String ALBUM_OUTPUT_THUMB_NAME = "%s - %s - %s.%s";
+    private static final String BASE_FOLDER = "/media/namnh16/Transcend/2022-10-17/";
+    private static final String MEDIA_OUTPUT_BASE_FOLDER = BASE_FOLDER + "Singles/";
+    private static final String ALBUM_OUTPUT_BASE_FOLDER = BASE_FOLDER + "Albums/";
     private static final String SEPARATOR = "¸";
-    private static final Executor EXECUTOR = Executors.newFixedThreadPool(22);
-    private static final int MAX_CONCURRENCY = 10;
-    private static final TZMP3CoreMWClient CORE_MW = TZMP3CoreMWClient.INST;
+    private static final Executor EXECUTOR = Executors.newFixedThreadPool(30);
+    private static final int MAX_CONCURRENCY = 5;
 
-    public static void main(String[] args) throws IOException {
-        ZMProfiler.open("ThumbAndSourceFetcher");
-        try {
-            List<String> lines = FileUtils.readLines(new File("data/media.csv"), StandardCharsets.UTF_8);
-            lines = lines.subList(100, lines.size());
+    public static void main(String[] args) {
+//        _fetchMediaSourceAndThumb();
+        _fetchAlbumSourceAndThumb();
+    }
 
-            int total = lines.size();
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Private
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    private static void _fetchAlbumSourceAndThumb() {
+        new Thread(() -> {
+            ZMProfiler.open("AlbumSource");
+            try {
+                _fetch("data/album-sources-pp.csv", "SOURCE.ALBUM", ALBUM_OUTPUT_BASE_FOLDER, 2, 3);
+            } catch (Throwable e) {
+                LOG.error(e.getMessage(), e);
+            } finally {
+                ZMProfiler.close();
+            }
+        }).start();
 
-            List<List<String>> batches = ZUtil.splitList(lines, MAX_CONCURRENCY);
-            new Thread(() -> {
-                ZMProfiler.open("SourceFetcher");
-                try {
-                    ZMProfiler.count(SourceAndThumbFetcher.class, "main", "SOURCE", "TOTAL", total);
+//        new Thread(() -> {
+//            ZMProfiler.open("AlbumThumb");
+//            try {
+//                _fetch("data/album-thumbs-pp.csv", "THUMB.ALBUM", ALBUM_OUTPUT_BASE_FOLDER, 1, 2);
+//            } catch (Throwable e) {
+//                LOG.error(e.getMessage(), e);
+//            } finally {
+//                ZMProfiler.close();
+//            }
+//        }).start();
+    }
 
-                    for (List<String> batch : batches) {
-                        List<CompletableFuture<Void>> cfs = new ArrayList<>();
-                        for (String line : batch) {
-                            String[] split = line.split(SEPARATOR);
-                            cfs.add(CompletableFuture.runAsync(() -> _downloadSource(split[0], split[1], split[2]), EXECUTOR));
+    private static void _fetchMediaSourceAndThumb() {
+        new Thread(() -> {
+            ZMProfiler.open("MediaSource");
+            try {
+                _fetch("data/media-sources-pp.csv", "SOURCE.SINGLE", MEDIA_OUTPUT_BASE_FOLDER, 1, 2);
+            } catch (Throwable e) {
+                LOG.error(e.getMessage(), e);
+            } finally {
+                ZMProfiler.close();
+            }
+        }).start();
+
+        new Thread(() -> {
+            ZMProfiler.open("MediaThumb");
+            try {
+                _fetch("data/media-thumbs-pp.csv", "THUMB.SINGLE", MEDIA_OUTPUT_BASE_FOLDER, 1, 2);
+            } catch (Throwable e) {
+                LOG.error(e.getMessage(), e);
+            } finally {
+                ZMProfiler.close();
+            }
+        }).start();
+    }
+
+    private static void _fetch(String inputFile, String profilerLabel, String outputBaseFolder, int outputPathIndex, int urlIndex) throws IOException, ExecutionException, InterruptedException {
+        List<String> lines = FileUtils.readLines(new File(inputFile), StandardCharsets.UTF_8);
+        lines = lines.subList(1, lines.size());     // Bỏ header, nếu không có header thì comment dòng này
+
+        lines = lines.subList(30000, lines.size());  // Album đợt trước, đừng xóa
+
+        ZMProfiler.count(SourceAndThumbFetcher.class, "_fetch", profilerLabel, "TOTAL", lines.size());
+
+        List<String> errors = new LinkedList<>();
+
+        List<List<String>> batches = ZUtil.splitList(lines, MAX_CONCURRENCY);
+        for (List<String> batch : batches) {
+            List<CompletableFuture<List<String>>> cfs = new ArrayList<>(batch.size());
+            for (String line : batch) {
+                cfs.add(CompletableFuture.supplyAsync(() -> {
+                    ZMProfiler.open(profilerLabel);
+                    try {
+                        ZMProfiler.count(SourceAndThumbFetcher.class, "_fetch", profilerLabel, "PROGRESS");
+
+                        String[] split = line.split(SEPARATOR, -1);
+
+                        String outputPath = split[outputPathIndex], url = split[urlIndex];
+
+                        outputPath = outputPath.replace("$BASE$/", BASE_FOLDER);
+
+                        List<String> es = new LinkedList<>();
+                        if (CommonUtils.isEmpty(url)) {
+                            es.add(line);
+                        } else {
+                            _download(url, outputPath);
                         }
-                        for (CompletableFuture<Void> cf : cfs) {
-                            cf.get();
 
-                            ZMProfiler.count(SourceAndThumbFetcher.class, "main", "SOURCE", "PROGRESS");
-                        }
+                        return es;
+                    } catch (Exception e) {
+                        LOG.error(e.getMessage(), e);
+                        return Collections.emptyList();
+                    } finally {
+                        ZMProfiler.close();
                     }
-                } catch (Exception e) {
-                    LOG.error(e.getMessage(), e);
-                }
-            }).start();
-
-            new Thread(() -> {
-                ZMProfiler.open("ThumbFetcher");
-                try {
-                    ZMProfiler.count(SourceAndThumbFetcher.class, "main", "THUMB", "TOTAL", total);
-
-                    for (List<String> batch : batches) {
-                        List<CompletableFuture<Void>> cfs = new ArrayList<>();
-                        for (String line : batch) {
-                            String[] split = line.split(SEPARATOR);
-                            cfs.add(CompletableFuture.runAsync(() -> _downloadSongThumb(split[0], split[1], split[2]), EXECUTOR));
-                        }
-                        for (CompletableFuture<Void> cf : cfs) {
-                            cf.get();
-
-                            ZMProfiler.count(SourceAndThumbFetcher.class, "main", "THUMB", "PROGRESS");
-                        }
-                    }
-                } catch (Exception e) {
-                    LOG.error(e.getMessage(), e);
-                }
-            }).start();
-        } catch (Exception e) {
-            LOG.error(e.getMessage(), e);
-        } finally {
-            ZMProfiler.close();
+                }, EXECUTOR));
+            }
+            for (CompletableFuture<List<String>> cf : cfs) {
+                errors.addAll(cf.get());
+            }
         }
+
+        StringBuilder errorSB = new StringBuilder();
+        for (String error : errors) {
+            errorSB.append(error).append('\n');
+        }
+
+        FileUtils.writeStringToFile(new File(outputBaseFolder + profilerLabel + ".error.csv"), errorSB.toString(), StandardCharsets.UTF_8, true);
     }
 
-    private static void _downloadSource(String mediaID, String mediaTitle, String artistNames) {
-        TBuildLinkRes res = ZMP3BuildLinkServiceClient.INST.getAudioBigFileLinks(new TBuildLinkReq()
-                .setCountryCode(TCountryCode.VIETNAM.getValue())
-                .setFormats(Arrays.asList(
-                        TMediaSourceFormat.AudioLossless.getValue(),
-                        TMediaSourceFormat.Audio320.getValue(),
-                        TMediaSourceFormat.Audio128.getValue())
-                )
-                .setMediaId(ConvertUtils.toInteger(mediaID))
-        );
-        if (ZErrorHelper.isFail(res.error)) {
-            LOG.info(LogUtils.buildTabLog("BUILD_LINK_SERVICE.getAudioBigFileLinks.FAIL", mediaID, mediaTitle, artistNames, res));
-            return;
-        }
-
-        Map<Integer, TStreamingLink> values = res.values;
-
-        String link = "", extension = "";
-        if (values.containsKey(TMediaSourceFormat.AudioLossless.getValue())) {
-            link = values.get(TMediaSourceFormat.AudioLossless.getValue()).link;
-            extension = ".flac";
-        } else if (values.containsKey(TMediaSourceFormat.Audio320.getValue())) {
-            link = values.get(TMediaSourceFormat.Audio320.getValue()).link;
-            extension = ".mp3";
-        } else if (values.containsKey(TMediaSourceFormat.Audio128.getValue())) {
-            link = values.get(TMediaSourceFormat.Audio128.getValue()).link;
-            extension = ".mp3";
-        }
-
-        if (CommonUtils.isEmpty(link)) {
-            LOG.info(LogUtils.buildTabLog("NO_SOURCE_AVAILABLE", mediaID, mediaTitle, artistNames, res));
-            return;
-        }
-
-        HttpUtils.downloadFile(link, String.format(MEDIA_OUTPUT_FOLDER, mediaID, mediaTitle, artistNames) + String.format(MEDIA_OUTPUT_SOURCE_NAME, mediaID, mediaTitle, artistNames, extension));
-    }
-
-    private static void _downloadSongThumb(String mediaID, String mediaTitle, String artistNames) {
-        TMediaResult res = TZMP3CoreMWClient.INST.getMedia(ConvertUtils.toInteger(mediaID));
-        if (ZErrorHelper.isFail(res.error) || res.value == null) {
-            LOG.info(LogUtils.buildTabLog("CORE_MW.getMedia.FAIL", mediaID, mediaTitle, artistNames, res));
-            return;
-        }
-        TMedia media = res.value;
-
-        String thumbnail = "";
-        if (media.audio != null) {
-            thumbnail = media.audio.thumbnail;
-        }
-        if (CommonUtils.isEmpty(thumbnail) && media.video != null) {
-            thumbnail = media.video.thumbnail;
-        }
-
-        _downloadThumb(thumbnail, String.format(MEDIA_OUTPUT_FOLDER, mediaID, mediaTitle, artistNames) + String.format(MEDIA_OUTPUT_THUMB_NAME, mediaID, mediaTitle, artistNames, "jpg"));
-    }
-
-    private static void _downloadAlbumThumb(String albumID, String albumTitle, String artistNames) {
-        TPlaylistResult res = CORE_MW.getPlaylist(ConvertUtils.toInteger(albumID));
-        if (ZErrorHelper.isFail(res.error) || res.value == null) {
-            LOG.error(LogUtils.buildTabLog("CORE_MW.getPlaylist.FAIL", res.error, albumID, albumTitle, artistNames));
-            return;
-        }
-        TPlaylist album = res.value;
-
-        String thumbnail = "";
-        if (album.storageMeta != null) {
-            thumbnail = album.storageMeta.coverImage;
-        }
-
-        _downloadThumb(thumbnail, String.format(ALBUM_OUTPUT_FOLDER, albumID, albumTitle, artistNames) + String.format(ALBUM_OUTPUT_THUMB_NAME, albumID, albumTitle, artistNames, "jpg"));
-    }
-
-    private static void _downloadThumb(String thumbnail, String outputPath) {
-        String url = CommonUtils.isEmpty(thumbnail) ? "" : PHOTO_DOMAIN + thumbnail;
+    private static void _download(String url, String outputPath) throws IOException {
         if (CommonUtils.isEmpty(url)) {
+            ZMProfiler.count(SourceAndThumbFetcher.class, "EMPTY_URL");
             return;
         }
 
-        HttpUtils.downloadFile(url, outputPath);
+        File outputFile = new File(outputPath);
+        if (outputFile.exists()) {
+            if (FileUtils.sizeOf(outputFile) > 0) {
+                ZMProfiler.count(SourceAndThumbFetcher.class, "_download", "PROCESSED", "SKIP");
+                return;
+            } else {
+                ZMProfiler.count(SourceAndThumbFetcher.class, "_download", "PROCESSED_BUT_0_BYTE", "RE_PROCESS");
+                LOG.error(LogUtils.buildTabLog("PROCESSED_BUT_0_BYTE", url, outputPath));
+
+                FileUtils.forceDelete(outputFile);
+            }
+        }
+
+        Path path = Paths.get(outputPath);
+        if (!Files.exists(path.getParent())) {
+            Files.createDirectories(path.getParent());
+        }
+        try {
+            outputFile.createNewFile();
+        } catch (IOException e) {
+            LOG.error(e.getMessage(), e);
+        }
+
+        HttpRequestHelper.newGet()
+                .setUrl(url)
+                .downloadToFile(new File(outputPath));
     }
 }

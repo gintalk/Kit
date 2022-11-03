@@ -12,11 +12,10 @@ import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
-import com.vng.zing.media.common.utils.HttpUtils;
+import com.vng.zing.media.mp3.engine.utils.HttpUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.parser.Parser;
-import org.jsoup.safety.Whitelist;
+import org.jsoup.safety.Safelist;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,8 +23,8 @@ import java.net.URL;
 public class RSSFeedTest extends Test {
 
     public static void main(String[] args) {
-//        _getEnclosures();
-        _escapeHtml();
+        _getEnclosures();
+//        _escapeHtml();
     }
 
     private static void _escapeHtml() {
@@ -44,12 +43,13 @@ public class RSSFeedTest extends Test {
         System.exit(0);
     }
 
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // Private
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //
+//    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//    // Private
+//    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private static void _getEnclosures() {
         try {
-            String url = "https://anchor.fm/s/39118fa8/podcast/rss";
+            String url = "https://feeds.transistor.fm/coffee-around";
             String targetEpTitle = "[Quyển 1 – Tập 1] Mao Sơn Quỷ Môn Thuật – Truyện Ma Có Thật Diễn Đọc MC Đình Soạn";
 
             SyndFeedInput input = new SyndFeedInput();
@@ -82,6 +82,6 @@ public class RSSFeedTest extends Test {
 
         String str = jsoupDoc.html().replaceAll("\\\\n", "\n");
 
-        return Jsoup.clean(str, "", Whitelist.none(), jsoupOutputSettings);
+        return Jsoup.clean(str, "", Safelist.none(), jsoupOutputSettings);
     }
 }

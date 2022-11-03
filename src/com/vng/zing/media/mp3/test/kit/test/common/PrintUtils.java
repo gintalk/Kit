@@ -1,13 +1,14 @@
+package com.vng.zing.media.mp3.test.kit.test.common;
+
 /*
  * Copyright (c) 2012-2016 by Zalo Group.
  * All Rights Reserved.
+ *
+ * @author namnh16 on 20/07/2022
  */
-package com.vng.zing.media.mp3.test.kit.test.common;
 
-import com.vng.zing.media.common.utils.CommonUtils;
-import com.vng.zing.media.common.utils.ConvertUtils;
-import com.vng.zing.media.mp3.common.thrift.TZMP3OAAction;
-import com.vng.zing.media.mp3.common.thrift.oa.core.TZMP3OAFeature;
+import com.vng.zing.media.commonlib.utils.CommonUtils;
+import com.vng.zing.media.commonlib.utils.ConvertUtils;
 import org.apache.thrift.TBase;
 import org.apache.thrift.TFieldIdEnum;
 import org.apache.thrift.TFieldRequirementType;
@@ -19,11 +20,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
-/**
- * @author namnh16
- */
 public class PrintUtils {
 
     private static final Map<Byte, String> MAP_TYPE_STRING = new HashMap<Byte, String>() {
@@ -45,34 +42,11 @@ public class PrintUtils {
     };
     private static short MAX_TYPE_STRING_LENGTH = 0;
 
-    private PrintUtils() {
-
+    public static void printTBase(TBase tBase) {
+        System.out.println(_getStructAsString(tBase));
     }
 
-    public static void printTBase(TBase thriftObject) {
-        System.out.println(_getStructAsString(0, thriftObject));
-    }
-
-    public static void printOAAccountPermission(Map<Integer, Set<Integer>> featureMap) {
-        featureMap.forEach((featureID, actionSet) -> {
-            TZMP3OAFeature feature = TZMP3OAFeature.findByValue(featureID);
-            if (feature != null) {
-                System.out.printf("%s:", feature.name());
-                actionSet.forEach(actionID -> {
-                    TZMP3OAAction action = TZMP3OAAction.findByValue(actionID);
-                    if (action != null) {
-                        System.out.printf(" %s", action.name());
-                    }
-                });
-                System.out.println();
-            }
-        });
-    }
-
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // Private
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    private static String _getStructAsString(int level, TBase thriftObject) {
+    private static String _getStructAsString(TBase thriftObject) {
         if (thriftObject == null) {
             return "";
         }
@@ -155,7 +129,7 @@ public class PrintUtils {
                 if (parameterizedType.getActualTypeArguments()[0] instanceof ParameterizedType) {
                     parameterName = parameterizedType.getActualTypeArguments()[0].getTypeName();
                 } else {
-                    parameterName = ((Class) parameterizedType.getActualTypeArguments()[0]).getSimpleName();
+                    parameterName = ((Class<?>) parameterizedType.getActualTypeArguments()[0]).getSimpleName();
                 }
 
                 typeName = MAP_TYPE_STRING.get(typeValue) + "<" + parameterName + ">";
@@ -168,14 +142,14 @@ public class PrintUtils {
                 if (mapPT.getActualTypeArguments()[0] instanceof ParameterizedType) {
                     keyParameterName = mapPT.getActualTypeArguments()[0].getTypeName();
                 } else {
-                    keyParameterName = ((Class) mapPT.getActualTypeArguments()[0]).getSimpleName();
+                    keyParameterName = ((Class<?>) mapPT.getActualTypeArguments()[0]).getSimpleName();
                 }
 
                 String valueParameterName;
                 if (mapPT.getActualTypeArguments()[1] instanceof ParameterizedType) {
                     valueParameterName = mapPT.getActualTypeArguments()[1].getTypeName();
                 } else {
-                    valueParameterName = ((Class) mapPT.getActualTypeArguments()[1]).getSimpleName();
+                    valueParameterName = ((Class<?>) mapPT.getActualTypeArguments()[1]).getSimpleName();
                 }
 
                 typeName = MAP_TYPE_STRING.get(typeValue) + "<" + keyParameterName + ", " + valueParameterName + ">";
