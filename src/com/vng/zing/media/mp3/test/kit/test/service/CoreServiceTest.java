@@ -7,24 +7,37 @@ package com.vng.zing.media.mp3.test.kit.test.service;
  * @author namnh16 on 24/03/2021
  */
 
-import com.vng.zing.media.mp3.commonlib.thrift.TMP3ItemType;
-import com.vng.zing.media.mp3.commonlib.thrift.TMP3ListType;
-import com.vng.zing.media.mp3.commonlib.thrift.core.TListInfo;
 import com.vng.zing.media.mp3.mw.core.thrift.client.TZMP3CoreMWClient;
 import com.vng.zing.media.mp3.service.core.thrift.client.TZMP3CoreServiceClient;
-import com.vng.zing.media.mp3.service.core.thrift.req.TGetMediaReq;
+import com.vng.zing.media.mp3.service.core.thrift.req.TGetGenericArtistReq;
+import com.vng.zing.media.mp3.service.oa.thrift.client.TZMP3OAServiceClient;
+import com.vng.zing.media.mp3.service.oa.thrift.req.TGetOAReq;
 import com.vng.zing.media.mp3.test.kit.test.common.PrintUtils;
 
 public class CoreServiceTest extends Test {
 
     private static final TZMP3CoreServiceClient CORE_SERVICE = TZMP3CoreServiceClient.INST;
     private static final TZMP3CoreMWClient CORE_MW = TZMP3CoreMWClient.INST;
-//
-    public static void main(String[] args) {
-//        PrintUtils.printTBase(CORE_MW.getArtist(14182).value);
 
-        PrintUtils.printTBase(CORE_MW.getPlaylist(1073921674).value.storageMeta);
-        System.out.println(CORE_MW.getMediaIdsOfPlaylist(1073939414));
+    //
+    public static void main(String[] args) {
+//        System.out.println(BitUtils.hasBit(16384, TPlaylistBoolAttribute.IS_INDIE.getValue()));
+
+//        TPlaylist playlist = CORE_SERVICE.getOldPlaylist(new TGetOldPlaylistReq()
+//                .setPlaylistId(1489750475)
+//        ).value;
+//        PrintUtils.printTBase(playlist);
+
+        PrintUtils.printTBase(CORE_SERVICE.getGenericArtist(new TGetGenericArtistReq()
+                .setId(7174)
+        ).value);
+
+        PrintUtils.printTBase(TZMP3OAServiceClient.INST.getOA(new TGetOAReq()
+                .setOaId(7174)
+        ).value);
+
+//        PrintUtils.printTBase(CORE_MW.getPlaylist(1073921674).value.storageMeta);
+//        System.out.println(CORE_MW.getMediaIdsOfPlaylist(1073939414));
 
 //        PrintUtils.printTBase(CORE_SERVICE.getMedia(new TGetMediaReq()
 //                .setId(1073869429)

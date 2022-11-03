@@ -7,34 +7,48 @@ package com.vng.zing.media.mp3.test.kit.test.service;
  * @author namnh16 on 22/03/2022
  */
 
+import com.vng.zing.common.ZErrorHelper;
+import com.vng.zing.media.commonlib.vip.thrift.common.TLastTransactionInfo;
+import com.vng.zing.media.commonlib.vip.thrift.common.TProductType;
+import com.vng.zing.media.commonlib.vip.thrift.common.TVipProfileResult;
+import com.vng.zing.media.commonlib.vip.thrift.common.TVipTransactionChannel;
+import com.vng.zing.media.mw.vip.thrift.client.ZMVIPMWReadClient;
+
 public class VipTest extends Test {
 
-//    private static final ZMVIPMWReadClient VIP_MW = ZMVIPMWReadClient.INST;
-//
-//    public static void main(String[] args) {
-//        System.out.println(_isValidVIPUser(1019076810));
-//
-//        System.exit(0);
-//    }
-//
-//    private static boolean _isValidVIPUser(int userId) {
-//        TVipProfileResult profileResult = ZMVIPMWReadClient.INST.getVipProfile(userId, TProductType.ZMP3);
-//        if (ZErrorHelper.isFail(profileResult.error)
-//                || profileResult.value == null
-//                || profileResult.value.expireTimeMils < System.currentTimeMillis()
-//        ) {
-//            return false;
-//        }
-//
-//        TLastTransactionInfo lastTransaction = profileResult.value.lastTransactionInfo;
-//        if (lastTransaction == null) {
-//            return true;
-//        }
-//        TVipTransactionChannel lastTransactionChannel = TVipTransactionChannel.findByValue(lastTransaction.channel);
-//        if (lastTransactionChannel == null) {
-//            return false;
-//        }
-//
-//        return lastTransactionChannel != TVipTransactionChannel.VAS;
-//    }
+    private static final ZMVIPMWReadClient VIP_MW = ZMVIPMWReadClient.INST;
+
+    //
+    public static void main(String[] args) {
+        System.out.println(isValidVIPUser(1038561803));
+
+        System.exit(0);
+    }
+
+    //
+    protected static boolean isValidVIPUser(int userID) {
+        TVipProfileResult profileResult = ZMVIPMWReadClient.INST.getVipProfile(userID, TProductType.ZMP3);
+        if (ZErrorHelper.isFail(profileResult.error)
+                || profileResult.value == null
+                || profileResult.value.expireTimeMils < System.currentTimeMillis()
+        ) {
+            return false;
+        }
+
+        /*
+            If lastTransaction does not exist, approve. Else, reject if last transaction was done through VAS channel
+            https://trello.com/c/hXeckceV
+         */
+        TLastTransactionInfo lastTransaction = profileResult.value.lastTransactionInfo;
+        if (lastTransaction == null) {
+            return true;
+        }
+
+        TVipTransactionChannel lastTransactionChannel = TVipTransactionChannel.findByValue(lastTransaction.channel);
+        if (lastTransactionChannel == null) {
+            return false;
+        }
+
+        return lastTransactionChannel != TVipTransactionChannel.VAS;
+    }
 }

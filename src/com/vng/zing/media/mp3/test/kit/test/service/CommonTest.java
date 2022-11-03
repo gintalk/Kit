@@ -19,7 +19,9 @@ public class CommonTest extends Test {
     private static final Logger LOG = ZLogger.getLogger(CommonTest.class);
 
     public static void main(String[] args) {
-        Path path = Paths.get("data/albums.csv");
-        System.out.println(Files.exists(path));
+        String s = "https://www.nct.com/wyewuqwqeqwiewqewq";
+        int splitAt = s.indexOf(".com") + 4;
+        System.out.println(s.substring(0, splitAt));
+        System.out.println(s.substring(splitAt));
     }
 }
