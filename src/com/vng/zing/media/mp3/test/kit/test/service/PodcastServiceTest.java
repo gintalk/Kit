@@ -8,20 +8,28 @@ package com.vng.zing.media.mp3.test.kit.test.service;
  */
 
 import com.vng.zing.media.mp3.commonlib.thrift.podcast.TPodcastProgramGetEpisodeIdsReq;
+import com.vng.zing.media.mp3.commonlib.thrift.user.THistoryEpisode;
 import com.vng.zing.media.mp3.mw.podcast.thrift.client.TZMP3PodcastMWClient;
+import com.vng.zing.media.mp3.service.podcast.thrift.client.TZMP3PodcastServiceClient;
+import com.vng.zing.media.mp3.service.podcast.thrift.req.TGetEpisodeHistorySliceReq;
+import com.vng.zing.media.mp3.service.podcast.thrift.req.TMGetEpisodeHistoryReq;
 import com.vng.zing.media.mp3.test.kit.test.common.PrintUtils;
 import org.apache.commons.codec.digest.DigestUtils;
+
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 public class PodcastServiceTest extends Test {
 
     private static final TZMP3PodcastMWClient MW = TZMP3PodcastMWClient.INST;
 
-    //    private static final TZMP3PodcastServiceClient SERVICE = TZMP3PodcastServiceClient.INST;
+        private static final TZMP3PodcastServiceClient SERVICE = TZMP3PodcastServiceClient.INST;
 //
     public static void main(String[] args) {
         try {
-//            _testEpisode();
-            _testProgram();
+            _testEpisode();
+//            _testProgram();
 //            _testCategory();
 //            _testList();
 //            _testRating();
@@ -32,14 +40,14 @@ public class PodcastServiceTest extends Test {
         System.exit(0);
     }
 
-    //
-//    private static void _testEpisode() throws IOException {
-////        ThriftUtils.prettyPrint(SERVICE.getEpisodeHistorySlice(new TGetEpisodeHistorySliceReq()
-////                .setUserId(WhiteListUserUtils.NAMNH16)
-////                .setStart(20)
-////                .setCount(10)
-////        ));
-//
+    private static void _testEpisode() throws IOException {
+        List<THistoryEpisode> histories = SERVICE.mgetEpisodeHistory(new TMGetEpisodeHistoryReq()
+                .setUserId(NAMNH16_ZMP3_ID)
+                .setEpisodeIds(Collections.singletonList(1138461904))
+                .setAsList(true)
+        ).valueList;
+        histories.forEach(e -> PrintUtils.printTBase(e));
+
 ////        List<TPodcastEpisode> episodes = SERVICE.mgetEpisode(new TMGetEpisodeReq()
 ////                .setEpisodeIds(Arrays.asList(1107549733, 1124674895, 1124676418))
 ////                .setAsList(true)
@@ -71,8 +79,8 @@ public class PodcastServiceTest extends Test {
 ////        ThriftUtils.prettyPrint(res);
 ////        List<TPodcastEpisode> eps = EPodcastEpisodeModel.INST.multiGetAsList(res.values);
 ////        eps.forEach(e -> System.out.println(e.status + " - " + e.title));
-//    }
-//
+    }
+
     private static void _testProgram() {
         PrintUtils.printTBase(MW.getEpisodeIdsOfProgram(new TPodcastProgramGetEpisodeIdsReq()
                 .setProgramId(1492946538)

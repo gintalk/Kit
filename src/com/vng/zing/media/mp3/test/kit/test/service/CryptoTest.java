@@ -7,7 +7,7 @@ package com.vng.zing.media.mp3.test.kit.test.service;
  * @author namnh16 on 18/04/2022
  */
 
-import com.vng.zing.media.common.utils.EncryptUtils;
+import com.vng.zing.media.commonlib.utils.EncryptUtils;
 
 public class CryptoTest extends Test {
 

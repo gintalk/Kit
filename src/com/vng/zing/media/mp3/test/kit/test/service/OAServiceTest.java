@@ -4,14 +4,7 @@
  */
 package com.vng.zing.media.mp3.test.kit.test.service;
 
-import com.vng.zing.media.mp3.commonlib.thrift.oa.TZMP3OA;
-import com.vng.zing.media.mp3.commonlib.thrift.oa.TZMP3OABox;
 import com.vng.zing.media.mp3.service.oa.thrift.client.TZMP3OAServiceClient;
-import com.vng.zing.media.mp3.service.oa.thrift.req.TGetOABoxReq;
-import com.vng.zing.media.mp3.service.oa.thrift.req.TGetOAReq;
-import com.vng.zing.media.mp3.service.oa.thrift.req.TPutOABoxReq;
-import com.vng.zing.media.mp3.service.oa.thrift.req.TPutOAReq;
-import com.vng.zing.media.mp3.test.kit.test.common.PrintUtils;
 
 /**
  * @author namnh16
@@ -19,22 +12,25 @@ import com.vng.zing.media.mp3.test.kit.test.common.PrintUtils;
 public class OAServiceTest extends Test {
 
     private static final TZMP3OAServiceClient OA_SERVICE = TZMP3OAServiceClient.INST;
-//    private static final TZMP3OAServiceClient OA_SERVICE_STG = new TZMP3OAServiceClient("staging");
+
+    //    private static final TZMP3OAServiceClient OA_SERVICE_STG = new TZMP3OAServiceClient("staging");
 //
     public static void main(String[] args) {
         _testOA();
 //        _testOABox();
 //        testStats();
 //        _testPlaylist();
-////        test();
+//        test();
 //
-//        System.exit(0);
+        System.exit(0);
     }
-//
+
+    //
     private static void _testOA() {
-        TZMP3OA oa = OA_SERVICE.getOA(new TGetOAReq().setOaId(5)).value;
-        PrintUtils.printTBase(oa);
+//        TZMP3OA oa = OA_SERVICE.getOA(new TGetOAReq().setAliasName("spacespeakers")).value;
+//        PrintUtils.printTBase(oa);
     }
+
     private static void _testOABox() {
 //        TZMP3OABox box = OA_SERVICE.getOABox(new TGetOABoxReq()
 //                .setBoxId(15664)

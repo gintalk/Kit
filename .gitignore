@@ -9,3 +9,5 @@ thrift/jar/
 .gradle/
 
 .idea/
+
+data/

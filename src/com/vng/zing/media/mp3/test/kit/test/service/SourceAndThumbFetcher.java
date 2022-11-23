@@ -34,15 +34,16 @@ import java.util.concurrent.Executors;
 public class SourceAndThumbFetcher extends Test {
 
     private static final Logger LOG = ZLogger.getLogger(SourceAndThumbFetcher.class);
-    private static final String BASE_FOLDER = "/media/namnh16/Transcend/2022-10-17/";
-    private static final String MEDIA_OUTPUT_BASE_FOLDER = BASE_FOLDER + "Singles/";
-    private static final String ALBUM_OUTPUT_BASE_FOLDER = BASE_FOLDER + "Albums/";
+    private static final String INPUT_BASE_FOLDER = "data/p0/";
+    private static final String OUTPUT_BASE_FOLDER = "/media/namnh16/Transcend/P0 còn thiếu (19.10)/";
+    private static final String MEDIA_OUTPUT_BASE_FOLDER = OUTPUT_BASE_FOLDER + "Singles/";
+    private static final String ALBUM_OUTPUT_BASE_FOLDER = OUTPUT_BASE_FOLDER + "Albums/";
     private static final String SEPARATOR = "¸";
     private static final Executor EXECUTOR = Executors.newFixedThreadPool(30);
     private static final int MAX_CONCURRENCY = 5;
 
     public static void main(String[] args) {
-//        _fetchMediaSourceAndThumb();
+        _fetchMediaSourceAndThumb();
         _fetchAlbumSourceAndThumb();
     }
 
@@ -53,7 +54,7 @@ public class SourceAndThumbFetcher extends Test {
         new Thread(() -> {
             ZMProfiler.open("AlbumSource");
             try {
-                _fetch("data/album-sources-pp.csv", "SOURCE.ALBUM", ALBUM_OUTPUT_BASE_FOLDER, 2, 3);
+                _fetch(INPUT_BASE_FOLDER + "album-sources-pp.csv", "SOURCE.ALBUM", ALBUM_OUTPUT_BASE_FOLDER, 2, 3);
             } catch (Throwable e) {
                 LOG.error(e.getMessage(), e);
             } finally {
@@ -61,23 +62,23 @@ public class SourceAndThumbFetcher extends Test {
             }
         }).start();
 
-//        new Thread(() -> {
-//            ZMProfiler.open("AlbumThumb");
-//            try {
-//                _fetch("data/album-thumbs-pp.csv", "THUMB.ALBUM", ALBUM_OUTPUT_BASE_FOLDER, 1, 2);
-//            } catch (Throwable e) {
-//                LOG.error(e.getMessage(), e);
-//            } finally {
-//                ZMProfiler.close();
-//            }
-//        }).start();
+        new Thread(() -> {
+            ZMProfiler.open("AlbumThumb");
+            try {
+                _fetch(INPUT_BASE_FOLDER + "album-thumbs-pp.csv", "THUMB.ALBUM", ALBUM_OUTPUT_BASE_FOLDER, 1, 2);
+            } catch (Throwable e) {
+                LOG.error(e.getMessage(), e);
+            } finally {
+                ZMProfiler.close();
+            }
+        }).start();
     }
 
     private static void _fetchMediaSourceAndThumb() {
         new Thread(() -> {
             ZMProfiler.open("MediaSource");
             try {
-                _fetch("data/media-sources-pp.csv", "SOURCE.SINGLE", MEDIA_OUTPUT_BASE_FOLDER, 1, 2);
+                _fetch(INPUT_BASE_FOLDER + "media-sources-pp.csv", "SOURCE.SINGLE", MEDIA_OUTPUT_BASE_FOLDER, 1, 2);
             } catch (Throwable e) {
                 LOG.error(e.getMessage(), e);
             } finally {
@@ -88,7 +89,7 @@ public class SourceAndThumbFetcher extends Test {
         new Thread(() -> {
             ZMProfiler.open("MediaThumb");
             try {
-                _fetch("data/media-thumbs-pp.csv", "THUMB.SINGLE", MEDIA_OUTPUT_BASE_FOLDER, 1, 2);
+                _fetch(INPUT_BASE_FOLDER + "media-thumbs-pp.csv", "THUMB.SINGLE", MEDIA_OUTPUT_BASE_FOLDER, 1, 2);
             } catch (Throwable e) {
                 LOG.error(e.getMessage(), e);
             } finally {
@@ -101,7 +102,7 @@ public class SourceAndThumbFetcher extends Test {
         List<String> lines = FileUtils.readLines(new File(inputFile), StandardCharsets.UTF_8);
         lines = lines.subList(1, lines.size());     // Bỏ header, nếu không có header thì comment dòng này
 
-        lines = lines.subList(30000, lines.size());  // Album đợt trước, đừng xóa
+//        lines = lines.subList(20000, 30000);  // Album đợt trước, đừng xóa
 
         ZMProfiler.count(SourceAndThumbFetcher.class, "_fetch", profilerLabel, "TOTAL", lines.size());
 
@@ -120,7 +121,7 @@ public class SourceAndThumbFetcher extends Test {
 
                         String outputPath = split[outputPathIndex], url = split[urlIndex];
 
-                        outputPath = outputPath.replace("$BASE$/", BASE_FOLDER);
+                        outputPath = outputPath.replace("$BASE$/", OUTPUT_BASE_FOLDER);
 
                         List<String> es = new LinkedList<>();
                         if (CommonUtils.isEmpty(url)) {

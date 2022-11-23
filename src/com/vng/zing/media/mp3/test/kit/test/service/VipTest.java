@@ -8,6 +8,7 @@ package com.vng.zing.media.mp3.test.kit.test.service;
  */
 
 import com.vng.zing.common.ZErrorHelper;
+import com.vng.zing.media.commonlib.helper.DateTimeHelper;
 import com.vng.zing.media.commonlib.vip.thrift.common.TLastTransactionInfo;
 import com.vng.zing.media.commonlib.vip.thrift.common.TProductType;
 import com.vng.zing.media.commonlib.vip.thrift.common.TVipProfileResult;
@@ -16,11 +17,8 @@ import com.vng.zing.media.mw.vip.thrift.client.ZMVIPMWReadClient;
 
 public class VipTest extends Test {
 
-    private static final ZMVIPMWReadClient VIP_MW = ZMVIPMWReadClient.INST;
-
-    //
     public static void main(String[] args) {
-        System.out.println(isValidVIPUser(1038561803));
+        System.out.println(isValidVIPUser(QUYENDB2_ZMP3_ID));
 
         System.exit(0);
     }
@@ -36,8 +34,9 @@ public class VipTest extends Test {
         }
 
         /*
-            If lastTransaction does not exist, approve. Else, reject if last transaction was done through VAS channel
-            https://trello.com/c/hXeckceV
+         * If lastTransaction does not exist, approve. Else, reject if last transaction was done through VAS channel and
+         * VIP expires in less than 24 hours; approve otherwise
+         * https://trello.com/c/hXeckceV
          */
         TLastTransactionInfo lastTransaction = profileResult.value.lastTransactionInfo;
         if (lastTransaction == null) {
@@ -49,6 +48,6 @@ public class VipTest extends Test {
             return false;
         }
 
-        return lastTransactionChannel != TVipTransactionChannel.VAS;
+        return !TVipTransactionChannel.VAS.equals(lastTransactionChannel) || profileResult.value.expireTimeMils - System.currentTimeMillis() >= 86400000;
     }
 }

@@ -33,6 +33,7 @@ dependencies {
     implementation 'com.vng.zing.media.mp3:zmp3-lib-common:1.0.21'
     implementation 'com.vng.zing.media.mp3:zmp3-lib-content-collection:1.0.19'
     implementation 'com.vng.zing.media.mp3:zmp3-lib-web-engine:1.0.4'
+    implementation "com.vng.zing.media.mp3:zmp3-lib-api-engine:1.0.26"
 
     /* Core */
     implementation 'com.vng.zing:jzcommon-corelib:1.2.3.8'
@@ -50,9 +51,10 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.15.3'
     implementation 'org.json:json:20220924'
     implementation 'com.jsoniter:jsoniter:0.9.23'
-    implementation 'org.seleniumhq.selenium:selenium-java:4.5.3'
-    implementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.5.3'
-    implementation 'io.github.bonigarcia:webdrivermanager:5.3.0'
+    implementation 'org.apache.commons:commons-math3:3.6.1'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.6.0'
+    implementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.6.0'
+    implementation 'io.github.bonigarcia:webdrivermanager:5.3.1'
     /* --- Libs end --- */
 
     /* --- Thrifts begin --- */
@@ -66,11 +68,13 @@ dependencies {
     implementation 'com.vng.zing.media.mp3:zmp3-mw-core:1.0.2'
     implementation 'com.vng.zing.media.mp3:zmp3-mw-podcast:1.0.1'
     implementation 'com.vng.zing.media.mp3:zmp3-mw-indie:1.0.1'
+    implementation "com.vng.zing.media.mp3:zmp3-mw-user:1.0.3"
     implementation 'com.vng.zing.media.mp3:zmp3-service-forbiddenfilter:1.0.1'
     implementation 'com.vng.zing.media.mp3:zmp3-service-indie:1.0.2'
     implementation 'com.vng.zing.media.mp3:zmp3-service-buildlink:1.0.1'
     implementation 'com.vng.zing.media.mp3:zmp3-service-core:1.0.2'
     implementation 'com.vng.zing.media.mp3:zmp3-service-oa:1.0.1'
+    implementation 'com.vng.zing.media.mp3:zmp3-service-podcast:1.0.1'
     implementation "com.vng.zing.media.mp3:zmp3-service-promote-song:1.0.1"
 
     /* Core */

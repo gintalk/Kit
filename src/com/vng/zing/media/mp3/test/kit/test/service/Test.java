@@ -4,11 +4,6 @@
  */
 package com.vng.zing.media.mp3.test.kit.test.service;
 
-import com.vng.zing.media.common.thrift.TCMSClient;
-import com.vng.zing.media.common.thrift.TCMSHeader;
-
-import java.util.function.BiFunction;
-
 /**
  * @author namnh16
  */

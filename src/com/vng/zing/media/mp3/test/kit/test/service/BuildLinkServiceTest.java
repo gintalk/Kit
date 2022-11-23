@@ -8,6 +8,7 @@ package com.vng.zing.media.mp3.test.kit.test.service;
  */
 
 import com.vng.zing.media.commonlib.thrift.TCountryCode;
+import com.vng.zing.media.commonlib.thrift.TPlatform;
 import com.vng.zing.media.mp3.commonlib.thrift.TMediaSourceFormat;
 import com.vng.zing.media.mp3.service.buildlink.thrift.TBuildLinkReq;
 import com.vng.zing.media.mp3.service.buildlink.thrift.TBuildLinkRes;
@@ -15,38 +16,30 @@ import com.vng.zing.media.mp3.service.buildlink.thrift.client.ZMP3BuildLinkServi
 import com.vng.zing.media.mp3.test.kit.test.common.PrintUtils;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 public class BuildLinkServiceTest extends Test {
 
     private static final ZMP3BuildLinkServiceClient SERVICE = ZMP3BuildLinkServiceClient.INST;
 
     public static void main(String[] args) {
-        TBuildLinkRes res = ZMP3BuildLinkServiceClient.INST.getAudioZMCLinks(new TBuildLinkReq()
-                .setCountryCode(TCountryCode.VIETNAM.getValue())
-                .setFormats(Collections.emptyList())
-                .setZmcId("0c36b76dc4032d5d7412")
-        );
-        PrintUtils.printTBase(res);
-
-        TBuildLinkRes res = ZMP3BuildLinkServiceClient.INST.getVideoZMCLinks(new TBuildLinkReq()
-                .setCountryCode(TCountryCode.VIETNAM.getValue())
-                .setFormats(Arrays.asList(
-                        TMediaSourceFormat.Video1080.getValue(),
-                        TMediaSourceFormat.Video720.getValue()
-                ))
-                .setPlatform(TPlatform.APP.getValue())
-                .setZmcId("9d64676e6c298577dc38")
-                .setHeader(new THeaderReq())
-        );
-        PrintUtils.printTBase(res);
-
-        PrintUtils.printTBase(TZMP3CoreMWClient.INST.getMedia(1079103858).value);
-
-//        TBuildLinkRes res = SERVICE.getAudioZMCLinks(new TBuildLinkReq()
-//                .setZmcId("5e6bcbfeb4935dcd0482")
+//        TBuildLinkRes res = ZMP3BuildLinkServiceClient.INST.getVideoZMCLinks(new TBuildLinkReq()
+//                .setCountryCode(TCountryCode.VIETNAM.getValue())
+//                .setFormats(Arrays.asList(
+//                        TMediaSourceFormat.Video1080.getValue(),
+//                        TMediaSourceFormat.Video720.getValue()
+//                ))
+//                .setPlatform(TPlatform.APP.getValue())
+//                .setZmcId("742a64fc8dae64f03dbf")
+//                .setHeader(new THeaderReq())
 //        );
 //        PrintUtils.printTBase(res);
+
+        TBuildLinkRes res = SERVICE.getAudioZMCLinks(new TBuildLinkReq()
+                .setCountryCode(TCountryCode.VIETNAM.getValue())
+                .setFormats(Arrays.asList(TMediaSourceFormat.Audio320.getValue(), TMediaSourceFormat.Audio128.getValue()))
+                .setZmcId("58505c12ca7c23227a6d")
+        );
+        PrintUtils.printTBase(res);
 
         System.exit(0);
     }
