@@ -76,6 +76,7 @@ dependencies {
     implementation 'com.vng.zing.media.mp3:zmp3-service-oa:1.0.1'
     implementation 'com.vng.zing.media.mp3:zmp3-service-podcast:1.0.1'
     implementation "com.vng.zing.media.mp3:zmp3-service-promote-song:1.0.1"
+    implementation 'com.vng.zing.media.mp3:zmp3-service-user:1.0.1'
 
     /* Core */
 
