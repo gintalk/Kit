@@ -1,8 +1,11 @@
-pluginManagement.repositories.maven {
-    url mavenUrl
-    credentials {
-        username mavenRUsername
-        password mavenRPassword
+pluginManagement.repositories {
+    mavenCentral()
+    maven {
+        url mavenUrl
+        credentials {
+            username mavenRUsername
+            password mavenRPassword
+        }
     }
 }
 
