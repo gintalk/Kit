@@ -7,11 +7,16 @@ package com.vng.zing.media.mp3.test.kit.test.service;
  * @author namnh16 on 25/06/2021
  */
 
+import com.vng.zing.media.commonlib.thrift.TCMSClient;
+import com.vng.zing.media.mp3.engine.wrapper.CMSProxyWrapper;
+import com.vng.zing.media.mp3.proxy.cms.thrift.shared.TCMSHeader;
+
 public class CMSProxyTest extends Test {
 
-//    private static final CMSProxyWrapper WRAPPER = CMSProxyWrapper.INST;
-//
-//    public static void main(String[] args) {
+    private static final CMSProxyWrapper WRAPPER = CMSProxyWrapper.INST;
+
+    //
+    public static void main(String[] args) {
 ////        _testOA();
 ////        _testOAHome();
 ////        _testOABox();
@@ -23,14 +28,15 @@ public class CMSProxyTest extends Test {
 ////        _testLivestream();
 ////        _testsPerformance();
 ////        _testAccount();
-////        _testLivestreamStats();
+        _testLivestreamStats();
 ////        _testPodcastProgramStats();
 ////        _testPodcastEpisodeStats();
 //        _testPlaylist();
 //
 //        System.exit(0);
-//    }
-//
+    }
+
+    //
 //    public static void _testOA() {
 ////        List<TZMP3OAAccount> accounts = WRAPPER.getMyOAAccountSlice(1014146619, 0, 10);
 ////        accounts.forEach(ThriftUtils::prettyPrint);
@@ -200,61 +206,19 @@ public class CMSProxyTest extends Test {
 //        System.out.println(WRAPPER.getOAAccountPermission(1144229, NGUYENLT4_ZMP3_ID));
 //    }
 //
-//    private static void _testLivestreamStats() {
-////        ThriftUtils.prettyPrint(BAHAINAM.getLivestreamOverview(new TGetLivestreamOverviewReq()
-////                .setLivestreamID(10562)
-////                .setOaID(XONE_RADIO_OA_ID)
-////                .setUserID(QUYENDB2_ZMP3_ID)
-////        ));
-////
-////        ThriftUtils.prettyPrint(BAHAINAM.getLivestreamViewChart(new TGetLivestreamViewChartReq()
-////                .setLivestreamID(10562)
-////                .setOaID(XONE_RADIO_OA_ID)
-////                .setUserID(QUYENDB2_ZMP3_ID)
-////                .setFromTime(1646067600)
-////                .setToTime(1646240400)
-////        ));
-////
-//        ThriftUtils.prettyPrint(WRAPPER.getLivestreamUserChart(
-//                1223281,
-//                NAMNH16_ZMP3_ID,
-//                10643,
-//                1649091600,
-//                1649696400)
-//        );
-////
-////        ThriftUtils.prettyPrint(BAHAINAM.getLivestreamPlayTimeChart(new TGetLivestreamPlayTimeChartReq()
-////                .setLivestreamID(10562)
-////                .setOaID(XONE_RADIO_OA_ID)
-////                .setUserID(QUYENDB2_ZMP3_ID)
-////                .setFromTime(1646067600)
-////                .setToTime(1646240400)
-////        ));
-////
-////        ThriftUtils.prettyPrint(BAHAINAM.getLivestreamReturnRateChart(new TGetLivestreamReturnRateChartReq()
-////                .setLivestreamID(10562)
-////                .setOaID(XONE_RADIO_OA_ID)
-////                .setUserID(QUYENDB2_ZMP3_ID)
-////                .setFromTime(1646067600)
-////                .setToTime(1646240400)
-////        ));
-////
-////        ThriftUtils.prettyPrint(BAHAINAM.getLivestreamUserDemographicStats(new TGetLivestreamUserDemographicStatsReq()
-////                .setLivestreamID(10562)
-////                .setOaID(947376)
-////                .setUserID(1021507292)
-////                .setTime(1646192771)
-////        ));
-////
-////        System.out.println(BAHAINAM.getLivestreamCCUChart(new TGetLivestreamCCUChartReq()
-////                .setLivestreamID(10562)
-////                .setOaID(XONE_RADIO_OA_ID)
-////                .setUserID(QUYENDB2_ZMP3_ID)
-////                .setFromTime(1646067600)
-////                .setToTime(1646240400)
-////                .setMinuteStep(30)
-////        ).values.entrySet().stream().sorted((a, b) -> (int) (ConvertUtils.toLong(a.getKey()) - ConvertUtils.toLong(b.getKey()))).collect(Collectors.toList()));
-//    }
+    private static void _testLivestreamStats() {
+        System.out.println(WRAPPER.getLivestreamOverview(
+                new TCMSHeader().setUserID(NAMNH16_ZMP3_ID).setClientPlatformID(TCMSClient.OA_CMS.getValue()).setObjectID(XONE_RADIO),
+                10562
+        ));
+
+        System.out.println(WRAPPER.getLivestreamViewChart(
+                new TCMSHeader().setUserID(NAMNH16_ZMP3_ID).setClientPlatformID(TCMSClient.OA_CMS.getValue()).setObjectID(XONE_RADIO),
+                10562, 1669482000, 1670173200
+        ));
+
+        System.exit(0);
+    }
 //
 //    private static void _testPodcastProgramStats() {
 ////        ThriftUtils.prettyPrint(WRAPPER.getPodcastProgramOverview(XONE_RADIO_OA_ID, NAMNH16_ZMP3_ID, 1372611983));

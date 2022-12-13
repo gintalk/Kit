@@ -23,13 +23,13 @@ import java.net.URL;
 public class RSSFeedTest extends Test {
 
     public static void main(String[] args) {
-        _getEnclosures();
-//        _escapeHtml();
+//        _getEnclosures();
+        _escapeHtml();
     }
 
     private static void _escapeHtml() {
         try {
-            String url = "https://anchor.fm/s/6b9f15bc/podcast/rss";
+            String url = "https://anchor.fm/s/7de8f0d0/podcast/rss";
 
             SyndFeedInput input = new SyndFeedInput();
             SyndFeed feed = input.build(new XmlReader(new URL(url)));

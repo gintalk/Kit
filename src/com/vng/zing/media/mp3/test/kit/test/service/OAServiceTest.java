@@ -4,7 +4,14 @@
  */
 package com.vng.zing.media.mp3.test.kit.test.service;
 
+import com.vng.zing.media.mp3.commonlib.thrift.core.TArtist;
+import com.vng.zing.media.mp3.commonlib.thrift.oa.TZMP3OA;
+import com.vng.zing.media.mp3.engine.model.EArtistModel;
+import com.vng.zing.media.mp3.service.core.thrift.client.TZMP3CoreServiceClient;
+import com.vng.zing.media.mp3.service.core.thrift.req.TGetArtistReq;
 import com.vng.zing.media.mp3.service.oa.thrift.client.TZMP3OAServiceClient;
+import com.vng.zing.media.mp3.service.oa.thrift.req.TGetOAReq;
+import com.vng.zing.media.mp3.test.kit.test.common.PrintUtils;
 
 /**
  * @author namnh16
@@ -27,8 +34,14 @@ public class OAServiceTest extends Test {
 
     //
     private static void _testOA() {
-//        TZMP3OA oa = OA_SERVICE.getOA(new TGetOAReq().setAliasName("spacespeakers")).value;
+//        TZMP3OA oa = OA_SERVICE.getOA(new TGetOAReq().setAliasName("Various-Artists")).value;
 //        PrintUtils.printTBase(oa);
+
+        TArtist artist = TZMP3CoreServiceClient.INST.getArtist(new TGetArtistReq()
+                .setAliasName("Various-Artists")
+        ).value;
+        System.out.println(EArtistModel.INST.getIdByAlias("Various-Artists"));
+        PrintUtils.printTBase(artist);
     }
 
     private static void _testOABox() {

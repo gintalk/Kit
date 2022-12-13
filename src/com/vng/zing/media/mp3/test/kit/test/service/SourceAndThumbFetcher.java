@@ -127,7 +127,7 @@ public class SourceAndThumbFetcher extends Test {
                         if (CommonUtils.isEmpty(url)) {
                             es.add(line);
                         } else {
-                            _download(url, outputPath);
+                            download(url, outputPath);
                         }
 
                         return es;
@@ -150,39 +150,5 @@ public class SourceAndThumbFetcher extends Test {
         }
 
         FileUtils.writeStringToFile(new File(outputBaseFolder + profilerLabel + ".error.csv"), errorSB.toString(), StandardCharsets.UTF_8, true);
-    }
-
-    private static void _download(String url, String outputPath) throws IOException {
-        if (CommonUtils.isEmpty(url)) {
-            ZMProfiler.count(SourceAndThumbFetcher.class, "EMPTY_URL");
-            return;
-        }
-
-        File outputFile = new File(outputPath);
-        if (outputFile.exists()) {
-            if (FileUtils.sizeOf(outputFile) > 0) {
-                ZMProfiler.count(SourceAndThumbFetcher.class, "_download", "PROCESSED", "SKIP");
-                return;
-            } else {
-                ZMProfiler.count(SourceAndThumbFetcher.class, "_download", "PROCESSED_BUT_0_BYTE", "RE_PROCESS");
-                LOG.error(LogUtils.buildTabLog("PROCESSED_BUT_0_BYTE", url, outputPath));
-
-                FileUtils.forceDelete(outputFile);
-            }
-        }
-
-        Path path = Paths.get(outputPath);
-        if (!Files.exists(path.getParent())) {
-            Files.createDirectories(path.getParent());
-        }
-        try {
-            outputFile.createNewFile();
-        } catch (IOException e) {
-            LOG.error(e.getMessage(), e);
-        }
-
-        HttpRequestHelper.newGet()
-                .setUrl(url)
-                .downloadToFile(new File(outputPath));
     }
 }
