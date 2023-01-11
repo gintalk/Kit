@@ -8,17 +8,19 @@ package com.vng.zing.media.mp3.test.kit.test.service;
  */
 
 import com.vng.zing.logger.ZLogger;
-import com.vng.zing.media.commonlib.utils.ConvertUtils;
+import com.vng.zing.media.commonlib.utils.CommonUtils;
+import com.vng.zing.media.mp3.commonlib.thrift.TMP3ItemType;
+import com.vng.zing.media.mp3.commonlib.thrift.TMP3ListType;
 import com.vng.zing.media.mp3.mw.core.thrift.client.TZMP3CoreMWClient;
 import com.vng.zing.media.mp3.service.core.thrift.client.TZMP3CoreServiceClient;
-import com.vng.zing.media.mp3.service.core.thrift.req.TGetMediaIdsOfPlaylistReq;
-import org.apache.commons.io.FileUtils;
+import com.vng.zing.media.mp3.service.core.thrift.req.TGetSliceIdsReq;
 import org.apache.log4j.Logger;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class CoreServiceTest extends Test {
 
@@ -29,24 +31,28 @@ public class CoreServiceTest extends Test {
 
     //
     public static void main(String[] args) throws IOException {
-        List<String> lines = FileUtils.readLines(new File("data/artist-tbo-cctl.csv"), StandardCharsets.UTF_8);
+        List<Integer> ids = Arrays.asList(1101181203, 1095512100,1095484536,  1095484537);
 
-        for (String line : lines) {
-            String[] split = line.split(",");
-
-            int tboPlaylistID = ConvertUtils.toInteger(split[1]);
-            int cctlPlaylistID = ConvertUtils.toInteger(split[2]);
-
-            List<Integer> tboIDs = CORE_SERVICE.getMediaIdsOfPlaylist(new TGetMediaIdsOfPlaylistReq()
-                    .setPlaylistId(tboPlaylistID)
-            ).values;
-            List<Integer> cctlIDs = CORE_SERVICE.getMediaIdsOfPlaylist(new TGetMediaIdsOfPlaylistReq()
-                    .setPlaylistId(cctlPlaylistID)
-            ).values;
-
-            if (!tboIDs.equals(cctlIDs)) {
-                System.err.println(line);
+        int start = 0;
+        while (true) {
+            Set<Integer> mediaIDs = new HashSet<>(CORE_SERVICE.getSliceIds(new TGetSliceIdsReq()
+                    .setId(620304)
+                    .setStart(start)
+                    .setCount(200)
+                    .setType(TMP3ListType.LIST_BY_ARTIST.getValue())
+                    .setItemType(TMP3ItemType.MEDIA.getValue())
+            ).value.values);
+            if (CommonUtils.isEmpty(mediaIDs)) {
+                break;
             }
+
+            for (int mediaID : ids) {
+                if (mediaIDs.contains(mediaID)) {
+                    System.out.println(mediaID);
+                }
+            }
+
+            start += 200;
         }
 
         System.exit(0);

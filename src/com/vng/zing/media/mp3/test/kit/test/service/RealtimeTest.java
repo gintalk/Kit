@@ -23,6 +23,7 @@ import com.vng.zing.media.mp3.commonlib.thrift.TZMP3RCounterObject;
 import com.vng.zing.media.mp3.commonlib.thrift.TZMP3RCounterType;
 import com.vng.zing.media.mp3.commonlib.thrift.TZMP3RCounterZone;
 import com.vng.zing.media.mp3.mw.stats.thrift.TBaseQueryGenStats;
+import com.vng.zing.media.mp3.mw.stats.thrift.TGenActiveUserTextStatsReportReq;
 import com.vng.zing.media.mp3.mw.stats.thrift.TMappedQueryGenTextStats;
 import com.vng.zing.media.mp3.mw.stats.thrift.TQueryGenTextStats;
 import com.vng.zing.media.mp3.mw.stats.thrift.TSource;
@@ -41,7 +42,9 @@ public class RealtimeTest extends Test {
     private static final TZMP3StatsMWClient STATS_MW = TZMP3StatsMWClient.INST;
 
     public static void main(String[] args) {
-        Date time = new Date(1670842800000L);
+        Date time = new Date(1672736400000L);
+
+//        active(time);
 
 //        source(time);
         iSource(time);
@@ -73,6 +76,17 @@ public class RealtimeTest extends Test {
 //        });
 
         System.exit(0);
+    }
+
+    private static void active(Date time) {
+        List<List<String>> customOrder = Collections.singletonList(
+                Arrays.asList("iOS", "Android")
+        );
+        System.out.println(STATS_MW.genActiveUserTextStatsReport(new TGenActiveUserTextStatsReportReq()
+                .setSeconds(1672723440)
+                .setYesterday(true)
+                .setCustomOrder(customOrder)
+        ));
     }
 
     private static void source(Date time) {

@@ -20,10 +20,8 @@ public class PromoteSongTest extends Test {
     private static final TZMP3PromoteSongServiceClient SERVICE = TZMP3PromoteSongServiceClient.INST;
 
     public static void main(String[] args) {
-//        PrintUtils.printTBase(TZMP3CoreMWClient.INST.getMedia(1138133687).value);
-
         PrintUtils.printTBase(SERVICE.getPromotedSong(new TGetPromotedSongReq()
-                .setMediaID(1138133687)
+                .setMediaID(1073748257)
                 .setUserID(NAMNH16_ZMP3_ID)
                 .setPlatformID(TPlatform.APP_ANDROID.getValue())
         ));

@@ -14,18 +14,19 @@ conf {
 dependencies {
     /* --- Libs begin --- */
     /* ZTM */
-    implementation 'com.vng.zing.media:ztm-lib-thrift:1.0.27'
+    implementation 'com.vng.zing.media:ztm-lib-thrift:1.0.28'
     implementation 'com.vng.zing.media:ztm-lib-profiler:1.0.6'
-    implementation 'com.vng.zing.media:ztm-lib-common:1.0.56'
+    implementation 'com.vng.zing.media:ztm-lib-common:1.0.58'
     implementation 'com.vng.zing.media:ztm-lib-thrift-service:1.0.5'
     implementation 'com.vng.zing.media:ztm-lib-utils:1.0.14'
     implementation 'com.vng.zing.media:ztm-lib-nosql:1.0.5'
-    implementation 'com.vng.zing.media:ztm-lib-api:1.0.18'
-    implementation 'com.vng.zing.media:ztm-lib-sql:1.0.40'
-    implementation 'com.vng.zing.media:ztm-lib-cms:1.0.15'
-    implementation 'com.vng.zing.media:ztm-lib-vip-thrift:1.0.7'
-    implementation 'com.vng.zing.media:ztm-lib-vip-common:1.0.6-beta-1'
-    implementation "com.vng.zing.media:ztm-lib-wrapper:1.0.1"
+    implementation 'com.vng.zing.media:ztm-lib-api:1.0.20'
+    implementation 'com.vng.zing.media:ztm-lib-sql:1.0.52'
+    implementation 'com.vng.zing.media:ztm-lib-cms:1.0.18'
+    implementation 'com.vng.zing.media:ztm-lib-vip-thrift:1.0.9'
+    implementation 'com.vng.zing.media:ztm-lib-vip-common:1.0.7'
+    implementation 'com.vng.zing.media:ztm-lib-wrapper:1.0.4'
+    implementation 'com.vng.zing.media:ztm-service-realtimecounterccu:1.0.1'
 
     /* ZMP3 */
     implementation 'com.vng.zing.media.mp3:zmp3-lib-thrift:1.0.55'
@@ -45,6 +46,11 @@ dependencies {
     implementation 'com.vng.zing:jzodt-thrift9:1.0.4.8'
 
     /* 3rd-party */
+    implementation 'org.apache.spark:spark-sql_2.12:3.2.2'
+    implementation 'org.apache.spark:spark-core_2.12:3.2.2'
+    implementation 'org.apache.spark:spark-graphx_2.12:3.2.2'
+    implementation 'org.apache.spark:spark-mllib_2.12:3.2.2'
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
     implementation 'commons-io:commons-io:2.11.0'
     implementation 'commons-codec:commons-codec:1.15'
     implementation 'com.rometools:rome:1.18.0'
@@ -52,8 +58,9 @@ dependencies {
     implementation 'org.json:json:20220924'
     implementation 'com.jsoniter:jsoniter:0.9.23'
     implementation 'org.apache.commons:commons-math3:3.6.1'
-    implementation 'org.seleniumhq.selenium:selenium-java:4.6.0'
-    implementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.6.0'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.7.1'
+    implementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.7.1'
+    implementation 'com.twelvemonkeys.imageio:imageio-jpeg:3.9.4'
     implementation 'io.github.bonigarcia:webdrivermanager:5.3.1'
     implementation 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
@@ -63,9 +70,10 @@ dependencies {
     /* ZTM */
     implementation 'com.vng.zing.media:ztm-service-authen:1.0.6'
     implementation 'com.vng.zing.media:ztm-service-photomaker:1.0.1'
-    implementation "com.vng.zing.media:ztm-service-alert:1.0.1"
+    implementation "com.vng.zing.media:ztm-service-alert:1.0.5-SNAPSHOT"
     implementation "com.vng.zing.media:ztm-service-realtimecounter:1.0.1"
     implementation 'com.vng.zing.media:ztm-mw-vip:1.0.2'
+    implementation 'com.vng.zing.media:ztm-service-upload:1.0.1'
 
     /* ZMP3 */
     implementation 'com.vng.zing.media.mp3:zmp3-mw-publisher:1.0.2'
@@ -73,7 +81,7 @@ dependencies {
     implementation 'com.vng.zing.media.mp3:zmp3-mw-core:1.0.3'
     implementation 'com.vng.zing.media.mp3:zmp3-mw-podcast:1.0.1'
     implementation 'com.vng.zing.media.mp3:zmp3-mw-indie:1.0.1'
-    implementation "com.vng.zing.media.mp3:zmp3-mw-stats:1.0.2-beta-3"
+    implementation "com.vng.zing.media.mp3:zmp3-mw-stats:1.0.4-SNAPSHOT"
     implementation 'com.vng.zing.media.mp3:zmp3-mw-user:1.0.3'
     implementation 'com.vng.zing.media.mp3:zmp3-service-forbiddenfilter:1.0.1'
     implementation 'com.vng.zing.media.mp3:zmp3-service-indie:1.0.2'
@@ -104,4 +112,8 @@ dependencies {
     /* ZMP3 */
 //    implementation project(":ZMP3ThriftLib")
     /* --- Development ends --- */
+}
+
+repositories {
+    mavenCentral()
 }

@@ -39,6 +39,7 @@ public class Test {
     protected static final int NGUYENLT4_ZMP3_ID = 1032126223;
     protected static final int BAO_QUYEN_OA_ID = 1921897;
     protected static final int PETER_SERKIN_OA_ID = 6980;
+    protected static final String SEPARATOR = "¸";
 
     protected static void download(String url, String outputPath) throws IOException {
         if (CommonUtils.isEmpty(url)) {
